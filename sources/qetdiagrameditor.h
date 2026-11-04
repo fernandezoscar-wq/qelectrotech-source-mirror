@@ -54,6 +54,7 @@ class ElementsCollectionWidget;
 class ElementPickerPopup;
 class CommandSearchPopup;
 class AutoNumberingDockWidget;
+class ElectricalCircuitsDock;
 class TerminalNumberingDialog;
 
 class KAutoSaveFile;
@@ -89,6 +90,8 @@ class QETDiagramEditor : public QETMainWindow
 		QList<QString>       editedFiles       () const;
 		ProjectView         *viewForFile       (const QString &) const;
 		ProjectView *currentProjectView() const;
+			/// Show or hide the electrical circuits panel as the settings say
+		void updateElectricalCircuitsDock();
 		QETProject *currentProject() const;
 		void templateSaved(const ElementsLocation &location);
 		bool drawGrid() const;
@@ -115,6 +118,7 @@ class QETDiagramEditor : public QETMainWindow
 		void setUpUndoStack     ();
 		void setUpSelectionPropertiesEditor();
 		void setUpAutonumberingWidget();
+		void setUpElectricalCircuitsDock();
 		void setUpActions       ();
 		void setUpToolBar       ();
 		void setUpMenu          ();
@@ -431,6 +435,7 @@ class QETDiagramEditor : public QETMainWindow
 		
 		QUndoGroup undo_group;
 		AutoNumberingDockWidget *m_autonumbering_dock;
+		ElectricalCircuitsDock *m_electrical_dock = nullptr;
 		int activeSubWindowIndex;
 		SearchAndReplaceWidget m_search_and_replace_widget;
 };

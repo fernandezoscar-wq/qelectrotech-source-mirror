@@ -3944,6 +3944,8 @@ void QETProject::readProjectXml(QDomDocument &xml_project)
 		//What this QET does not know of the project, kept for every format
 	m_data_base.storeForeignBlocks(QString::fromLatin1(projectDataBase::project_owner),
 								   projectDataBase::foreignChildren(xml_project.documentElement(), false));
+		//The electrical model is one of those blocks (see storeElectricalBlock())
+	readElectricalXml(xml_project);
 
 		//Load the default properties for the new diagrams
 	readDefaultPropertiesXml(xml_project);
@@ -4904,6 +4906,73 @@ void QETProject::readBridgeXml(const QDomDocument &xml_project)
 			diagram->addItem(part);
 		}
 	}
+}
+
+/**
+ * @brief QETProject::readElectricalXml
+ * Read the electrical model (boards, circuits) of the project. It is
+ * also one of the blocks this QET keeps without reading
+ * (projectDataBase::foreignChildren()), which is what carries it through
+ * every format, .qetdb included, unchanged when it is not edited.
+ * @param xml_project
+ */
+void QETProject::readElectricalXml(const QDomDocument &xml_project)
+{
+	m_electrical_model = electrical::ElectricalModel();
+	m_electrical_read_report = electrical::ReadReport();
+	const auto xml_electrical = xml_project.documentElement()
+		.firstChildElement(electrical::ElectricalModel::tagName());
+	if (xml_electrical.isNull()) return;
+
+	m_electrical_read_report = m_electrical_model.fromXml(xml_electrical);
+	if (!m_electrical_read_report.badValues.isEmpty())
+		qWarning() << "Electrical model: values not read:"
+				   << m_electrical_read_report.badValues;
+}
+
+/**
+ * @brief QETProject::setElectricalModel
+ * Replace the electrical model of the project. What the user does goes
+ * through ChangeElectricalModelCommand, on the undo stack, instead.
+ * @return false, and nothing changes, when the model read from the file
+ * is of a newer version: it is kept as it was so it never loses data.
+ */
+bool QETProject::setElectricalModel(const electrical::ElectricalModel &model,
+									 bool mark_modified)
+{
+	if (m_electrical_model.isReadOnly()) return false;
+	if (model == m_electrical_model) return true;
+
+	m_electrical_model = model;
+	storeElectricalBlock();
+	if (mark_modified) setModified(true);
+	emit electricalModelChanged();
+	return true;
+}
+
+/**
+ * @brief QETProject::storeElectricalBlock
+ * Put the model, as XML, among the project's blocks this QET keeps
+ * without reading, in place of the one there was. toXml() and the
+ * .qetdb writer both write those blocks, so the model is saved in every
+ * format with no change to them. An empty model leaves no block.
+ */
+void QETProject::storeElectricalBlock()
+{
+	const QString owner = QString::fromLatin1(projectDataBase::project_owner);
+	QStringList blocks;
+	for (const QString &block : m_data_base.foreignBlocks(owner)) {
+		QDomDocument document;
+		if (document.setContent(block)
+			&& document.documentElement().tagName()
+				== electrical::ElectricalModel::tagName())
+			continue;
+		blocks << block;
+	}
+	const QString text = m_electrical_model.toXmlText();
+	if (!text.isEmpty())
+		blocks << text;
+	m_data_base.storeForeignBlocks(owner, blocks);
 }
 
 /**

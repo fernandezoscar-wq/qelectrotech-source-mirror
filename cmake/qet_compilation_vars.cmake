@@ -1090,6 +1090,30 @@ set(QET_SRC_FILES
   ${QET_DIR}/sources/cable/cabletextformatdialog.h
   ${QET_DIR}/sources/cable/editcablecommand.cpp
   ${QET_DIR}/sources/cable/editcablecommand.h
+  ${QET_DIR}/sources/electrical/report/electricalreport.cpp
+  ${QET_DIR}/sources/electrical/report/electricalreport.h
+  ${QET_DIR}/sources/electrical/report/reportlogo.cpp
+  ${QET_DIR}/sources/electrical/report/reportlogo.h
+  ${QET_DIR}/sources/electrical/report/reportpdfwriter.cpp
+  ${QET_DIR}/sources/electrical/report/reportpdfwriter.h
+  ${QET_DIR}/sources/electrical/ui/reportdialog.cpp
+  ${QET_DIR}/sources/electrical/ui/reportdialog.h
+  ${QET_DIR}/sources/electrical/ui/boarddialog.cpp
+  ${QET_DIR}/sources/electrical/ui/boarddialog.h
+  ${QET_DIR}/sources/electrical/ui/roomsdialog.cpp
+  ${QET_DIR}/sources/electrical/ui/roomsdialog.h
+  ${QET_DIR}/sources/electrical/ui/devicepickerdialog.cpp
+  ${QET_DIR}/sources/electrical/ui/devicepickerdialog.h
+  ${QET_DIR}/sources/electrical/ui/electricalelementwidget.cpp
+  ${QET_DIR}/sources/electrical/ui/electricalelementwidget.h
+  ${QET_DIR}/sources/electrical/ui/changeelectricalmodelcommand.cpp
+  ${QET_DIR}/sources/electrical/ui/changeelectricalmodelcommand.h
+  ${QET_DIR}/sources/electrical/ui/circuitdialog.cpp
+  ${QET_DIR}/sources/electrical/ui/circuitdialog.h
+  ${QET_DIR}/sources/electrical/ui/electricalcircuitsdock.cpp
+  ${QET_DIR}/sources/electrical/ui/electricalcircuitsdock.h
+  ${QET_DIR}/sources/electrical/ui/electricaltexts.cpp
+  ${QET_DIR}/sources/electrical/ui/electricaltexts.h
 
   ${QET_DIR}/sources/xml/terminalstripitemxml.cpp
   ${QET_DIR}/sources/xml/terminalstripitemxml.h

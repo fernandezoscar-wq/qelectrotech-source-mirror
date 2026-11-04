@@ -71,6 +71,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="m_electrical_circuits_panel">
+         <property name="text">
+          <string>Electrical circuits panel: boards, circuits and low voltage calculations (REBT)</string>
+         </property>
+         <property name="toolTip">
+          <string>Adds the panel to the Lists menu. Partial checks: they never state that an installation complies with the regulation.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="m_terminal_conductor_color">
          <property name="text">
           <string>Draw a connected terminal in the color of its conductor</string>
@@ -1749,6 +1759,7 @@
   <tabstop>m_use_gesture_trackpad</tabstop>
   <tabstop>m_zoom_out_beyond_folio</tabstop>
   <tabstop>m_conductor_properties_panel</tabstop>
+  <tabstop>m_electrical_circuits_panel</tabstop>
   <tabstop>m_terminal_conductor_color</tabstop>
   <tabstop>m_wiring_rules_cb</tabstop>
   <tabstop>m_wiring_max_wires_sb</tabstop>

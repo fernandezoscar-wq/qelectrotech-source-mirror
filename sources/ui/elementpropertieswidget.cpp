@@ -17,6 +17,9 @@
 */
 #include "elementpropertieswidget.h"
 
+#include "../electrical/ui/electricalcircuitsdock.h"
+#include "../electrical/ui/electricalelementwidget.h"
+
 #include "../diagram.h"
 #include "../diagramposition.h"
 #include "../qetapp.h"
@@ -374,6 +377,10 @@ void ElementPropertiesWidget::updateUi()
 			break;
 	}
 	m_list_editor << new DynamicElementTextItemEditor(m_element, this);
+		//Electrical data of the symbol, when the panel is turned on
+	if (ElectricalCircuitsDock::isEnabledInSettings() && m_element->diagram()
+		&& m_element->diagram()->project())
+		m_list_editor << new ElectricalElementWidget(m_element, this);
 
 		//Add each editors in tab widget
 	for (AbstractElementPropertiesEditorWidget *aepew : m_list_editor)

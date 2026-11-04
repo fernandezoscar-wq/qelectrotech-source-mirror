@@ -48,6 +48,7 @@
 #include "commandsearchpopup.h"
 #include "QWidgetAnimation/qwidgetanimation.h"
 #include "autoNum/ui/autonumberingdockwidget.h"
+#include "electrical/ui/electricalcircuitsdock.h"
 #include "conductornumexport.h"
 #include "diagramcommands.h"
 #include "diagramcontent.h"
@@ -328,6 +329,7 @@ QETDiagramEditor::QETDiagramEditor(const QStringList &files, QWidget *parent) :
 	setUpUndoStack();
 	setUpSelectionPropertiesEditor();
 	setUpAutonumberingWidget();
+	setUpElectricalCircuitsDock();
 
 	setUpActions();
 	setUpToolBar();
@@ -345,6 +347,8 @@ QETDiagramEditor::QETDiagramEditor(const QStringList &files, QWidget *parent) :
 	readSettings();  // restoreGeometry before show()
 	show();
 	readSettingsState();  // restoreState() must be called after show() in Qt6
+		//After restoreState(): the panel stays hidden when it is off
+	updateElectricalCircuitsDock();
 		//For a moment only: while a message shows, the status bar hides
 		//what stands on its left -- what is visible then, so only once the
 		//window is shown
@@ -513,6 +517,41 @@ void QETDiagramEditor::setUpAutonumberingWidget()
 				|QDockWidget::DockWidgetMovable
 				|QDockWidget::DockWidgetFloatable);
 	addDockWidget(Qt::RightDockWidgetArea, m_autonumbering_dock);
+}
+
+/**
+	@brief QETDiagramEditor::setUpElectricalCircuitsDock
+	The boards and circuits of the current project, with their low
+	voltage calculations. Created hidden: updateElectricalCircuitsDock()
+	shows it in the menus only when the setting is on.
+*/
+void QETDiagramEditor::setUpElectricalCircuitsDock()
+{
+	m_electrical_dock = new ElectricalCircuitsDock(this);
+	m_electrical_dock->setDiagramProvider([this]() -> Diagram * {
+		DiagramView *view = currentDiagramView();
+		return view ? view->diagram() : nullptr;
+	});
+	addDockWidget(Qt::BottomDockWidgetArea, m_electrical_dock);
+	m_electrical_dock->hide();
+}
+
+/**
+	@brief QETDiagramEditor::updateElectricalCircuitsDock
+	Off (the default), the panel is hidden and nowhere to be found in the
+	menus, so the editor looks as it always did.
+*/
+void QETDiagramEditor::updateElectricalCircuitsDock()
+{
+	if (!m_electrical_dock) return;
+	const bool on = ElectricalCircuitsDock::isEnabledInSettings();
+	m_electrical_dock->toggleViewAction()->setVisible(on);
+	if (on) {
+		m_electrical_dock->setProject(currentProject());
+	} else {
+		m_electrical_dock->hide();
+		m_electrical_dock->setProject(nullptr);
+	}
 }
 
 /**
@@ -2213,6 +2252,8 @@ void QETDiagramEditor::setUpMenu()
 	menu_lists -> addAction(m_project_terminalBloc);
 	menu_lists -> addSeparator();
 	menu_lists -> addAction(m_add_cable_list);
+	menu_lists -> addSeparator();
+	menu_lists -> addAction(m_electrical_dock->toggleViewAction());
 
 	main_tool_bar         -> toggleViewAction() -> setStatusTip(tr("Display or hide the main toolbar"));
 	view_tool_bar         -> toggleViewAction() -> setStatusTip(tr("Display or hide the Display toolbar"));
@@ -4994,6 +5035,8 @@ void QETDiagramEditor::subWindowActivated(QMdiSubWindow *subWindows)
 	emit syncElementsPanel();
 	updateUsageTrackersActiveState();
 	updateWindowModifiedState();
+	if (m_electrical_dock && ElectricalCircuitsDock::isEnabledInSettings())
+		m_electrical_dock->setProject(currentProject());
 }
 
 /**

@@ -8062,6 +8062,14 @@ Las entradas de texto y números
 <context>
     <name>GeneralConfigurationPage</name>
     <message>
+        <source>Electrical circuits panel: boards, circuits and low voltage calculations (REBT)</source>
+        <translation>Panel de circuitos eléctricos: cuadros, circuitos y cálculos de baja tensión (REBT)</translation>
+    </message>
+    <message>
+        <source>Adds the panel to the Lists menu. Partial checks: they never state that an installation complies with the regulation.</source>
+        <translation>Añade el panel al menú Listas. Comprobaciones parciales: nunca afirman que una instalación cumpla el reglamento.</translation>
+    </message>
+    <message>
         <location filename="../sources/ui/configpage/generalconfigurationpage.ui" line="24"/>
         <source>Appearance</source>
         <translation>Apariencia</translation>
@@ -28426,6 +28434,3028 @@ asociar el nombre de &quot;volta&quot; y el valor &quot;1745&quot; reemplazara %
         <location filename="../sources/SearchAndReplace/ui/replaceadvanceddialog.ui" line="92"/>
         <source>What:</source>
         <translation>Que:</translation>
+    </message>
+</context>
+<context>
+    <name>CircuitDialog</name>
+    <message>
+        <source>The PE (the PEN in TN-C): needed for the indirect contacts in TN and IT, never assumed</source>
+        <translation>El PE (el PEN en TN-C): necesario para los contactos indirectos en TN e IT, nunca se supone</translation>
+    </message>
+    <message>
+        <source>Fills the data of the device from the catalogue file chosen in the Electrical circuits panel</source>
+        <translation>Rellena los datos del aparato a partir del fichero de catálogo elegido en el panel Circuitos eléctricos</translation>
+    </message>
+    <message>
+        <source>From the catalogue...</source>
+        <translation>Del catálogo...</translation>
+    </message>
+    <message>
+        <source>I²t given at</source>
+        <translation>I²t dada a</translation>
+    </message>
+    <message>
+        <source>Prospective current of that I²t. If it is below the maximum Icc of the board, the I²t is not used. Empty: the I²t is taken as given at the maximum Icc</source>
+        <translation>Intensidad presunta de esa I²t. Si es menor que la Icc máxima del cuadro, la I²t no se usa. Vacío: la I²t se toma como dada a la Icc máxima</translation>
+    </message>
+    <message>
+        <source>Manufacturer</source>
+        <translation>Fabricante</translation>
+    </message>
+    <message>
+        <source>Part number</source>
+        <translation>Referencia</translation>
+    </message>
+    <message>
+        <source>Conduit</source>
+        <translation>Tubo</translation>
+    </message>
+    <message>
+        <source>Outer diameter of the conduit (ITC-BT-19, ITC-BT-21)</source>
+        <translation>Diámetro exterior del tubo (ITC-BT-19, ITC-BT-21)</translation>
+    </message>
+    <message>
+        <source>Residual current device</source>
+        <translation>Interruptor diferencial</translation>
+    </message>
+    <message>
+        <source>The residual current device of the board that protects the circuit, by its name. Empty with an RCBO: it protects the circuit by itself</source>
+        <translation>El interruptor diferencial del cuadro que protege el circuito, por su nombre. Vacío con un magnetotérmico diferencial: protege el circuito por sí mismo</translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation>mm</translation>
+    </message>
+    <message>
+        <source>Circuit of table 1 of ITC-BT-25: its breaker, smallest section and points are checked. Unknown: not a dwelling circuit</source>
+        <translation>Circuito de la tabla 1 de la ITC-BT-25: se comprueban su interruptor, su sección mínima y sus puntos. Desconocido: no es un circuito de vivienda</translation>
+    </message>
+    <message>
+        <source>Dwelling circuit</source>
+        <translation>Circuito de vivienda</translation>
+    </message>
+    <message>
+        <source>Points of light or sockets of the circuit</source>
+        <translation>Puntos de luz o tomas del circuito</translation>
+    </message>
+    <message>
+        <source>Points of use</source>
+        <translation>Puntos de utilización</translation>
+    </message>
+    <message>
+        <source>Empty: from the curve B, C or D of a UNE-EN 60898 or 61009 device. Given (A), with its source: industrial breakers (Im) and fuses</source>
+        <translation>Vacío: según la curva B, C o D de un aparato UNE-EN 60898 o 61009. Si lo indica (A), con su fuente: interruptores industriales (Im) y fusibles</translation>
+    </message>
+    <message>
+        <source>Instantaneous trip (A)</source>
+        <translation>Disparo instantáneo (A)</translation>
+    </message>
+    <message>
+        <source>I²t (A²s)</source>
+        <translation>I²t (A²s)</translation>
+    </message>
+    <message>
+        <source>Let-through energy of the manufacturer at the maximum Icc of the board, with its source (catalogue curve)</source>
+        <translation>Energía específica pasante del fabricante a la Icc máxima del cuadro, con su fuente (curva del catálogo)</translation>
+    </message>
+    <message>
+        <source>Empty: from the standard. Given (A), with its source: for a gG fuse under 16 A or any other device</source>
+        <translation>Vacío: según la norma. Si lo indica (A), con su fuente: para fusibles gG de menos de 16 A u otros dispositivos</translation>
+    </message>
+    <message>
+        <source>I2 (A)</source>
+        <translation>I2 (A)</translation>
+    </message>
+    <message>
+        <source>Protection and cable: %1</source>
+        <translation>Protección y cable: %1</translation>
+    </message>
+    <message>
+        <source>Sets the conventional tripping current I2 of the device</source>
+        <translation>Determina la corriente convencional de disparo I2 del dispositivo</translation>
+    </message>
+    <message>
+        <source>Standard</source>
+        <translation>Norma</translation>
+    </message>
+    <message>
+        <source>Voltage drop from the origin: %1 %</source>
+        <translation>Caída de tensión desde el origen: %1 %</translation>
+    </message>
+    <message>
+        <source>Admissible current</source>
+        <translation>Intensidad admisible</translation>
+    </message>
+    <message>
+        <source>Loaded conductors</source>
+        <translation>Conductores cargados</translation>
+    </message>
+    <message>
+        <source>2 or 3. Empty: 2 in single phase, 3 in three phase</source>
+        <translation>2 o 3. Vacío: 2 en monofásica, 3 en trifásica</translation>
+    </message>
+    <message>
+        <source>Ambient temperature</source>
+        <translation>Temperatura ambiente</translation>
+    </message>
+    <message>
+        <source>Of the air or the ground around the cable: the temperature factor is worked out from it</source>
+        <translation>Del aire o del terreno alrededor del cable: con ella se calcula el factor de temperatura</translation>
+    </message>
+    <message>
+        <source>Temperature factor</source>
+        <translation>Factor de temperatura</translation>
+    </message>
+    <message>
+        <source>Empty: computed from the ambient temperature. Given: it needs its reason</source>
+        <translation>Vacío: se calcula con la temperatura ambiente. Si lo indica, necesita su justificación</translation>
+    </message>
+    <message>
+        <source>Grouping factor</source>
+        <translation>Factor de agrupamiento</translation>
+    </message>
+    <message>
+        <source>Always needed, with its reason: 1 for a circuit on its own</source>
+        <translation>Siempre necesario, con su justificación: 1 para un circuito solo</translation>
+    </message>
+    <message>
+        <source>Other factor</source>
+        <translation>Otro factor</translation>
+    </message>
+    <message>
+        <source>Any other correction that applies, with its reason</source>
+        <translation>Cualquier otra corrección aplicable, con su justificación</translation>
+    </message>
+    <message>
+        <source>Use the suggested section</source>
+        <translation>Usar la sección propuesta</translation>
+    </message>
+    <message>
+        <source>justification: table, number of circuits...</source>
+        <translation>justificación: tabla, número de circuitos...</translation>
+    </message>
+    <message>
+        <source>IB ≤ IZ: %1</source>
+        <translation>IB ≤ IZ: %1</translation>
+    </message>
+    <message>
+        <source>Circuit</source>
+        <translation>Circuito</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>Board %1</source>
+        <translation>Cuadro %1</translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation>Cuadro</translation>
+    </message>
+    <message>
+        <source>System</source>
+        <translation>Sistema</translation>
+    </message>
+    <message>
+        <source>Voltage</source>
+        <translation>Tensión</translation>
+    </message>
+    <message>
+        <source>V</source>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>Phase to neutral in single phase, line to line in three phase</source>
+        <translation>Fase-neutro en monofásica, entre fases en trifásica</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Uso</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>Carga</translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation>Potencia</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <translation>W</translation>
+    </message>
+    <message>
+        <source>Power factor (cos φ)</source>
+        <translation>Factor de potencia (cos φ)</translation>
+    </message>
+    <message>
+        <source>Efficiency</source>
+        <translation>Rendimiento</translation>
+    </message>
+    <message>
+        <source>Motors and the like, from 0 to 1. Empty: the power is taken as absorbed</source>
+        <translation>Motores y similares, de 0 a 1. Vacío: la potencia se toma como absorbida</translation>
+    </message>
+    <message>
+        <source>Design current</source>
+        <translation>Intensidad de cálculo</translation>
+    </message>
+    <message>
+        <source>A</source>
+        <translation>A</translation>
+    </message>
+    <message>
+        <source>When known: used instead of the current worked out from the power</source>
+        <translation>Si se conoce, se usa en lugar de la calculada a partir de la potencia</translation>
+    </message>
+    <message>
+        <source>Protection</source>
+        <translation>Protección</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <source>Rated current</source>
+        <translation>Intensidad nominal</translation>
+    </message>
+    <message>
+        <source>e.g. C, gG</source>
+        <translation>p. ej. C, gG</translation>
+    </message>
+    <message>
+        <source>Curve</source>
+        <translation>Curva</translation>
+    </message>
+    <message>
+        <source>Breaking capacity</source>
+        <translation>Poder de corte</translation>
+    </message>
+    <message>
+        <source>kA</source>
+        <translation>kA</translation>
+    </message>
+    <message>
+        <source>Sensitivity</source>
+        <translation>Sensibilidad</translation>
+    </message>
+    <message>
+        <source>mA</source>
+        <translation>mA</translation>
+    </message>
+    <message>
+        <source>Poles</source>
+        <translation>Polos</translation>
+    </message>
+    <message>
+        <source>Conductor</source>
+        <translation>Conductor</translation>
+    </message>
+    <message>
+        <source>Material</source>
+        <translation>Material</translation>
+    </message>
+    <message>
+        <source>Insulation</source>
+        <translation>Aislamiento</translation>
+    </message>
+    <message>
+        <source>e.g. B1</source>
+        <translation>p. ej. B1</translation>
+    </message>
+    <message>
+        <source>Installation method</source>
+        <translation>Método de instalación</translation>
+    </message>
+    <message>
+        <source>Phase section</source>
+        <translation>Sección de fase</translation>
+    </message>
+    <message>
+        <source>mm²</source>
+        <translation>mm²</translation>
+    </message>
+    <message>
+        <source>Neutral section</source>
+        <translation>Sección del neutro</translation>
+    </message>
+    <message>
+        <source>Protective conductor section</source>
+        <translation>Sección del conductor de protección</translation>
+    </message>
+    <message>
+        <source>Length</source>
+        <translation>Longitud</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>Conductor temperature</source>
+        <translation>Temperatura del conductor</translation>
+    </message>
+    <message>
+        <source>°C</source>
+        <translation>°C</translation>
+    </message>
+    <message>
+        <source>Used with the material to work out the resistivity</source>
+        <translation>Se usa con el material para obtener la resistividad</translation>
+    </message>
+    <message>
+        <source>Conductivity</source>
+        <translation>Conductividad</translation>
+    </message>
+    <message>
+        <source>m/(Ω·mm²)</source>
+        <translation>m/(Ω·mm²)</translation>
+    </message>
+    <message>
+        <source>When given, used instead of the material and the temperature</source>
+        <translation>Si se indica, se usa en lugar del material y la temperatura</translation>
+    </message>
+    <message>
+        <source>Reactance</source>
+        <translation>Reactancia</translation>
+    </message>
+    <message>
+        <source>Ω/km</source>
+        <translation>Ω/km</translation>
+    </message>
+    <message>
+        <source>Empty: the reactance is neglected</source>
+        <translation>Vacío: se desprecia la reactancia</translation>
+    </message>
+    <message>
+        <source>Notes, assumptions, pending data</source>
+        <translation>Notas, hipótesis, datos pendientes</translation>
+    </message>
+    <message>
+        <source>Calculation</source>
+        <translation>Cálculo</translation>
+    </message>
+    <message>
+        <source>Leave a field empty when the value is not known: it is never filled in for you.</source>
+        <translation>Deje vacío un campo cuando no conozca el valor: el programa nunca lo rellena por usted.</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>desconocido</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Desconocido</translation>
+    </message>
+    <message>
+        <source>Correct the fields in red: they are not numbers.</source>
+        <translation>Corrija los campos en rojo: no son números.</translation>
+    </message>
+    <message>
+        <source>Design current: %1</source>
+        <translation>Intensidad de cálculo: %1</translation>
+    </message>
+    <message>
+        <source>%1 A</source>
+        <translation>%1 A</translation>
+    </message>
+    <message>
+        <source>not computable</source>
+        <translation>no calculable</translation>
+    </message>
+    <message>
+        <source>Voltage drop: %1 V (%2 %)</source>
+        <translation>Caída de tensión: %1 V (%2 %)</translation>
+    </message>
+    <message>
+        <source>Voltage drop: not computable</source>
+        <translation>Caída de tensión: no calculable</translation>
+    </message>
+    <message>
+        <source>Check: %1</source>
+        <translation>Comprobación: %1</translation>
+    </message>
+</context>
+<context>
+    <name>ElectricalCircuitsDock</name>
+    <message>
+        <source>Indirect contacts</source>
+        <translation>Contactos indirectos</translation>
+    </message>
+    <message>
+        <source>Indirect contacts: %1 passed, %2 not passed, %3 not performed.</source>
+        <translation>Contactos indirectos. Superadas: %1; no superadas: %2; no realizadas: %3.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n device(s) loaded from %1.</source>
+        <translation>
+            <numerusform>%n aparato cargado de %1.</numerusform>
+            <numerusform>%n aparatos cargados de %1.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Device catalogue</source>
+        <translation>Catálogo de aparatos</translation>
+    </message>
+    <message>
+        <source>Device catalogue...</source>
+        <translation>Catálogo de aparatos...</translation>
+    </message>
+    <message>
+        <source>Device catalogues (*.json)</source>
+        <translation>Catálogos de aparatos (*.json)</translation>
+    </message>
+    <message>
+        <source>The file of protective devices to choose from in the circuits and in the Electrical tab of the symbols</source>
+        <translation>El fichero de aparatos de protección para elegir en los circuitos y en la pestaña Eléctrico de los símbolos</translation>
+    </message>
+    <message>
+        <source>ITC-BT-25</source>
+        <translation>ITC-BT-25</translation>
+    </message>
+    <message>
+        <source>ITC-BT-25: %1 passed, %2 not passed, %3 not performed.</source>
+        <translation>ITC-BT-25. Superadas: %1; no superadas: %2; no realizadas: %3.</translation>
+    </message>
+    <message>
+        <source>Own transformer: limits of 4.5 % and 6.5 %</source>
+        <translation>Transformador propio: límites del 4,5 % y del 6,5 %</translation>
+    </message>
+    <message>
+        <source>Icc max (kA)</source>
+        <translation>Icc máx (kA)</translation>
+    </message>
+    <message>
+        <source>Icc min (kA)</source>
+        <translation>Icc mín (kA)</translation>
+    </message>
+    <message>
+        <source>Short circuit</source>
+        <translation>Cortocircuito</translation>
+    </message>
+    <message>
+        <source>Short circuit: %1 passed, %2 not passed, %3 not performed.</source>
+        <translation>Cortocircuito. Superadas: %1; no superadas: %2; no realizadas: %3.</translation>
+    </message>
+    <message>
+        <source>Supply not known: no short circuit</source>
+        <translation>Alimentación desconocida: sin cortocircuito</translation>
+    </message>
+    <message>
+        <source>A PDF with the folios and the calculation annex: characteristics of the boards, results and warnings, rules applied, with its title block</source>
+        <translation>Un PDF con los folios y el anexo de cálculo: características de los cuadros, resultados y advertencias, reglas aplicadas, con su cajetín</translation>
+    </message>
+    <message>
+        <source>Calculation report</source>
+        <translation>Informe de cálculo</translation>
+    </message>
+    <message>
+        <source>Calculation report (PDF)...</source>
+        <translation>Informe de cálculo (PDF)...</translation>
+    </message>
+    <message>
+        <source>Cannot write %1</source>
+        <translation>No se puede escribir %1</translation>
+    </message>
+    <message>
+        <source>Edit the data of the calculation report</source>
+        <translation>Editar los datos del informe de cálculo</translation>
+    </message>
+    <message>
+        <source>PDF (*.pdf)</source>
+        <translation>PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <source>Report written: %1</source>
+        <translation>Informe escrito: %1</translation>
+    </message>
+    <message>
+        <source>_calculations.pdf</source>
+        <translation>_calculos.pdf</translation>
+    </message>
+    <message>
+        <source>calculations.pdf</source>
+        <translation>calculos.pdf</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n circuit(s). ΔU from the origin: %1 passed, %2 not passed, %3 not performed.</source>
+        <translation>
+            <numerusform>%n circuito. ΔU desde el origen. Superadas: %1; no superadas: %2; no realizadas: %3.</numerusform>
+            <numerusform>%n circuitos. ΔU desde el origen. Superadas: %1; no superadas: %2; no realizadas: %3.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Edit board %1</source>
+        <translation>Editar cuadro %1</translation>
+    </message>
+    <message>
+        <source>Fed by %1</source>
+        <translation>Alimentado desde %1</translation>
+    </message>
+    <message>
+        <source>Fed by no circuit: origin of the interior installation</source>
+        <translation>Sin alimentación desde otro circuito: origen de la instalación interior</translation>
+    </message>
+    <message>
+        <source>Protection ↔ cable</source>
+        <translation>Protección ↔ cable</translation>
+    </message>
+    <message>
+        <source>Protection ↔ cable: %1 passed, %2 not passed, %3 not performed.</source>
+        <translation>Protección ↔ cable. Superadas: %1; no superadas: %2; no realizadas: %3.</translation>
+    </message>
+    <message>
+        <source>ΔU total (%)</source>
+        <translation>ΔU total (%)</translation>
+    </message>
+    <message>
+        <source>Ampacity tables...</source>
+        <translation>Tablas de intensidades...</translation>
+    </message>
+    <message>
+        <source>Choose the file of ampacity tables (UNE-HD 60364-5-52 or a cable catalogue) the admissible currents are read in. The program ships none.</source>
+        <translation>Elija el fichero de tablas de intensidades admisibles (UNE-HD 60364-5-52 o catálogo de cables) del que se leen las intensidades. El programa no incluye ninguna.</translation>
+    </message>
+    <message>
+        <source>Iz (A)</source>
+        <translation>Iz (A)</translation>
+    </message>
+    <message>
+        <source>Ib ≤ Iz</source>
+        <translation>Ib ≤ Iz</translation>
+    </message>
+    <message>
+        <source>IB ≤ IZ: %1 passed, %2 not passed, %3 not performed.</source>
+        <translation>IB ≤ IZ. Superadas: %1; no superadas: %2; no realizadas: %3.</translation>
+    </message>
+    <message>
+        <source>No ampacity table loaded.</source>
+        <translation>No hay tablas de intensidades cargadas.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n ampacity table(s) loaded from %1.</source>
+        <translation>
+            <numerusform>%n tabla de intensidades cargada de %1.</numerusform>
+            <numerusform>%n tablas de intensidades cargadas de %1.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Left out:</source>
+        <translation>Descartado:</translation>
+    </message>
+    <message>
+        <source>Ampacity tables</source>
+        <translation>Tablas de intensidades</translation>
+    </message>
+    <message>
+        <source>Ampacity tables (*.json)</source>
+        <translation>Tablas de intensidades (*.json)</translation>
+    </message>
+    <message>
+        <source>Electrical circuits</source>
+        <translation>Circuitos eléctricos</translation>
+    </message>
+    <message>
+        <source>Show or hide the boards and circuits, with their low voltage calculations</source>
+        <translation>Muestra u oculta los cuadros y circuitos con sus cálculos de baja tensión</translation>
+    </message>
+    <message>
+        <source>Add board</source>
+        <translation>Añadir cuadro</translation>
+    </message>
+    <message>
+        <source>Add circuit</source>
+        <translation>Añadir circuito</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editar</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>Selected symbol as origin</source>
+        <translation>Símbolo seleccionado como origen</translation>
+    </message>
+    <message>
+        <source>Selected symbol as destination</source>
+        <translation>Símbolo seleccionado como destino</translation>
+    </message>
+    <message>
+        <source>Selected symbol as protection</source>
+        <translation>Símbolo seleccionado como protección</translation>
+    </message>
+    <message>
+        <source>Selected conductors as the circuit&apos;s wires</source>
+        <translation>Conductores seleccionados como conductores del circuito</translation>
+    </message>
+    <message>
+        <source>Selected symbol as the board</source>
+        <translation>Símbolo seleccionado como el cuadro</translation>
+    </message>
+    <message>
+        <source>Linked to the drawing.</source>
+        <translation>Vinculado al esquema.</translation>
+    </message>
+    <message>
+        <source>Link to drawing</source>
+        <translation>Vincular al esquema</translation>
+    </message>
+    <message>
+        <source>Link the symbols or conductors selected in the folio to the board or circuit of the current row</source>
+        <translation>Vincula los símbolos o conductores seleccionados en el folio al cuadro o circuito de la fila actual</translation>
+    </message>
+    <message>
+        <source>Show in drawing</source>
+        <translation>Mostrar en el esquema</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item(s) selected in the folio shown.</source>
+        <translation>
+            <numerusform>%n elemento seleccionado en el folio mostrado.</numerusform>
+            <numerusform>%n elementos seleccionados en el folio mostrado.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Nothing it points at is on the folio shown.</source>
+        <translation>Nada de lo que tiene vinculado está en el folio mostrado.</translation>
+    </message>
+    <message>
+        <source>Board / circuit</source>
+        <translation>Cuadro / circuito</translation>
+    </message>
+    <message>
+        <source>System</source>
+        <translation>Sistema</translation>
+    </message>
+    <message>
+        <source>U (V)</source>
+        <translation>U (V)</translation>
+    </message>
+    <message>
+        <source>P (W)</source>
+        <translation>P (W)</translation>
+    </message>
+    <message>
+        <source>L (m)</source>
+        <translation>L (m)</translation>
+    </message>
+    <message>
+        <source>S (mm²)</source>
+        <translation>S (mm²)</translation>
+    </message>
+    <message>
+        <source>Protection</source>
+        <translation>Protección</translation>
+    </message>
+    <message>
+        <source>Ib (A)</source>
+        <translation>Ib (A)</translation>
+    </message>
+    <message>
+        <source>ΔU (%)</source>
+        <translation>ΔU (%)</translation>
+    </message>
+    <message>
+        <source>ΔU check</source>
+        <translation>Comprobación ΔU</translation>
+    </message>
+    <message>
+        <source>(unnamed circuit)</source>
+        <translation>(circuito sin nombre)</translation>
+    </message>
+    <message>
+        <source>No project open.</source>
+        <translation>No hay ningún proyecto abierto.</translation>
+    </message>
+    <message>
+        <source>The electrical data of this project were written by a newer version. They are kept as they are and cannot be edited here.</source>
+        <translation>Los datos eléctricos de este proyecto se guardaron con una versión más reciente. Se conservan tal cual y no se pueden editar aquí.</translation>
+    </message>
+    <message>
+        <source>(unnamed board)</source>
+        <translation>(cuadro sin nombre)</translation>
+    </message>
+    <message>
+        <source>Not linked to a symbol of the drawing</source>
+        <translation>No vinculado a ningún símbolo del esquema</translation>
+    </message>
+    <message>
+        <source>(no board)</source>
+        <translation>(sin cuadro)</translation>
+    </message>
+    <message>
+        <source>No circuit yet. Add a board, then its circuits.</source>
+        <translation>Todavía no hay circuitos. Añada un cuadro y después sus circuitos.</translation>
+    </message>
+    <message>
+        <source>1~</source>
+        <translation>1~</translation>
+    </message>
+    <message>
+        <source>3~</source>
+        <translation>3~</translation>
+    </message>
+    <message>
+        <source>%1 A</source>
+        <translation>%1 A</translation>
+    </message>
+    <message>
+        <source>Add board %1</source>
+        <translation>Añadir cuadro %1</translation>
+    </message>
+    <message>
+        <source>Add circuit %1</source>
+        <translation>Añadir circuito %1</translation>
+    </message>
+    <message>
+        <source>Edit circuit %1</source>
+        <translation>Editar circuito %1</translation>
+    </message>
+    <message>
+        <source>Rename board %1</source>
+        <translation>Renombrar cuadro %1</translation>
+    </message>
+    <message>
+        <source>Remove board %1</source>
+        <translation>Eliminar cuadro %1</translation>
+    </message>
+    <message>
+        <source>Remove circuit %1</source>
+        <translation>Eliminar circuito %1</translation>
+    </message>
+    <message>
+        <source>No folio is shown.</source>
+        <translation>No se muestra ningún folio.</translation>
+    </message>
+    <message>
+        <source>Choose a board in the list first.</source>
+        <translation>Elija antes un cuadro en la lista.</translation>
+    </message>
+    <message>
+        <source>Select exactly one symbol in the folio.</source>
+        <translation>Seleccione exactamente un símbolo en el folio.</translation>
+    </message>
+    <message>
+        <source>Link board %1 to its symbol</source>
+        <translation>Vincular el cuadro %1 a su símbolo</translation>
+    </message>
+    <message>
+        <source>Nothing changed.</source>
+        <translation>No ha cambiado nada.</translation>
+    </message>
+    <message>
+        <source>Choose a circuit in the list first.</source>
+        <translation>Elija antes un circuito en la lista.</translation>
+    </message>
+    <message>
+        <source>Select one or more conductors in the folio.</source>
+        <translation>Seleccione uno o varios conductores en el folio.</translation>
+    </message>
+    <message>
+        <source>Link circuit %1 to the drawing</source>
+        <translation>Vincular el circuito %1 al esquema</translation>
+    </message>
+    <message>
+        <source>Remove board</source>
+        <translation>Eliminar cuadro</translation>
+    </message>
+    <message numerus="yes">
+        <source>Remove the board and its %n circuit(s)?</source>
+        <translation>
+            <numerusform>¿Eliminar el cuadro y su circuito?</numerusform>
+            <numerusform>¿Eliminar el cuadro y sus %n circuitos?</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>ElectricalTexts</name>
+    <message>
+        <source>2 Zs × Ia = %1 V; 2 Zs × Ia ≤ U: %2</source>
+        <translation>2 Zs × Ia = %1 V; 2 Zs × Ia ≤ U: %2</translation>
+    </message>
+    <message>
+        <source>First fault, RA × Id ≤ U: %1</source>
+        <translation>Primer defecto, RA × Id ≤ U: %1</translation>
+    </message>
+    <message>
+        <source>First fault: RA × Id = %1 V</source>
+        <translation>Primer defecto: RA × Id = %1 V</translation>
+    </message>
+    <message>
+        <source>IT</source>
+        <translation>IT</translation>
+    </message>
+    <message>
+        <source>IT: Zs of the lines from the board where IT is given, feeders included, no source</source>
+        <translation>IT: Zs de las líneas desde el cuadro donde se indica IT, derivaciones incluidas, sin fuente</translation>
+    </message>
+    <message>
+        <source>Ia clears in under 0.1 s: within every time of the tables of ITC-BT-24</source>
+        <translation>Ia despeja en menos de 0,1 s: dentro de todos los tiempos de las tablas de la ITC-BT-24</translation>
+    </message>
+    <message>
+        <source>Id as given: %1</source>
+        <translation>Id indicada: %1</translation>
+    </message>
+    <message>
+        <source>Largest Zs: U / 2 Ia = %1 Ω</source>
+        <translation>Zs máxima: U / 2 Ia = %1 Ω</translation>
+    </message>
+    <message>
+        <source>Largest Zs: U0 / Ia = %1 Ω</source>
+        <translation>Zs máxima: U0 / Ia = %1 Ω</translation>
+    </message>
+    <message>
+        <source>Limit of the loop: %1 V</source>
+        <translation>Límite del bucle: %1 V</translation>
+    </message>
+    <message>
+        <source>Residual current device in TN-C: not allowed (ITC-BT-24 4.1.1)</source>
+        <translation>Diferencial en TN-C: no se admite (ITC-BT-24 4.1.1)</translation>
+    </message>
+    <message>
+        <source>Supply not known: Zs = R / 0.8 from the CGP (Guía-BT Anexo 3)</source>
+        <translation>Alimentación desconocida: Zs = R / 0,8 desde la CGP (Guía-BT Anexo 3)</translation>
+    </message>
+    <message>
+        <source>TN-C</source>
+        <translation>TN-C</translation>
+    </message>
+    <message>
+        <source>TN-S or TN-C-S</source>
+        <translation>TN-S o TN-C-S</translation>
+    </message>
+    <message>
+        <source>Zs = %1 Ω</source>
+        <translation>Zs = %1 Ω</translation>
+    </message>
+    <message>
+        <source>Zs × Ia = %1 V; Zs × Ia ≤ U0: %2</source>
+        <translation>Zs × Ia = %1 V; Zs × Ia ≤ U0: %2</translation>
+    </message>
+    <message>
+        <source>first fault current Id</source>
+        <translation>corriente de primer defecto Id</translation>
+    </message>
+    <message>
+        <source>protective conductor section</source>
+        <translation>sección del conductor de protección</translation>
+    </message>
+    <message>
+        <source>whether the masses are interconnected or earthed apart</source>
+        <translation>si las masas están interconectadas o puestas a tierra por separado</translation>
+    </message>
+    <message>
+        <source>whether the neutral is distributed</source>
+        <translation>si el neutro está distribuido</translation>
+    </message>
+    <message>
+        <source>%1 over 50 V, the value of normal conditions</source>
+        <translation>%1 por encima de 50 V, el valor de las condiciones normales</translation>
+    </message>
+    <message>
+        <source>Ia = IΔn = %1 mA</source>
+        <translation>Ia = IΔn = %1 mA</translation>
+    </message>
+    <message>
+        <source>Ia = IΔn of %1 = %2 mA</source>
+        <translation>Ia = IΔn de %1 = %2 mA</translation>
+    </message>
+    <message>
+        <source>Ia = instantaneous trip = %1 A</source>
+        <translation>Ia = disparo instantáneo = %1 A</translation>
+    </message>
+    <message>
+        <source>Ia: IΔn of the residual current device (ITC-BT-24 4.1.2)</source>
+        <translation>Ia: IΔn del diferencial (ITC-BT-24 4.1.2)</translation>
+    </message>
+    <message>
+        <source>IΔn of the residual current device</source>
+        <translation>IΔn del diferencial</translation>
+    </message>
+    <message>
+        <source>Largest RA: U / Ia = %1 Ω</source>
+        <translation>RA máxima: U / Ia = %1 Ω</translation>
+    </message>
+    <message>
+        <source>RA as given: %1</source>
+        <translation>RA indicada: %1</translation>
+    </message>
+    <message>
+        <source>RA as given: earth electrode plus protective conductors, not worked out</source>
+        <translation>RA indicada: toma de tierra más conductores de protección, no calculada</translation>
+    </message>
+    <message>
+        <source>RA × Ia = %1 V; RA × Ia ≤ U: %2</source>
+        <translation>RA × Ia = %1 V; RA × Ia ≤ U: %2</translation>
+    </message>
+    <message>
+        <source>TT</source>
+        <translation>TT</translation>
+    </message>
+    <message>
+        <source>U = %1 V</source>
+        <translation>U = %1 V</translation>
+    </message>
+    <message>
+        <source>U = %1 V (%2)</source>
+        <translation>U = %1 V (%2)</translation>
+    </message>
+    <message>
+        <source>U = 50 V, normal conditions (ITC-BT-24 4.1)</source>
+        <translation>U = 50 V, condiciones normales (ITC-BT-24 4.1)</translation>
+    </message>
+    <message>
+        <source>earth resistance RA</source>
+        <translation>resistencia de tierra RA</translation>
+    </message>
+    <message>
+        <source>earthing system of the installation</source>
+        <translation>esquema de conexión a tierra de la instalación</translation>
+    </message>
+    <message>
+        <source>limit voltage U</source>
+        <translation>tensión límite U</translation>
+    </message>
+    <message>
+        <source>operating current Ia of the device</source>
+        <translation>corriente de funcionamiento Ia del dispositivo</translation>
+    </message>
+    <message>
+        <source>residual current device of the circuit</source>
+        <translation>diferencial del circuito</translation>
+    </message>
+    <message>
+        <source>I²t given at a current below the maximum Icc: it is not valid at that fault, %1 needed at the maximum Icc</source>
+        <translation>I²t dada a una intensidad inferior a la Icc máxima: no vale para ese defecto, falta %1 a la Icc máxima</translation>
+    </message>
+    <message>
+        <source>prospective current of the I²t</source>
+        <translation>intensidad presunta de la I²t</translation>
+    </message>
+    <message>
+        <source>%1 %2/%3</source>
+        <translation>%1 %2/%3</translation>
+    </message>
+    <message>
+        <source>%1 of the room %2</source>
+        <translation>%1 de la estancia %2</translation>
+    </message>
+    <message>
+        <source>Access</source>
+        <translation>Acceso</translation>
+    </message>
+    <message>
+        <source>Bathroom</source>
+        <translation>Baño</translation>
+    </message>
+    <message>
+        <source>Bedroom</source>
+        <translation>Dormitorio</translation>
+    </message>
+    <message>
+        <source>C10 dryer socket</source>
+        <translation>base C10 secadora</translation>
+    </message>
+    <message>
+        <source>C13 charging socket</source>
+        <translation>toma C13 de recarga</translation>
+    </message>
+    <message>
+        <source>C2 sockets</source>
+        <translation>bases C2</translation>
+    </message>
+    <message>
+        <source>C3 25 A socket</source>
+        <translation>base C3 de 25 A</translation>
+    </message>
+    <message>
+        <source>C4 sockets</source>
+        <translation>bases C4</translation>
+    </message>
+    <message>
+        <source>C5 sockets</source>
+        <translation>bases C5</translation>
+    </message>
+    <message>
+        <source>Compensated with the DI, whose drop is not known: not performed</source>
+        <translation>Compensada con la DI, cuya caída no se conoce: no realizada</translation>
+    </message>
+    <message>
+        <source>Compensated with the DI: %1 % + DI %2 % = %3 %</source>
+        <translation>Compensada con la DI: %1 % + DI %2 % = %3 %</translation>
+    </message>
+    <message>
+        <source>Corridor or landing</source>
+        <translation>Pasillo o distribuidor</translation>
+    </message>
+    <message>
+        <source>Garage or other</source>
+        <translation>Garaje u otras</translation>
+    </message>
+    <message>
+        <source>Hall</source>
+        <translation>Vestíbulo</translation>
+    </message>
+    <message>
+        <source>Kitchen</source>
+        <translation>Cocina</translation>
+    </message>
+    <message>
+        <source>Living room</source>
+        <translation>Salón</translation>
+    </message>
+    <message>
+        <source>Points of use of the rooms: %1</source>
+        <translation>Puntos de utilización de las estancias: %1</translation>
+    </message>
+    <message>
+        <source>Room %1: %2 (%3)</source>
+        <translation>Estancia %1: %2 (%3)</translation>
+    </message>
+    <message>
+        <source>Rounded up: the text does not say how</source>
+        <translation>Redondeado al entero superior: el texto no dice cómo</translation>
+    </message>
+    <message>
+        <source>Terrace or dressing room</source>
+        <translation>Terraza o vestidor</translation>
+    </message>
+    <message>
+        <source>Voltage drop compensated with the DI (ITC-BT-19 2.2.2)</source>
+        <translation>Caída de tensión compensada con la DI (ITC-BT-19 2.2.2)</translation>
+    </message>
+    <message>
+        <source>accesses</source>
+        <translation>accesos</translation>
+    </message>
+    <message>
+        <source>air conditioning outlets</source>
+        <translation>tomas de aire acondicionado</translation>
+    </message>
+    <message>
+        <source>area</source>
+        <translation>superficie</translation>
+    </message>
+    <message>
+        <source>bell push</source>
+        <translation>pulsador de timbre</translation>
+    </message>
+    <message>
+        <source>heating outlets</source>
+        <translation>tomas de calefacción</translation>
+    </message>
+    <message>
+        <source>light points</source>
+        <translation>puntos de luz</translation>
+    </message>
+    <message>
+        <source>switches</source>
+        <translation>interruptores</translation>
+    </message>
+    <message>
+        <source>the rooms of the dwelling</source>
+        <translation>las estancias de la vivienda</translation>
+    </message>
+    <message>
+        <source>type</source>
+        <translation>tipo</translation>
+    </message>
+    <message>
+        <source>whether an independent dryer is planned</source>
+        <translation>si está prevista una secadora independiente</translation>
+    </message>
+    <message>
+        <source>%1: not passed</source>
+        <translation>%1: no superada</translation>
+    </message>
+    <message>
+        <source>%1: not performed</source>
+        <translation>%1: no realizada</translation>
+    </message>
+    <message>
+        <source>%1: passed</source>
+        <translation>%1: superada</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation>Básica</translation>
+    </message>
+    <message>
+        <source>C1 to C5: %1</source>
+        <translation>C1 a C5: %1</translation>
+    </message>
+    <message>
+        <source>C13 on a device of its own: %1</source>
+        <translation>C13 con diferencial exclusivo: %1</translation>
+    </message>
+    <message>
+        <source>Circuits for what is planned: %1</source>
+        <translation>Circuitos de lo previsto: %1</translation>
+    </message>
+    <message>
+        <source>Conduit ≥ %1 mm: %2</source>
+        <translation>Tubo ≥ %1 mm: %2</translation>
+    </message>
+    <message>
+        <source>Dwelling</source>
+        <translation>Vivienda</translation>
+    </message>
+    <message>
+        <source>EV charging in a single family dwelling</source>
+        <translation>recarga del vehículo eléctrico en vivienda unifamiliar</translation>
+    </message>
+    <message>
+        <source>Elevated</source>
+        <translation>Elevada</translation>
+    </message>
+    <message>
+        <source>Every circuit at 30 mA at most: %1</source>
+        <translation>Todos los circuitos a 30 mA como máximo: %1</translation>
+    </message>
+    <message>
+        <source>General switch ≥ %1 A: %2</source>
+        <translation>Interruptor general ≥ %1 A: %2</translation>
+    </message>
+    <message>
+        <source>Grade of electrification: basic</source>
+        <translation>Grado de electrificación: básico</translation>
+    </message>
+    <message>
+        <source>Grade of electrification: elevated (%1)</source>
+        <translation>Grado de electrificación: elevado (%1)</translation>
+    </message>
+    <message>
+        <source>Grade of electrification: not known</source>
+        <translation>Grado de electrificación: sin determinar</translation>
+    </message>
+    <message>
+        <source>IZ of the DI ≥ IGA: %1</source>
+        <translation>IZ de la DI ≥ IGA: %1</translation>
+    </message>
+    <message>
+        <source>Missing circuits: %1</source>
+        <translation>Faltan los circuitos: %1</translation>
+    </message>
+    <message>
+        <source>Missing: sensitivity of %1</source>
+        <translation>Falta: sensibilidad de %1</translation>
+    </message>
+    <message>
+        <source>Rated current of the devices ≥ IGA: %1</source>
+        <translation>Intensidad asignada de los diferenciales ≥ IGA: %1</translation>
+    </message>
+    <message>
+        <source>Residual current devices ≥ %1 (one per five circuits): %2</source>
+        <translation>Interruptores diferenciales ≥ %1 (uno por cada cinco circuitos): %2</translation>
+    </message>
+    <message>
+        <source>admissible current of the DI</source>
+        <translation>intensidad admisible de la DI</translation>
+    </message>
+    <message>
+        <source>air conditioning planned</source>
+        <translation>aire acondicionado previsto</translation>
+    </message>
+    <message>
+        <source>automation planned</source>
+        <translation>automatización prevista</translation>
+    </message>
+    <message>
+        <source>circuits beyond the basic ones</source>
+        <translation>circuitos además de los básicos</translation>
+    </message>
+    <message>
+        <source>electric heating planned</source>
+        <translation>calefacción eléctrica prevista</translation>
+    </message>
+    <message>
+        <source>outer diameter of the conduit</source>
+        <translation>diámetro exterior del tubo</translation>
+    </message>
+    <message>
+        <source>rated current of the general switch (IGA)</source>
+        <translation>intensidad asignada del interruptor general (IGA)</translation>
+    </message>
+    <message>
+        <source>residual current device %1</source>
+        <translation>interruptor diferencial %1</translation>
+    </message>
+    <message>
+        <source>the residual current device of some dwelling circuits</source>
+        <translation>el interruptor diferencial de algunos circuitos de la vivienda</translation>
+    </message>
+    <message>
+        <source>useful area of the dwelling</source>
+        <translation>superficie útil de la vivienda</translation>
+    </message>
+    <message>
+        <source>useful area over 160 m²</source>
+        <translation>superficie útil mayor de 160 m²</translation>
+    </message>
+    <message>
+        <source>whether EV charging is planned</source>
+        <translation>si está prevista la recarga del vehículo eléctrico</translation>
+    </message>
+    <message>
+        <source>whether air conditioning is planned</source>
+        <translation>si está previsto el aire acondicionado</translation>
+    </message>
+    <message>
+        <source>whether automation is planned</source>
+        <translation>si está prevista la automatización</translation>
+    </message>
+    <message>
+        <source>whether electric heating is planned</source>
+        <translation>si está prevista la calefacción eléctrica</translation>
+    </message>
+    <message>
+        <source>whether it is a single family dwelling</source>
+        <translation>si es una vivienda unifamiliar</translation>
+    </message>
+    <message>
+        <source>Additional circuit</source>
+        <translation>Circuito adicional</translation>
+    </message>
+    <message>
+        <source>Additional general use sockets</source>
+        <translation>Tomas de uso general adicionales</translation>
+    </message>
+    <message>
+        <source>Additional lighting, per 30 points</source>
+        <translation>Iluminación adicional, cada 30 puntos</translation>
+    </message>
+    <message>
+        <source>Air conditioning</source>
+        <translation>Aire acondicionado</translation>
+    </message>
+    <message>
+        <source>Basic electrification: C1 to C5 present (%1)</source>
+        <translation>Electrificación básica: C1 a C5 presentes (%1)</translation>
+    </message>
+    <message>
+        <source>Basic electrification: missing %1 (%2)</source>
+        <translation>Electrificación básica: faltan %1 (%2)</translation>
+    </message>
+    <message>
+        <source>Bathroom and kitchen worktop</source>
+        <translation>Baño y cuarto de cocina</translation>
+    </message>
+    <message>
+        <source>Breaker ≤ %1 A: %2</source>
+        <translation>Interruptor ≤ %1 A: %2</translation>
+    </message>
+    <message>
+        <source>Cooker and oven</source>
+        <translation>Cocina y horno</translation>
+    </message>
+    <message>
+        <source>Copper conductors: %1</source>
+        <translation>Conductores de cobre: %1</translation>
+    </message>
+    <message>
+        <source>Dryer</source>
+        <translation>Secadora</translation>
+    </message>
+    <message>
+        <source>Electric heating</source>
+        <translation>Calefacción eléctrica</translation>
+    </message>
+    <message>
+        <source>Electric vehicle charging</source>
+        <translation>Recarga del vehículo eléctrico</translation>
+    </message>
+    <message>
+        <source>General use sockets and fridge</source>
+        <translation>Tomas de uso general y frigorífico</translation>
+    </message>
+    <message>
+        <source>Home automation</source>
+        <translation>Automatización</translation>
+    </message>
+    <message>
+        <source>No power factor given: cos φ = 1, as table B of Guía-BT-25</source>
+        <translation>Sin factor de potencia indicado: cos φ = 1, como la tabla B de la Guía-BT-25</translation>
+    </message>
+    <message>
+        <source>One appliance of C4, its own 16 A circuit (note 8)</source>
+        <translation>Un aparato del C4, circuito propio de 16 A (nota 8)</translation>
+    </message>
+    <message>
+        <source>Origin at the output of the own transformer (ITC-BT-19 2.2.2)</source>
+        <translation>Origen a la salida del transformador propio (ITC-BT-19 2.2.2)</translation>
+    </message>
+    <message>
+        <source>Points ≤ %1: %2</source>
+        <translation>Puntos ≤ %1: %2</translation>
+    </message>
+    <message>
+        <source>Power ≤ %1 W: %2</source>
+        <translation>Potencia ≤ %1 W: %2</translation>
+    </message>
+    <message>
+        <source>Section ≥ %1 mm²: %2</source>
+        <translation>Sección ≥ %1 mm²: %2</translation>
+    </message>
+    <message>
+        <source>Voltage drop with the rated current of the breaker, as ITC-BT-25 3 asks</source>
+        <translation>Caída de tensión con la intensidad nominal del interruptor, como pide la ITC-BT-25 3</translation>
+    </message>
+    <message>
+        <source>Washing machine, dishwasher and water heater</source>
+        <translation>Lavadora, lavavajillas y termo eléctrico</translation>
+    </message>
+    <message>
+        <source>points of use</source>
+        <translation>puntos de utilización</translation>
+    </message>
+    <message>
+        <source>voltage drop with IN</source>
+        <translation>caída de tensión con IN</translation>
+    </message>
+    <message>
+        <source>ΔU with IN from the origin ≤ 3 %: %1</source>
+        <translation>ΔU con IN desde el origen ≤ 3 %: %1</translation>
+    </message>
+    <message>
+        <source>ΔU with IN from the origin ≤ 3 %: %1 % (%2)</source>
+        <translation>ΔU con IN desde el origen ≤ 3 %: %1 % (%2)</translation>
+    </message>
+    <message>
+        <source>Icc at the origin, maximum / minimum: %1</source>
+        <translation>Icc en el origen, máxima / mínima: %1</translation>
+    </message>
+    <message>
+        <source>Instantaneous trip as given: %1</source>
+        <translation>Disparo instantáneo según el dato indicado: %1</translation>
+    </message>
+    <message>
+        <source>I²t of the manufacturer: %1 A²s (%2)</source>
+        <translation>I²t del fabricante: %1 A²s (%2)</translation>
+    </message>
+    <message>
+        <source>%1 of the feeder %2</source>
+        <translation>%1 de la línea de alimentación %2</translation>
+    </message>
+    <message>
+        <source>(k S / Icc max)² = %1 s</source>
+        <translation>(k S / Icc máx)² = %1 s</translation>
+    </message>
+    <message>
+        <source>0.8 U / R needs the lines from the CGP: this circuit leaves from the origin board itself</source>
+        <translation>0,8 U / R necesita las líneas desde la CGP: este circuito sale del propio cuadro de origen</translation>
+    </message>
+    <message>
+        <source>Breaking capacity ≥ Icc max: %1</source>
+        <translation>Poder de corte ≥ Icc máx: %1</translation>
+    </message>
+    <message>
+        <source>Icc at the origin as given, with its source</source>
+        <translation>Icc en el origen según el dato indicado, con su fuente</translation>
+    </message>
+    <message>
+        <source>Icc at this board known</source>
+        <translation>Icc conocida en este cuadro</translation>
+    </message>
+    <message>
+        <source>Icc max at the board: %1 kA</source>
+        <translation>Icc máx en el cuadro: %1 kA</translation>
+    </message>
+    <message>
+        <source>Icc min at the far end: %1 kA</source>
+        <translation>Icc mín al final de la línea: %1 kA</translation>
+    </message>
+    <message>
+        <source>Icc min ≥ instantaneous trip %1 A: %2</source>
+        <translation>Icc mín ≥ disparo instantáneo %1 A: %2</translation>
+    </message>
+    <message>
+        <source>Icc min ≥ instantaneous trip: %1</source>
+        <translation>Icc mín ≥ disparo instantáneo: %1</translation>
+    </message>
+    <message>
+        <source>Instantaneous trip at the upper limit of the curve (B 5, C 10, D 20 IN)</source>
+        <translation>Disparo instantáneo en el límite superior de la curva (B 5, C 10, D 20 IN)</translation>
+    </message>
+    <message>
+        <source>I²t ≤ k²S²: %1</source>
+        <translation>I²t ≤ k²S²: %1</translation>
+    </message>
+    <message>
+        <source>Maximum Icc with the conductors at 20 °C</source>
+        <translation>Icc máxima con los conductores a 20 °C</translation>
+    </message>
+    <message>
+        <source>Minimum Icc with the conductors at their temperature at the end of the fault (160 °C PVC, 250 °C XLPE/EPR)</source>
+        <translation>Icc mínima con los conductores a su temperatura al final del cortocircuito (160 °C PVC, 250 °C XLPE/EPR)</translation>
+    </message>
+    <message>
+        <source>Missing: %1 (the fault is cleared in under 0.1 s or the device has no standard trip time)</source>
+        <translation>Falta: %1 (el defecto se despeja en menos de 0,1 s o el aparato no tiene tiempo de disparo normalizado)</translation>
+    </message>
+    <message>
+        <source>Network not known, this board is the CGP (0.8 U / R)</source>
+        <translation>Red desconocida, este cuadro es la CGP (0,8 U / R)</translation>
+    </message>
+    <message>
+        <source>Network not known: 0.8 U at the CGP (Guía-BT Anexo 3)</source>
+        <translation>Red desconocida: 0,8 U en la CGP (Guía-BT Anexo 3)</translation>
+    </message>
+    <message>
+        <source>Neutral section taken equal to the phase</source>
+        <translation>Sección del neutro igual a la de fase</translation>
+    </message>
+    <message>
+        <source>No I²t given: the device clears in under 0.1 s and (k S / Icc max)² is at least 0.1 s</source>
+        <translation>Sin I²t indicada: el aparato despeja en menos de 0,1 s y (k S / Icc máx)² es de al menos 0,1 s</translation>
+    </message>
+    <message>
+        <source>No k factor for this conductor and insulation</source>
+        <translation>No hay factor k para este conductor y aislamiento</translation>
+    </message>
+    <message>
+        <source>The device does not break short circuits (residual current device alone, switch)</source>
+        <translation>El aparato no corta cortocircuitos (diferencial solo, interruptor)</translation>
+    </message>
+    <message>
+        <source>The minimum Icc at the origin is greater than the maximum</source>
+        <translation>La Icc mínima en el origen es mayor que la máxima</translation>
+    </message>
+    <message>
+        <source>board of the circuit</source>
+        <translation>cuadro del circuito</translation>
+    </message>
+    <message>
+        <source>breaking capacity of the protection</source>
+        <translation>poder de corte de la protección</translation>
+    </message>
+    <message>
+        <source>curve of the protection (B, C, D)</source>
+        <translation>curva de la protección (B, C, D)</translation>
+    </message>
+    <message>
+        <source>instantaneous trip current of the protection</source>
+        <translation>intensidad de disparo instantáneo de la protección</translation>
+    </message>
+    <message>
+        <source>k = %1, k²S² = %2 A²s</source>
+        <translation>k = %1, k²S² = %2 A²s</translation>
+    </message>
+    <message>
+        <source>let-through energy I²t of the manufacturer</source>
+        <translation>energía específica pasante I²t del fabricante</translation>
+    </message>
+    <message>
+        <source>lines from the CGP</source>
+        <translation>líneas desde la CGP</translation>
+    </message>
+    <message>
+        <source>maximum Icc at the origin</source>
+        <translation>Icc máxima en el origen</translation>
+    </message>
+    <message>
+        <source>minimum Icc at the origin</source>
+        <translation>Icc mínima en el origen</translation>
+    </message>
+    <message>
+        <source>neutral section</source>
+        <translation>sección del neutro</translation>
+    </message>
+    <message>
+        <source>supply data of the origin board</source>
+        <translation>datos de alimentación del cuadro de origen</translation>
+    </message>
+    <message>
+        <source>DI of a single user, no LGA</source>
+        <translation>DI de un único usuario, sin LGA</translation>
+    </message>
+    <message>
+        <source>DI, meters grouped in more than one place</source>
+        <translation>DI, contadores concentrados en más de un lugar</translation>
+    </message>
+    <message>
+        <source>DI, meters totally grouped</source>
+        <translation>DI, contadores totalmente concentrados</translation>
+    </message>
+    <message numerus="yes">
+        <source>From the origin: %1 % (this circuit %2 % + %n feeder(s))</source>
+        <translation>
+            <numerusform>Desde el origen: %1 % (este circuito %2 % + %n alimentación)</numerusform>
+            <numerusform>Desde el origen: %1 % (este circuito %2 % + %n alimentaciones)</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>I2 = %1 A</source>
+        <translation>I2 = %1 A</translation>
+    </message>
+    <message>
+        <source>I2 from the standard of the device</source>
+        <translation>I2 según la norma del dispositivo</translation>
+    </message>
+    <message>
+        <source>I2 of the protection</source>
+        <translation>I2 de la protección</translation>
+    </message>
+    <message>
+        <source>I2 ≤ 1.45 IZ: %1</source>
+        <translation>I2 ≤ 1,45 IZ: %1</translation>
+    </message>
+    <message>
+        <source>IB ≤ IN: %1</source>
+        <translation>IB ≤ IN: %1</translation>
+    </message>
+    <message>
+        <source>IN ≤ IZ: %1</source>
+        <translation>IN ≤ IZ: %1</translation>
+    </message>
+    <message>
+        <source>LGA, meters partly centralized</source>
+        <translation>LGA, centralizaciones parciales de contadores</translation>
+    </message>
+    <message>
+        <source>LGA, meters totally centralized</source>
+        <translation>LGA, contadores totalmente centralizados</translation>
+    </message>
+    <message>
+        <source>Missing: I2 of the manufacturer (gG fuse under 16 A)</source>
+        <translation>Falta: I2 del fabricante (fusible gG de menos de 16 A)</translation>
+    </message>
+    <message>
+        <source>The boards feed each other in a loop, at %1</source>
+        <translation>Los cuadros se alimentan entre sí en bucle, en %1</translation>
+    </message>
+    <message>
+        <source>The device does not protect the cable against overload (residual current device alone, switch)</source>
+        <translation>El dispositivo no protege el cable contra sobrecargas (diferencial solo, interruptor)</translation>
+    </message>
+    <message>
+        <source>The drop from the origin cannot be worked out: the check is not complete</source>
+        <translation>No se puede obtener la caída desde el origen: la comprobación no es completa</translation>
+    </message>
+    <message>
+        <source>The first board fed by no circuit is the origin of the interior installation</source>
+        <translation>El primer cuadro que no se alimenta de otro circuito es el origen de la instalación interior</translation>
+    </message>
+    <message>
+        <source>The use of the feeder %1 is not known: interior or service connection?</source>
+        <translation>No se conoce el uso de la alimentación %1: ¿instalación interior o de enlace?</translation>
+    </message>
+    <message>
+        <source>The voltage drop of the feeder %1 cannot be computed</source>
+        <translation>No se puede calcular la caída de tensión de la alimentación %1</translation>
+    </message>
+    <message>
+        <source>UNE-EN 60269 gG fuse</source>
+        <translation>Fusible gG, UNE-EN 60269</translation>
+    </message>
+    <message>
+        <source>UNE-EN 60898 (circuit breaker, household)</source>
+        <translation>UNE-EN 60898 (magnetotérmico, uso doméstico)</translation>
+    </message>
+    <message>
+        <source>UNE-EN 60947-2 (circuit breaker, industrial)</source>
+        <translation>UNE-EN 60947-2 (interruptor automático, industrial)</translation>
+    </message>
+    <message>
+        <source>UNE-EN 61009 (RCBO, household)</source>
+        <translation>UNE-EN 61009 (magnetotérmico diferencial, uso doméstico)</translation>
+    </message>
+    <message>
+        <source>admissible current IZ</source>
+        <translation>intensidad admisible IZ</translation>
+    </message>
+    <message>
+        <source>not passed</source>
+        <translation>no superada</translation>
+    </message>
+    <message>
+        <source>not performed</source>
+        <translation>no realizada</translation>
+    </message>
+    <message>
+        <source>passed</source>
+        <translation>superada</translation>
+    </message>
+    <message>
+        <source>rated current of the protection</source>
+        <translation>intensidad nominal de la protección</translation>
+    </message>
+    <message>
+        <source>standard of the protection</source>
+        <translation>norma de la protección</translation>
+    </message>
+    <message>
+        <source>type of protection</source>
+        <translation>tipo de protección</translation>
+    </message>
+    <message>
+        <source>insulation</source>
+        <translation>aislamiento</translation>
+    </message>
+    <message>
+        <source>installation method</source>
+        <translation>método de instalación</translation>
+    </message>
+    <message>
+        <source>loaded conductors</source>
+        <translation>conductores cargados</translation>
+    </message>
+    <message>
+        <source>ambient temperature</source>
+        <translation>temperatura ambiente</translation>
+    </message>
+    <message>
+        <source>temperature factor</source>
+        <translation>factor de temperatura</translation>
+    </message>
+    <message>
+        <source>grouping factor</source>
+        <translation>factor de agrupamiento</translation>
+    </message>
+    <message>
+        <source>other factor</source>
+        <translation>otro factor</translation>
+    </message>
+    <message>
+        <source>reference temperature of the table</source>
+        <translation>temperatura de referencia de la tabla</translation>
+    </message>
+    <message>
+        <source>%1 needs its justification</source>
+        <translation>%1: falta su justificación</translation>
+    </message>
+    <message>
+        <source>No ampacity table loaded for this material, insulation, loaded conductors and method</source>
+        <translation>No hay tabla de intensidades cargada para este material, aislamiento, conductores cargados y método</translation>
+    </message>
+    <message>
+        <source>The section is not a row of the ampacity table</source>
+        <translation>La sección no figura en la tabla de intensidades</translation>
+    </message>
+    <message>
+        <source>Loaded conductors from the system: 2 single phase, 3 three phase</source>
+        <translation>Conductores cargados según el sistema: 2 en monofásica, 3 en trifásica</translation>
+    </message>
+    <message>
+        <source>Temperature factor computed from the ambient temperature</source>
+        <translation>Factor de temperatura calculado con la temperatura ambiente</translation>
+    </message>
+    <message>
+        <source>Temperature factor</source>
+        <translation>Factor de temperatura</translation>
+    </message>
+    <message>
+        <source>Grouping factor</source>
+        <translation>Factor de agrupamiento</translation>
+    </message>
+    <message>
+        <source>Other factor</source>
+        <translation>Otro factor</translation>
+    </message>
+    <message>
+        <source>Table: %1 (%2): %3 A</source>
+        <translation>Tabla: %1 (%2): %3 A</translation>
+    </message>
+    <message>
+        <source>computed</source>
+        <translation>calculado</translation>
+    </message>
+    <message>
+        <source>IZ = %1 A</source>
+        <translation>IZ = %1 A</translation>
+    </message>
+    <message>
+        <source>Suggested section: not computable</source>
+        <translation>Sección propuesta: no calculable</translation>
+    </message>
+    <message>
+        <source>Suggested section: no section of the table is enough</source>
+        <translation>Sección propuesta: ninguna sección de la tabla es suficiente</translation>
+    </message>
+    <message>
+        <source>Suggested section: %1 mm² (IZ %2 A)</source>
+        <translation>Sección propuesta: %1 mm² (IZ %2 A)</translation>
+    </message>
+    <message>
+        <source>with the voltage drop within its limit</source>
+        <translation>con la caída de tensión dentro de su límite</translation>
+    </message>
+    <message>
+        <source>by admissible current only: the voltage drop was not taken into account</source>
+        <translation>solo por intensidad admisible: no se ha tenido en cuenta la caída de tensión</translation>
+    </message>
+    <message>
+        <source>Single phase</source>
+        <translation>Monofásico</translation>
+    </message>
+    <message>
+        <source>Three phase</source>
+        <translation>Trifásico</translation>
+    </message>
+    <message>
+        <source>Copper</source>
+        <translation>Cobre</translation>
+    </message>
+    <message>
+        <source>Aluminium</source>
+        <translation>Aluminio</translation>
+    </message>
+    <message>
+        <source>Dwelling, interior circuit</source>
+        <translation>Vivienda, circuito interior</translation>
+    </message>
+    <message>
+        <source>Lighting</source>
+        <translation>Alumbrado</translation>
+    </message>
+    <message>
+        <source>Other uses</source>
+        <translation>Otros usos</translation>
+    </message>
+    <message>
+        <source>Circuit breaker</source>
+        <translation>Interruptor automático (magnetotérmico)</translation>
+    </message>
+    <message>
+        <source>Residual current device</source>
+        <translation>Interruptor diferencial</translation>
+    </message>
+    <message>
+        <source>Circuit breaker with residual current</source>
+        <translation>Interruptor magnetotérmico diferencial</translation>
+    </message>
+    <message>
+        <source>Fuse</source>
+        <translation>Fusible</translation>
+    </message>
+    <message>
+        <source>Switch</source>
+        <translation>Interruptor</translation>
+    </message>
+    <message>
+        <source>system</source>
+        <translation>sistema</translation>
+    </message>
+    <message>
+        <source>voltage</source>
+        <translation>tensión</translation>
+    </message>
+    <message>
+        <source>power</source>
+        <translation>potencia</translation>
+    </message>
+    <message>
+        <source>power factor</source>
+        <translation>factor de potencia</translation>
+    </message>
+    <message>
+        <source>efficiency</source>
+        <translation>rendimiento</translation>
+    </message>
+    <message>
+        <source>design current</source>
+        <translation>intensidad de cálculo</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation>longitud</translation>
+    </message>
+    <message>
+        <source>section</source>
+        <translation>sección</translation>
+    </message>
+    <message>
+        <source>material</source>
+        <translation>material</translation>
+    </message>
+    <message>
+        <source>conductor temperature</source>
+        <translation>temperatura del conductor</translation>
+    </message>
+    <message>
+        <source>conductivity</source>
+        <translation>conductividad</translation>
+    </message>
+    <message>
+        <source>reactance</source>
+        <translation>reactancia</translation>
+    </message>
+    <message>
+        <source>Missing: %1</source>
+        <translation>Falta: %1</translation>
+    </message>
+    <message>
+        <source>%1 must be greater than zero</source>
+        <translation>%1: debe ser mayor que cero</translation>
+    </message>
+    <message>
+        <source>%1 is not a number</source>
+        <translation>%1: no es un número</translation>
+    </message>
+    <message>
+        <source>%1 must be greater than 0 and at most 1</source>
+        <translation>%1: debe ser mayor que 0 y como máximo 1</translation>
+    </message>
+    <message>
+        <source>%1 must not be negative</source>
+        <translation>%1: no puede ser negativo</translation>
+    </message>
+    <message>
+        <source>No efficiency given: the power is taken as absorbed</source>
+        <translation>Sin rendimiento: la potencia se toma como absorbida</translation>
+    </message>
+    <message>
+        <source>Design current as given, not computed</source>
+        <translation>Intensidad de cálculo indicada, no calculada</translation>
+    </message>
+    <message>
+        <source>Conductivity as given</source>
+        <translation>Conductividad indicada</translation>
+    </message>
+    <message>
+        <source>Resistivity from the material at the conductor temperature</source>
+        <translation>Resistividad del material a la temperatura del conductor</translation>
+    </message>
+    <message>
+        <source>No reactance given: neglected</source>
+        <translation>Sin reactancia: se desprecia</translation>
+    </message>
+    <message>
+        <source>Whole load at the far end of the line</source>
+        <translation>Toda la carga al final de la línea</translation>
+    </message>
+    <message>
+        <source>Balanced three phase load</source>
+        <translation>Carga trifásica equilibrada</translation>
+    </message>
+    <message>
+        <source>No limit</source>
+        <comment>voltage drop check: the circuit use is not known</comment>
+        <translation>Sin límite</translation>
+    </message>
+    <message>
+        <source>Passed</source>
+        <translation>Superada</translation>
+    </message>
+    <message>
+        <source>Not passed</source>
+        <translation>No superada</translation>
+    </message>
+    <message>
+        <source>Not performed</source>
+        <translation>No realizada</translation>
+    </message>
+    <message>
+        <source>Limit: voltage drop %1 %2 % (%3)</source>
+        <translation>Límite: caída de tensión %1 %2 % (%3)</translation>
+    </message>
+    <message>
+        <source>No limit: the use of the circuit is not known</source>
+        <translation>Sin límite: no se conoce el uso del circuito</translation>
+    </message>
+    <message>
+        <source>Partial check: only this circuit, not the drop accumulated from the origin of the installation</source>
+        <translation>Comprobación parcial: solo este circuito, no la caída acumulada desde el origen de la instalación</translation>
+    </message>
+    <message>
+        <source>Rules: %1</source>
+        <translation>Reglas: %1</translation>
+    </message>
+</context>
+<context>
+    <name>AmpacityFile</name>
+    <message>
+        <source>no &quot;id&quot;</source>
+        <translation>falta &quot;id&quot;</translation>
+    </message>
+    <message>
+        <source>no &quot;source&quot;: say where the values come from</source>
+        <translation>falta &quot;source&quot;: indique de dónde proceden los valores</translation>
+    </message>
+    <message>
+        <source>&quot;material&quot; must be &quot;Cu&quot; or &quot;Al&quot;</source>
+        <translation>&quot;material&quot; debe ser &quot;Cu&quot; o &quot;Al&quot;</translation>
+    </message>
+    <message>
+        <source>&quot;insulation&quot; must be &quot;PVC&quot;, &quot;XLPE&quot; or &quot;EPR&quot;</source>
+        <translation>&quot;insulation&quot; debe ser &quot;PVC&quot;, &quot;XLPE&quot; o &quot;EPR&quot;</translation>
+    </message>
+    <message>
+        <source>&quot;loadedConductors&quot; must be 2 or 3</source>
+        <translation>&quot;loadedConductors&quot; debe ser 2 o 3</translation>
+    </message>
+    <message>
+        <source>no &quot;method&quot;</source>
+        <translation>falta &quot;method&quot;</translation>
+    </message>
+    <message>
+        <source>&quot;referenceAmbient&quot; must be a number (degC)</source>
+        <translation>&quot;referenceAmbient&quot; debe ser un número (°C)</translation>
+    </message>
+    <message>
+        <source>no &quot;entries&quot;</source>
+        <translation>falta &quot;entries&quot;</translation>
+    </message>
+    <message>
+        <source>entry %1 must be [section, current], both greater than zero</source>
+        <translation>la entrada %1 debe ser [sección, intensidad], ambas mayores que cero</translation>
+    </message>
+    <message>
+        <source>section %1 appears twice</source>
+        <translation>la sección %1 aparece dos veces</translation>
+    </message>
+    <message>
+        <source>the current of %1 mm² is not above that of %2 mm²: a typo?</source>
+        <translation>la intensidad de %1 mm² no es mayor que la de %2 mm²: ¿una errata?</translation>
+    </message>
+    <message>
+        <source>Not a JSON file: %1</source>
+        <translation>No es un fichero JSON: %1</translation>
+    </message>
+    <message>
+        <source>Not an ampacity file: &quot;format&quot; must be &quot;qet-ampacity&quot;</source>
+        <translation>No es un fichero de tablas: &quot;format&quot; debe ser &quot;qet-ampacity&quot;</translation>
+    </message>
+    <message>
+        <source>Version %1 of the file format is not known</source>
+        <translation>La versión %1 del formato no es conocida</translation>
+    </message>
+    <message>
+        <source>The file holds no table</source>
+        <translation>El fichero no contiene ninguna tabla</translation>
+    </message>
+    <message>
+        <source>Table %1</source>
+        <translation>Tabla %1</translation>
+    </message>
+    <message>
+        <source>another table has the same material, insulation, loaded conductors and method</source>
+        <translation>otra tabla tiene el mismo material, aislamiento, conductores cargados y método</translation>
+    </message>
+    <message>
+        <source>Cannot read %1: %2</source>
+        <translation>No se puede leer %1: %2</translation>
+    </message>
+</context>
+<context>
+    <name>BoardDialog</name>
+    <message>
+        <source>Distributed</source>
+        <translation>Distribuido</translation>
+    </message>
+    <message>
+        <source>Earthed apart</source>
+        <translation>Puestas a tierra por separado</translation>
+    </message>
+    <message>
+        <source>IT: first fault Id (A)</source>
+        <translation>IT: primer defecto Id (A)</translation>
+    </message>
+    <message>
+        <source>IT: masses</source>
+        <translation>IT: masas</translation>
+    </message>
+    <message>
+        <source>IT: neutral</source>
+        <translation>IT: neutro</translation>
+    </message>
+    <message>
+        <source>Interconnected, one earthing</source>
+        <translation>Interconectadas, una sola tierra</translation>
+    </message>
+    <message>
+        <source>Not distributed</source>
+        <translation>No distribuido</translation>
+    </message>
+    <message>
+        <source>Source of Id</source>
+        <translation>Fuente de Id</translation>
+    </message>
+    <message>
+        <source>TT: RA × Ia ≤ U. TN: Zs × Ia ≤ U0, with the PE of every line. IT: RA × Id ≤ U, and the second fault as TT or with 2 Zs × Ia (ITC-BT-24 4.1). RA, the earth electrode plus the protective conductors of the masses, and Id, as measured or estimated: they are not worked out here.</source>
+        <translation>TT: RA × Ia ≤ U. TN: Zs × Ia ≤ U0, con el PE de cada línea. IT: RA × Id ≤ U, y el segundo defecto como TT o con 2 Zs × Ia (ITC-BT-24 4.1). RA, la toma de tierra más los conductores de protección de las masas, e Id, medidas o estimadas: aquí no se calculan.</translation>
+    </message>
+    <message>
+        <source>source: measured, insulation monitor...</source>
+        <translation>fuente: medida, controlador de aislamiento...</translation>
+    </message>
+    <message>
+        <source>50, normal conditions</source>
+        <translation>50, condiciones normales</translation>
+    </message>
+    <message>
+        <source>As the board that feeds it</source>
+        <translation>Como el cuadro que lo alimenta</translation>
+    </message>
+    <message>
+        <source>Earthing and indirect contacts</source>
+        <translation>Puesta a tierra y contactos indirectos</translation>
+    </message>
+    <message>
+        <source>Earthing system</source>
+        <translation>Esquema de conexión a tierra</translation>
+    </message>
+    <message>
+        <source>Limit voltage U (V)</source>
+        <translation>Tensión límite U (V)</translation>
+    </message>
+    <message>
+        <source>RA (Ω)</source>
+        <translation>RA (Ω)</translation>
+    </message>
+    <message>
+        <source>Reason of U</source>
+        <translation>Motivo de U</translation>
+    </message>
+    <message>
+        <source>Source of RA</source>
+        <translation>Fuente de RA</translation>
+    </message>
+    <message>
+        <source>reason of a lower value</source>
+        <translation>motivo de un valor menor</translation>
+    </message>
+    <message>
+        <source>source: measured, estimated per ITC-BT-18...</source>
+        <translation>fuente: medida, estimada según ITC-BT-18...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n room(s)...</source>
+        <translation>
+            <numerusform>%n estancia...</numerusform>
+            <numerusform>%n estancias...</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Compensate the voltage drop with the DI</source>
+        <translation>Compensar la caída de tensión con la DI</translation>
+    </message>
+    <message>
+        <source>ITC-BT-19 2.2.2: the drops of the interior installation and of the DI added, lower than the sum of both limits</source>
+        <translation>ITC-BT-19 2.2.2: la suma de las caídas de la instalación interior y de la DI, inferior a la suma de ambos límites</translation>
+    </message>
+    <message>
+        <source>Independent dryer planned</source>
+        <translation>Secadora independiente prevista</translation>
+    </message>
+    <message>
+        <source>Rooms (table 2)</source>
+        <translation>Estancias (tabla 2)</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Añadir</translation>
+    </message>
+    <message>
+        <source>Air conditioning planned</source>
+        <translation>Aire acondicionado previsto</translation>
+    </message>
+    <message>
+        <source>Automation or energy management planned</source>
+        <translation>Automatización o gestión de la energía prevista</translation>
+    </message>
+    <message>
+        <source>Circuits refer to these devices by name.</source>
+        <translation>Los circuitos se refieren a estos aparatos por su nombre.</translation>
+    </message>
+    <message>
+        <source>Dwelling (ITC-BT-25)</source>
+        <translation>Vivienda (ITC-BT-25)</translation>
+    </message>
+    <message>
+        <source>Electric heating planned</source>
+        <translation>Calefacción eléctrica prevista</translation>
+    </message>
+    <message>
+        <source>Electric vehicle charging planned</source>
+        <translation>Recarga del vehículo eléctrico prevista</translation>
+    </message>
+    <message>
+        <source>For the board where the dwelling starts: fed by nothing, or by its DI. The grade of electrification follows from these data and the circuits; an unknown datum leaves it unknown.</source>
+        <translation>Para el cuadro donde empieza la vivienda: sin alimentación desde otro circuito, o alimentado por su DI. El grado de electrificación se deduce de estos datos y de los circuitos; un dato desconocido lo deja sin determinar.</translation>
+    </message>
+    <message>
+        <source>General switch IGA (A)</source>
+        <translation>Interruptor general IGA (A)</translation>
+    </message>
+    <message>
+        <source>ID%1</source>
+        <translation>ID%1</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>No</translation>
+    </message>
+    <message>
+        <source>Rated current (A)</source>
+        <translation>Intensidad asignada (A)</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>Residual current devices</source>
+        <translation>Interruptores diferenciales</translation>
+    </message>
+    <message>
+        <source>Sensitivity (mA)</source>
+        <translation>Sensibilidad (mA)</translation>
+    </message>
+    <message>
+        <source>Single family dwelling</source>
+        <translation>Vivienda unifamiliar</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Desconocido</translation>
+    </message>
+    <message>
+        <source>Useful area (m²)</source>
+        <translation>Superficie útil (m²)</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Sí</translation>
+    </message>
+    <message>
+        <source>ITC-BT-19 2.2.2: the interior installation starts at the transformer output; voltage drop at most 4.5 % for lighting and 6.5 % for other uses</source>
+        <translation>ITC-BT-19 2.2.2: la instalación interior empieza a la salida del transformador; caída de tensión máxima del 4,5 % en alumbrado y del 6,5 % en los demás usos</translation>
+    </message>
+    <message>
+        <source>Industrial installation fed in high voltage through its own transformer</source>
+        <translation>Instalación industrial alimentada en alta tensión con transformador propio</translation>
+    </message>
+    <message>
+        <source>Supply of the installation</source>
+        <translation>Alimentación de la instalación</translation>
+    </message>
+    <message>
+        <source>0.8 U / R (Guía-BT Anexo 3) only when the transformer is outside the building and this board is the CGP: the LGA and the DI must then be circuits of the model. Otherwise give the Icc at this board, phase to neutral and the greatest of any fault, with their source.</source>
+        <translation>0,8 U / R (Guía-BT Anexo 3) solo cuando el centro de transformación está fuera del edificio y este cuadro es la CGP: la LGA y la DI deben ser entonces circuitos del modelo. En otro caso, indique la Icc en este cuadro, fase-neutro y la mayor de cualquier defecto, con su fuente.</translation>
+    </message>
+    <message>
+        <source>Maximum Icc (kA)</source>
+        <translation>Icc máxima (kA)</translation>
+    </message>
+    <message>
+        <source>Minimum Icc (kA)</source>
+        <translation>Icc mínima (kA)</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Red</translation>
+    </message>
+    <message>
+        <source>Not known</source>
+        <translation>Desconocida</translation>
+    </message>
+    <message>
+        <source>Source of the values</source>
+        <translation>Fuente de los valores</translation>
+    </message>
+    <message>
+        <source>source: letter of the distributor, study...</source>
+        <translation>fuente: carta de la distribuidora, estudio...</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>desconocido</translation>
+    </message>
+    <message>
+        <source>(unnamed board)</source>
+        <translation>(cuadro sin nombre)</translation>
+    </message>
+    <message>
+        <source>(unnamed circuit)</source>
+        <translation>(circuito sin nombre)</translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation>Cuadro</translation>
+    </message>
+    <message>
+        <source>Fed by</source>
+        <translation>Alimentado desde</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>None: origin of the installation</source>
+        <translation>Ninguno: origen de la instalación</translation>
+    </message>
+    <message>
+        <source>The voltage drop of the circuit that feeds the board is added to that of its circuits, back to the origin of the interior installation.</source>
+        <translation>La caída de tensión del circuito que alimenta el cuadro se suma a la de sus circuitos, hasta el origen de la instalación interior.</translation>
+    </message>
+</context>
+<context>
+    <name>ElectricalReportBuilder</name>
+    <message>
+        <source>This annex shows, circuit by circuit, the checks listed, done with the data entered in the project. It does not state that the installation complies with the REBT as a whole: protection against electric shock beyond the conditions of ITC-BT-24 4.1 for indirect contacts (TT, TN and IT, with the RA and Id given), the earthing itself, selectivity, the protective conductor and the particular requirements of each ITC, beyond the checks of table 1 of ITC-BT-25 listed, are not checked here. The short circuit is checked only for the phase conductors, with the supply data of the origin board and the methods stated. A check marked &quot;not performed&quot; lacks data: it is neither passed nor failed.</source>
+        <translation>Este anexo recoge, circuito a circuito, las comprobaciones indicadas, realizadas con los datos introducidos en el proyecto. No afirma que la instalación cumpla el REBT en su conjunto: no se comprueban aquí la protección contra los choques eléctricos, salvo las condiciones de la ITC-BT-24 4.1 para contactos indirectos (TT, TN e IT, con la RA y la Id indicadas), la propia puesta a tierra, la selectividad, el conductor de protección ni las prescripciones particulares de cada ITC, salvo las comprobaciones de la tabla 1 de la ITC-BT-25 indicadas. El cortocircuito se comprueba solo en los conductores de fase, con los datos de alimentación del cuadro de origen y los métodos indicados. Una comprobación «no realizada» carece de datos: no está superada ni incumplida.</translation>
+    </message>
+    <message>
+        <source>ITC-BT-24</source>
+        <translation>ITC-BT-24</translation>
+    </message>
+    <message>
+        <source>Indirect contacts: %1</source>
+        <translation>Contactos indirectos: %1</translation>
+    </message>
+    <message>
+        <source>Protective device: %1</source>
+        <translation>Aparato de protección: %1</translation>
+    </message>
+    <message>
+        <source>ITC-BT-25: %1</source>
+        <translation>ITC-BT-25: %1</translation>
+    </message>
+    <message>
+        <source>ITC-BT-25</source>
+        <translation>ITC-BT-25</translation>
+    </message>
+    <message>
+        <source>ITC-BT-25, %1: %2</source>
+        <translation>ITC-BT-25, %1: %2</translation>
+    </message>
+    <message>
+        <source>Own transformer: voltage drop at most 4.5 % lighting, 6.5 % other uses (ITC-BT-19 2.2.2)</source>
+        <translation>Transformador propio: caída de tensión máxima del 4,5 % en alumbrado y del 6,5 % en los demás usos (ITC-BT-19 2.2.2)</translation>
+    </message>
+    <message>
+        <source>Icc at this board: maximum %1 kA, minimum %2 kA (%3)</source>
+        <translation>Icc en este cuadro: máxima %1 kA, mínima %2 kA (%3)</translation>
+    </message>
+    <message>
+        <source>Icc max (kA)</source>
+        <translation>Icc máx (kA)</translation>
+    </message>
+    <message>
+        <source>Icc min (kA)</source>
+        <translation>Icc mín (kA)</translation>
+    </message>
+    <message>
+        <source>Short circuit</source>
+        <translation>Cortocircuito</translation>
+    </message>
+    <message>
+        <source>Short circuit: %1</source>
+        <translation>Cortocircuito: %1</translation>
+    </message>
+    <message>
+        <source>Supply not known: no short circuit</source>
+        <translation>Alimentación desconocida: sin cortocircuito</translation>
+    </message>
+    <message>
+        <source>%1 (%2)</source>
+        <translation>%1 (%2)</translation>
+    </message>
+    <message>
+        <source>%1 A</source>
+        <translation>%1 A</translation>
+    </message>
+    <message>
+        <source>%1 kA</source>
+        <translation>%1 kA</translation>
+    </message>
+    <message>
+        <source>%1 mA</source>
+        <translation>%1 mA</translation>
+    </message>
+    <message>
+        <source>%1 mm²</source>
+        <translation>%1 mm²</translation>
+    </message>
+    <message>
+        <source>(no board)</source>
+        <translation>(sin cuadro)</translation>
+    </message>
+    <message>
+        <source>(unnamed board)</source>
+        <translation>(cuadro sin nombre)</translation>
+    </message>
+    <message>
+        <source>(unnamed circuit)</source>
+        <translation>(circuito sin nombre)</translation>
+    </message>
+    <message>
+        <source>1~</source>
+        <translation>1~</translation>
+    </message>
+    <message>
+        <source>3~</source>
+        <translation>3~</translation>
+    </message>
+    <message>
+        <source>Cable</source>
+        <translation>Cable</translation>
+    </message>
+    <message>
+        <source>Circuit</source>
+        <translation>Circuito</translation>
+    </message>
+    <message>
+        <source>Electrical calculation annex</source>
+        <translation>Anexo de cálculo eléctrico</translation>
+    </message>
+    <message>
+        <source>Fed by %1</source>
+        <translation>Alimentado desde %1</translation>
+    </message>
+    <message>
+        <source>IB ≤ IZ: %1</source>
+        <translation>IB ≤ IZ: %1</translation>
+    </message>
+    <message>
+        <source>Ib (A)</source>
+        <translation>Ib (A)</translation>
+    </message>
+    <message>
+        <source>Ib ≤ Iz</source>
+        <translation>Ib ≤ Iz</translation>
+    </message>
+    <message>
+        <source>Iz (A)</source>
+        <translation>Iz (A)</translation>
+    </message>
+    <message>
+        <source>L (m)</source>
+        <translation>L (m)</translation>
+    </message>
+    <message>
+        <source>N %1</source>
+        <translation>N %1</translation>
+    </message>
+    <message>
+        <source>No ampacity table loaded: IZ not computed.</source>
+        <translation>No hay tablas de intensidades cargadas: IZ no calculada.</translation>
+    </message>
+    <message>
+        <source>No table of %1 applies to these circuits.</source>
+        <translation>Ninguna tabla de %1 es aplicable a estos circuitos.</translation>
+    </message>
+    <message>
+        <source>Not passed</source>
+        <translation>No superada</translation>
+    </message>
+    <message>
+        <source>Not performed</source>
+        <translation>No realizada</translation>
+    </message>
+    <message>
+        <source>Notes: %1</source>
+        <translation>Notas: %1</translation>
+    </message>
+    <message>
+        <source>Origin of the interior installation: fed by no circuit of the project</source>
+        <translation>Origen de la instalación interior: no se alimenta de ningún circuito del proyecto</translation>
+    </message>
+    <message>
+        <source>P (W)</source>
+        <translation>P (W)</translation>
+    </message>
+    <message>
+        <source>PE %1</source>
+        <translation>PE %1</translation>
+    </message>
+    <message>
+        <source>Passed</source>
+        <translation>Superada</translation>
+    </message>
+    <message>
+        <source>Protection</source>
+        <translation>Protección</translation>
+    </message>
+    <message>
+        <source>Protection ↔ cable</source>
+        <translation>Protección ↔ cable</translation>
+    </message>
+    <message>
+        <source>Protection ↔ cable: %1</source>
+        <translation>Protección ↔ cable: %1</translation>
+    </message>
+    <message>
+        <source>Sys.</source>
+        <translation>Sist.</translation>
+    </message>
+    <message>
+        <source>U (V)</source>
+        <translation>U (V)</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Uso</translation>
+    </message>
+    <message>
+        <source>Voltage drop: %1</source>
+        <translation>Caída de tensión: %1</translation>
+    </message>
+    <message>
+        <source>ΔU (%)</source>
+        <translation>ΔU (%)</translation>
+    </message>
+    <message>
+        <source>ΔU check</source>
+        <translation>Comprob. ΔU</translation>
+    </message>
+    <message>
+        <source>ΔU total (%)</source>
+        <translation>ΔU total (%)</translation>
+    </message>
+</context>
+<context>
+    <name>ReportDialog</name>
+    <message>
+        <source>Choose...</source>
+        <translation>Elegir...</translation>
+    </message>
+    <message>
+        <source>Company logo</source>
+        <translation>Logotipo de la empresa</translation>
+    </message>
+    <message>
+        <source>Images (*.png *.jpg *.jpeg *.svg *.bmp)</source>
+        <translation>Imágenes (*.png *.jpg *.jpeg *.svg *.bmp)</translation>
+    </message>
+    <message>
+        <source>Logo</source>
+        <translation>Logotipo</translation>
+    </message>
+    <message>
+        <source>No logo</source>
+        <translation>Sin logotipo</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Quitar</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <source>Calculation report</source>
+        <translation>Informe de cálculo</translation>
+    </message>
+    <message>
+        <source>Company</source>
+        <translation>Empresa</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Fecha</translation>
+    </message>
+    <message>
+        <source>Document</source>
+        <translation>Documento</translation>
+    </message>
+    <message>
+        <source>Plan number</source>
+        <translation>Nº de plano</translation>
+    </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revisión</translation>
+    </message>
+    <message>
+        <source>The folios of the project first, then the annex</source>
+        <translation>Primero los folios del proyecto y después el anexo</translation>
+    </message>
+    <message>
+        <source>These data are kept with the project and printed in the title block of every page of the annex. An empty field stays empty.</source>
+        <translation>Estos datos se guardan con el proyecto y se imprimen en el cajetín de cada página del anexo. Un campo vacío queda vacío.</translation>
+    </message>
+</context>
+<context>
+    <name>ReportPdfWriter</name>
+    <message>
+        <source>Indirect contacts (ITC-BT-24 4.1)</source>
+        <translation>Contactos indirectos (ITC-BT-24 4.1)</translation>
+    </message>
+    <message>
+        <source>Dwelling of %1 (ITC-BT-25): %2</source>
+        <translation>Vivienda de %1 (ITC-BT-25): %2</translation>
+    </message>
+    <message>
+        <source>Dwellings as a whole (ITC-BT-25)</source>
+        <translation>Viviendas en conjunto (ITC-BT-25)</translation>
+    </message>
+    <message>
+        <source>Dwelling circuits (ITC-BT-25)</source>
+        <translation>Circuitos de vivienda (ITC-BT-25)</translation>
+    </message>
+    <message>
+        <source>Short circuit (ITC-BT-22 1.1 b, UNE-HD 60364-4-43)</source>
+        <translation>Cortocircuito (ITC-BT-22 1.1 b, UNE-HD 60364-4-43)</translation>
+    </message>
+    <message>
+        <source>%1 / %2</source>
+        <translation>%1 / %2</translation>
+    </message>
+    <message>
+        <source>(continued)</source>
+        <translation>(continuación)</translation>
+    </message>
+    <message>
+        <source>Ampacity tables read</source>
+        <translation>Tablas de intensidades utilizadas</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <source>Cannot write %1</source>
+        <translation>No se puede escribir %1</translation>
+    </message>
+    <message>
+        <source>Characteristics of the boards</source>
+        <translation>Características de los cuadros</translation>
+    </message>
+    <message>
+        <source>Company</source>
+        <translation>Empresa</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Fecha</translation>
+    </message>
+    <message>
+        <source>Document</source>
+        <translation>Documento</translation>
+    </message>
+    <message>
+        <source>IB ≤ IZ (ITC-BT-19 2.2.3)</source>
+        <translation>IB ≤ IZ (ITC-BT-19 2.2.3)</translation>
+    </message>
+    <message>
+        <source>Limitations: %1</source>
+        <translation>Limitaciones: %1</translation>
+    </message>
+    <message>
+        <source>No circuit.</source>
+        <translation>Sin circuitos.</translation>
+    </message>
+    <message>
+        <source>Not passed</source>
+        <translation>No superadas</translation>
+    </message>
+    <message>
+        <source>Not performed</source>
+        <translation>No realizadas</translation>
+    </message>
+    <message>
+        <source>Page</source>
+        <translation>Página</translation>
+    </message>
+    <message>
+        <source>Passed</source>
+        <translation>Superadas</translation>
+    </message>
+    <message>
+        <source>Plan no.</source>
+        <translation>Nº plano</translation>
+    </message>
+    <message>
+        <source>Plan number</source>
+        <translation>Nº de plano</translation>
+    </message>
+    <message>
+        <source>Project</source>
+        <translation>Proyecto</translation>
+    </message>
+    <message>
+        <source>Protection ↔ cable (ITC-BT-22)</source>
+        <translation>Protección ↔ cable (ITC-BT-22)</translation>
+    </message>
+    <message>
+        <source>Results and warnings, circuit by circuit</source>
+        <translation>Resultados y advertencias, circuito a circuito</translation>
+    </message>
+    <message>
+        <source>Rev.</source>
+        <translation>Rev.</translation>
+    </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revisión</translation>
+    </message>
+    <message>
+        <source>Rules applied</source>
+        <translation>Reglas aplicadas</translation>
+    </message>
+    <message numerus="yes">
+        <source>Summary: %n circuit(s)</source>
+        <translation>
+            <numerusform>Resumen: %n circuito</numerusform>
+            <numerusform>Resumen: %n circuitos</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Text: %1</source>
+        <translation>Texto: %1</translation>
+    </message>
+    <message>
+        <source>Voltage drop from the origin (ITC-BT-19, 14, 15)</source>
+        <translation>Caída de tensión desde el origen (ITC-BT-19, 14, 15)</translation>
+    </message>
+</context>
+<context>
+    <name>ReportLogo</name>
+    <message>
+        <source>Cannot read the image %1: %2</source>
+        <translation>No se puede leer la imagen %1: %2</translation>
+    </message>
+</context>
+<context>
+    <name>RoomsDialog</name>
+    <message>
+        <source>Accesses</source>
+        <translation>Accesos</translation>
+    </message>
+    <message>
+        <source>Add room</source>
+        <translation>Añadir estancia</translation>
+    </message>
+    <message>
+        <source>Area (m²)</source>
+        <translation>Superficie (m²)</translation>
+    </message>
+    <message>
+        <source>Length (m)</source>
+        <translation>Longitud (m)</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>Room %1</source>
+        <translation>Estancia %1</translation>
+    </message>
+    <message>
+        <source>Rooms of the dwelling</source>
+        <translation>Estancias de la vivienda</translation>
+    </message>
+    <message>
+        <source>Table 2 of ITC-BT-25 asks the minimum points of each room by its type and size: give the area, and for a corridor its length and accesses. An empty cell is not known: the check is then not performed. Heating, air conditioning, dryer and charging points count only when planned for the dwelling.</source>
+        <translation>La tabla 2 de la ITC-BT-25 fija los puntos mínimos de cada estancia según su tipo y tamaño: indique la superficie y, en un pasillo, su longitud y sus accesos. Una casilla vacía no se conoce y la comprobación queda sin realizar. Las tomas de calefacción, aire acondicionado, secadora y recarga solo cuentan si están previstas en la vivienda.</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Desconocido</translation>
+    </message>
+</context>
+<context>
+    <name>ElectricalElementWidget</name>
+    <message>
+        <source>Fills the data of the device from the catalogue file chosen in the Electrical circuits panel</source>
+        <translation>Rellena los datos del aparato a partir del fichero de catálogo elegido en el panel Circuitos eléctricos</translation>
+    </message>
+    <message>
+        <source>From the catalogue...</source>
+        <translation>Del catálogo...</translation>
+    </message>
+    <message>
+        <source>(unnamed board)</source>
+        <translation>(cuadro sin nombre)</translation>
+    </message>
+    <message>
+        <source>(unnamed circuit)</source>
+        <translation>(circuito sin nombre)</translation>
+    </message>
+    <message>
+        <source>A</source>
+        <translation>A</translation>
+    </message>
+    <message>
+        <source>A board or circuit linked to another symbol is moved to this one. Boards and circuits are created in the Electrical circuits panel.</source>
+        <translation>Un cuadro o circuito vinculado a otro símbolo pasa a este. Los cuadros y circuitos se crean en el panel Circuitos eléctricos.</translation>
+    </message>
+    <message>
+        <source>Board %1</source>
+        <translation>Cuadro %1</translation>
+    </message>
+    <message>
+        <source>Board drawn by this symbol</source>
+        <translation>Cuadro que representa este símbolo</translation>
+    </message>
+    <message>
+        <source>Breaking capacity</source>
+        <translation>Poder de corte</translation>
+    </message>
+    <message>
+        <source>Checks of the circuit</source>
+        <translation>Comprobaciones del circuito</translation>
+    </message>
+    <message>
+        <source>Choose the circuit this symbol protects to see its checks.</source>
+        <translation>Elija el circuito que protege este símbolo para ver sus comprobaciones.</translation>
+    </message>
+    <message>
+        <source>Curve</source>
+        <translation>Curva</translation>
+    </message>
+    <message>
+        <source>Destination of %1</source>
+        <translation>Destino de %1</translation>
+    </message>
+    <message>
+        <source>Electrical</source>
+        <translation>Eléctrico</translation>
+    </message>
+    <message>
+        <source>Electrical data of a symbol</source>
+        <translation>Datos eléctricos de un símbolo</translation>
+    </message>
+    <message>
+        <source>IB ≤ IZ: %1</source>
+        <translation>IB ≤ IZ: %1</translation>
+    </message>
+    <message>
+        <source>ITC-BT-25, %1: %2</source>
+        <translation>ITC-BT-25, %1: %2</translation>
+    </message>
+    <message>
+        <source>Manufacturer</source>
+        <translation>Fabricante</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Ninguno</translation>
+    </message>
+    <message>
+        <source>Not in the electrical model of the project.</source>
+        <translation>No forma parte del modelo eléctrico del proyecto.</translation>
+    </message>
+    <message>
+        <source>Origin of %1</source>
+        <translation>Origen de %1</translation>
+    </message>
+    <message>
+        <source>Part number</source>
+        <translation>Referencia</translation>
+    </message>
+    <message>
+        <source>Poles</source>
+        <translation>Polos</translation>
+    </message>
+    <message>
+        <source>Protection of %1</source>
+        <translation>Protección de %1</translation>
+    </message>
+    <message>
+        <source>Protection of the circuit</source>
+        <translation>Protección del circuito</translation>
+    </message>
+    <message>
+        <source>Protection ↔ cable: %1</source>
+        <translation>Protección ↔ cable: %1</translation>
+    </message>
+    <message>
+        <source>Protective device</source>
+        <translation>Aparato de protección</translation>
+    </message>
+    <message>
+        <source>Rated current</source>
+        <translation>Intensidad nominal</translation>
+    </message>
+    <message>
+        <source>Sensitivity</source>
+        <translation>Sensibilidad</translation>
+    </message>
+    <message>
+        <source>Short circuit: %1</source>
+        <translation>Cortocircuito: %1</translation>
+    </message>
+    <message>
+        <source>Standard</source>
+        <translation>Norma</translation>
+    </message>
+    <message>
+        <source>The electrical data of this project were written by a newer version: they can only be read here.</source>
+        <translation>Los datos eléctricos de este proyecto los escribió una versión más reciente: aquí solo pueden leerse.</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Desconocido</translation>
+    </message>
+    <message>
+        <source>Voltage drop: %1</source>
+        <translation>Caída de tensión: %1</translation>
+    </message>
+    <message>
+        <source>What this symbol is</source>
+        <translation>Qué es este símbolo</translation>
+    </message>
+    <message>
+        <source>e.g. C, gG</source>
+        <translation>p. ej. C, gG</translation>
+    </message>
+    <message>
+        <source>kA</source>
+        <translation>kA</translation>
+    </message>
+    <message>
+        <source>mA</source>
+        <translation>mA</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>desconocido</translation>
+    </message>
+</context>
+<context>
+    <name>DeviceCatalogue</name>
+    <message>
+        <source>&quot;%1&quot; must be a number greater than zero</source>
+        <translation>«%1» debe ser un número mayor que cero</translation>
+    </message>
+    <message>
+        <source>&quot;letThrough&quot; must be {&quot;energy&quot;: A²s, &quot;atCurrent&quot;: kA}, both greater than zero</source>
+        <translation>«letThrough» debe ser {&quot;energy&quot;: A²s, &quot;atCurrent&quot;: kA}, los dos mayores que cero</translation>
+    </message>
+    <message>
+        <source>&quot;poles&quot; must be 1, 2, 3 or 4</source>
+        <translation>«poles» debe ser 1, 2, 3 o 4</translation>
+    </message>
+    <message>
+        <source>&quot;standard&quot; must be &quot;EN60898&quot;, &quot;EN61009&quot;, &quot;EN60947-2&quot; or &quot;gG&quot;</source>
+        <translation>«standard» debe ser &quot;EN60898&quot;, &quot;EN61009&quot;, &quot;EN60947-2&quot; o &quot;gG&quot;</translation>
+    </message>
+    <message>
+        <source>&quot;type&quot; must be &quot;circuit-breaker&quot;, &quot;residual-current&quot;, &quot;rcbo&quot;, &quot;fuse&quot; or &quot;switch&quot;</source>
+        <translation>«type» debe ser &quot;circuit-breaker&quot;, &quot;residual-current&quot;, &quot;rcbo&quot;, &quot;fuse&quot; o &quot;switch&quot;</translation>
+    </message>
+    <message>
+        <source>Cannot read %1: %2</source>
+        <translation>No se puede leer %1: %2</translation>
+    </message>
+    <message>
+        <source>Catalogue: %1</source>
+        <translation>Catálogo: %1</translation>
+    </message>
+    <message>
+        <source>Device %1</source>
+        <translation>Aparato %1</translation>
+    </message>
+    <message>
+        <source>Not a JSON file: %1</source>
+        <translation>No es un fichero JSON: %1</translation>
+    </message>
+    <message>
+        <source>Not a device catalogue: &quot;format&quot; must be &quot;qet-devices&quot;</source>
+        <translation>No es un catálogo de aparatos: «format» debe ser &quot;qet-devices&quot;</translation>
+    </message>
+    <message>
+        <source>The file holds no device</source>
+        <translation>El fichero no contiene ningún aparato</translation>
+    </message>
+    <message>
+        <source>Version %1 of the file format is not known</source>
+        <translation>La versión %1 del formato del fichero no es conocida</translation>
+    </message>
+    <message>
+        <source>another device has the same manufacturer and part number</source>
+        <translation>otro aparato tiene el mismo fabricante y referencia</translation>
+    </message>
+    <message>
+        <source>no &quot;manufacturer&quot;</source>
+        <translation>falta «manufacturer»</translation>
+    </message>
+    <message>
+        <source>no &quot;partNumber&quot;</source>
+        <translation>falta «partNumber»</translation>
+    </message>
+    <message>
+        <source>no &quot;ratedCurrent&quot;</source>
+        <translation>falta «ratedCurrent»</translation>
+    </message>
+    <message>
+        <source>no &quot;source&quot;: say where the values come from</source>
+        <translation>falta «source»: indique de dónde salen los valores</translation>
+    </message>
+</context>
+<context>
+    <name>DevicePickerDialog</name>
+    <message numerus="yes">
+        <source>%n device(s) of %1.</source>
+        <translation>
+            <numerusform>%n aparato de %1.</numerusform>
+            <numerusform>%n aparatos de %1.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n device(s).</source>
+        <translation>
+            <numerusform>%n aparato.</numerusform>
+            <numerusform>%n aparatos.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Choose a device.</source>
+        <translation>Elija un aparato.</translation>
+    </message>
+    <message>
+        <source>Curve</source>
+        <translation>Curva</translation>
+    </message>
+    <message>
+        <source>Device catalogue</source>
+        <translation>Catálogo de aparatos</translation>
+    </message>
+    <message>
+        <source>I2: %1 A</source>
+        <translation>I2: %1 A</translation>
+    </message>
+    <message>
+        <source>Icu/Icn (kA)</source>
+        <translation>Icu/Icn (kA)</translation>
+    </message>
+    <message>
+        <source>In (A)</source>
+        <translation>In (A)</translation>
+    </message>
+    <message>
+        <source>Instantaneous trip: %1 A</source>
+        <translation>Disparo instantáneo: %1 A</translation>
+    </message>
+    <message>
+        <source>I²t: %1 A²s</source>
+        <translation>I²t: %1 A²s</translation>
+    </message>
+    <message>
+        <source>I²t: %1 A²s at %2 kA</source>
+        <translation>I²t: %1 A²s a %2 kA</translation>
+    </message>
+    <message>
+        <source>IΔn (mA)</source>
+        <translation>IΔn (mA)</translation>
+    </message>
+    <message>
+        <source>Left out of the file:</source>
+        <translation>Descartado del fichero:</translation>
+    </message>
+    <message>
+        <source>Manufacturer</source>
+        <translation>Fabricante</translation>
+    </message>
+    <message>
+        <source>Part number</source>
+        <translation>Referencia</translation>
+    </message>
+    <message>
+        <source>Poles</source>
+        <translation>Polos</translation>
+    </message>
+    <message>
+        <source>Search by manufacturer, part number or source</source>
+        <translation>Buscar por fabricante, referencia o fuente</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Fuente</translation>
+    </message>
+    <message>
+        <source>Source: %1</source>
+        <translation>Fuente: %1</translation>
+    </message>
+    <message>
+        <source>Standard: %1</source>
+        <translation>Norma: %1</translation>
+    </message>
+    <message>
+        <source>The catalogue has no device.</source>
+        <translation>El catálogo no tiene ningún aparato.</translation>
+    </message>
+    <message>
+        <source>The values are those of the file, typed by the user from the manufacturer&apos;s catalogue: check them against it. Choosing a device replaces every datum of the device of the circuit.</source>
+        <translation>Los valores son los del fichero, tecleados por el usuario a partir del catálogo del fabricante: compruébelos con él. Elegir un aparato sustituye todos los datos del aparato del circuito.</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tipo</translation>
     </message>
 </context>
 </TS>

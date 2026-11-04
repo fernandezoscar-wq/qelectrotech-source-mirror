@@ -279,6 +279,56 @@ add_test(NAME tst_dimensionitem COMMAND tst_dimensionitem)
 target_include_directories(tst_dimensionitem PRIVATE ${QET_DIR}/sources)
 target_link_libraries(tst_dimensionitem PRIVATE qelectrotech_objects Qt::Test)
 
+# The REBT calculations are a library with no Qt: QtTest only drives them.
+add_executable(tst_rebtcalc tst_rebtcalc.cpp)
+add_test(NAME tst_rebtcalc COMMAND tst_rebtcalc)
+target_include_directories(tst_rebtcalc PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_rebtcalc PRIVATE qetrebt Qt::Test)
+
+# Admissible current and the section that carries a circuit (ITC-BT-19
+# 2.2.3), with synthetic tables: the program holds none.
+add_executable(tst_rebtampacity tst_rebtampacity.cpp)
+add_test(NAME tst_rebtampacity COMMAND tst_rebtampacity)
+target_include_directories(tst_rebtampacity PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_rebtampacity PRIVATE qetrebt Qt::Test)
+
+# Coordination of a conductor with its protection (ITC-BT-22) and the
+# voltage drop limits of the LGA and the DI (ITC-BT-14, ITC-BT-15).
+add_executable(tst_rebtprotection tst_rebtprotection.cpp)
+add_test(NAME tst_rebtprotection COMMAND tst_rebtprotection)
+target_include_directories(tst_rebtprotection PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_rebtprotection PRIVATE qetrebt Qt::Test)
+
+# Short circuit currents and the checks of the protection against them
+# (ITC-BT-22 1.1 b, UNE-HD 60364-4-43 434, Guia-BT Anexo 3).
+add_executable(tst_rebtshortcircuit tst_rebtshortcircuit.cpp)
+add_test(NAME tst_rebtshortcircuit COMMAND tst_rebtshortcircuit)
+target_include_directories(tst_rebtshortcircuit PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_rebtshortcircuit PRIVATE qetrebt Qt::Test)
+
+# Circuits of a dwelling (ITC-BT-25) and the limits with an own transformer.
+add_executable(tst_rebtdwelling tst_rebtdwelling.cpp)
+add_test(NAME tst_rebtdwelling COMMAND tst_rebtdwelling)
+target_include_directories(tst_rebtdwelling PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_rebtdwelling PRIVATE qetrebt Qt::Test)
+
+# Indirect contacts in TT: RA x Ia <= U (ITC-BT-24 4.1.2).
+add_executable(tst_rebtindirect tst_rebtindirect.cpp)
+add_test(NAME tst_rebtindirect COMMAND tst_rebtindirect)
+target_include_directories(tst_rebtindirect PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_rebtindirect PRIVATE qetrebt Qt::Test)
+
+# The electrical model of a project and its XML, without the application.
+add_executable(tst_electricalmodel tst_electricalmodel.cpp)
+add_test(NAME tst_electricalmodel COMMAND tst_electricalmodel)
+target_link_libraries(tst_electricalmodel PRIVATE qetelectrical Qt::Test)
+
+# The catalogue of protective devices of the user (JSON) and how a device
+# chosen fills the data of a protection.
+add_executable(tst_devicecatalogue tst_devicecatalogue.cpp)
+add_test(NAME tst_devicecatalogue COMMAND tst_devicecatalogue)
+target_link_libraries(tst_devicecatalogue PRIVATE qetelectrical Qt::Test)
+
 # positionorder.h is header-only: the position comparisons behind element
 # renumbering and terminal numbering, as strict weak orderings for std::sort.
 add_executable(tst_positionorder tst_positionorder.cpp)
@@ -601,6 +651,19 @@ qet_add_app_test(tst_terminalstriporder tst_terminalstriporder.cpp)
 # Location and Label of the first piece its wires land on past the strip, in
 # plan order, the same three fields the cable list computes for a target.
 qet_add_app_test(tst_cabletarget tst_cabletarget.cpp)
+
+# The electrical model (REBT) of a project through .qet, .qetz and .qetdb:
+# saved, opened again unchanged, and absent from projects that have none.
+qet_add_app_test(tst_electricalproject tst_electricalproject.cpp)
+# The electrical circuits panel, its dialog and its undo command, in the
+# real editor: off by default, every change undoable.
+qet_add_app_test(tst_electricalpanel tst_electricalpanel.cpp)
+# The calculation annex as a PDF: built from the model, its pages read
+# back with pdftotext; through the command line, folios and annex.
+qet_add_app_test(tst_electricalreport tst_electricalreport.cpp)
+add_dependencies(tst_electricalreport qelectrotech)
+target_compile_definitions(tst_electricalreport PRIVATE
+  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
 
 # What lies outside the sheet: named per folio, for the warning before
 # printing and exporting; off with the setting.

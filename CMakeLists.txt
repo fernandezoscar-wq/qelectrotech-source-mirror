@@ -175,6 +175,11 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS ${QET_DIR}/sources/ui)
 
 include(cmake/fetch_kdeaddons.cmake)
 
+# Low voltage circuit calculations (REBT), a library of its own with no
+# Qt, and the electrical model of a project that feeds them.
+add_subdirectory(sources/rebt)
+add_subdirectory(sources/electrical)
+
 # Add sub directories
 option(PACKAGE_TESTS "Build the tests" ON)
 if(PACKAGE_TESTS)
@@ -355,6 +360,7 @@ target_link_libraries(
     ${PROJECT_NAME}_objects
     PUBLIC
     pugixml::pugixml
+    qetelectrical
     SingleApplication::SingleApplication
     SQLite3::SQLite3
     ${KF_PRIVATE_LIBRARIES}

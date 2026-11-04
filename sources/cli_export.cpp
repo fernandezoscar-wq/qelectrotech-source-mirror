@@ -59,6 +59,10 @@
 #include <QPair>
 #include <QPainter>
 #include <QPdfWriter>
+#include "electrical/ampacityfile.h"
+#include "electrical/report/electricalreport.h"
+#include "electrical/report/reportpdfwriter.h"
+#include <functional>
 #include <QSet>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -105,6 +109,8 @@ const QHash<QString, QString> &exportFlags()
 		{"--from-database", "fromdb"},
 		{"--set-titleblock", "settb"},
 		{"--query", "query"},
+		{"--export-calculations", "calc"},
+		{"--export-pdf-calculations", "pdfcalc"},
 	};
 	return flags;
 }
@@ -186,7 +192,8 @@ QDateTime sourceDateEpoch()
 }
 
 int exportPdf(QETProject &project, const QString &output,
-			 bool showTerminals = false)
+			 bool showTerminals = false,
+			 const std::function<int(QPdfWriter &, QPainter &)> &appendix = {})
 {
 	const QList<Diagram *> diagrams = project.diagrams();
 	if (diagrams.isEmpty()) {
@@ -286,6 +293,8 @@ int exportPdf(QETProject &project, const QString &output,
 			PdfLinks::injectCrossRefLinks(engine, diagram, geom, pageMap, output);
 		}
 	}
+		//Pages after the folios (the electrical calculation annex)
+	const int appended = appendix ? appendix(writer, painter) : 0;
 	painter.end();
 
 	// Rewrite the URI link annotations into native internal GoTo actions, so
@@ -297,8 +306,25 @@ int exportPdf(QETProject &project, const QString &output,
 		PdfLinks::setDocumentIdFromContent(output);
 	}
 
-	out << "Exported " << diagrams.size() << " page(s) -> " << output << "\n";
+	out << "Exported " << diagrams.size() + appended << " page(s) -> " << output << "\n";
 	return 0;
+}
+
+/// The calculation annex of @p project, with the ampacity tables of
+/// @p tables_path, or else those of the settings
+electrical::ElectricalReport calculationReport(QETProject &project,
+											   const QString &tables_path)
+{
+	const electrical::AmpacityFile file = tables_path.isEmpty()
+		? electrical::AmpacityTables::current()
+		: electrical::loadAmpacityFile(tables_path);
+	for (const QString &e : file.errors)
+		err << "Ampacity tables: " << e << "\n";
+	QString title = project.title();
+	if (title.isEmpty())
+		title = QFileInfo(project.filePath()).completeBaseName();
+	return electrical::ElectricalReportBuilder::build(
+		project.electricalModel(), file.library, file.path, title);
 }
 
 int exportImages(QETProject &project, const QString &format,
@@ -1215,6 +1241,28 @@ int queryProjects(const QString &sql, const QStringList &files, bool json)
 
 namespace CLIExport {
 
+int exportCalculations(QETProject &project, const QString &output,
+					   const QString &tablesPath, bool withFolios,
+					   QString *error)
+{
+	const electrical::ElectricalReport report = calculationReport(project, tablesPath);
+	if (!withFolios) {
+		if (!ReportPdfWriter::write(report, output, error))
+			return 1;
+		out << "Exported the calculation annex -> " << output << "\n";
+		out.flush();
+		return 0;
+	}
+	const int code = exportPdf(project, output, false,
+							   [&report](QPdfWriter &writer, QPainter &painter) {
+		return ReportPdfWriter::append(report, writer, painter);
+	});
+	out.flush();
+	if (code != 0 && error)
+		*error = QStringLiteral("Cannot write %1").arg(output);
+	return code;
+}
+
 bool isExportRequest(const QStringList &args)
 {
 	for (const QString &a : args)
@@ -1238,6 +1286,12 @@ int run(const QStringList &args)
 	const bool includeJunctions = filtered.removeAll("--no-junctions") == 0;
 	const bool ignoreLock = filtered.removeAll("--ignore-lock") > 0;
 	const bool json = filtered.removeAll("--json") > 0;
+	QString ampacityTables;
+	for (int i = filtered.size() - 1; i >= 0; --i)
+		if (filtered.at(i).startsWith(QLatin1String("--ampacity-tables="))) {
+			ampacityTables = filtered.at(i).section(QLatin1Char('='), 1);
+			filtered.removeAt(i);
+		}
 
 	QString flag;
 	QStringList rest;
@@ -1467,6 +1521,8 @@ int run(const QStringList &args)
 	}
 	if (format == "pdf")
 		return exportPdf(project, output, showTerminals);
+	if (format == "calc" || format == "pdfcalc")
+		return exportCalculations(project, output, ampacityTables, format == "pdfcalc");
 	if (format == "dxf")
 		return exportDxf(project, output, showTerminals, dxfBlocks, dxfAttributes);
 	if (format == "cables" || format == "wires")

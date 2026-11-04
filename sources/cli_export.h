@@ -20,6 +20,8 @@
 
 #include <QStringList>
 
+class QETProject;
+
 /**
 	@brief Headless command-line export.
 
@@ -36,6 +38,15 @@ namespace CLIExport {
 		(i.e. contain one of the export options).
 	*/
 	bool isExportRequest(const QStringList &args);
+	/**
+		@brief The electrical calculation annex of @p project as a PDF,
+		after its folios when @p withFolios.
+		@param tablesPath ampacity tables; empty: those of the settings
+		@return 0 on success
+	*/
+	int exportCalculations(QETProject &project, const QString &output,
+						   const QString &tablesPath, bool withFolios,
+						   QString *error = nullptr);
 
 	/**
 		@brief Run the CLI export described by @p args.
@@ -58,8 +69,14 @@ namespace CLIExport {
 		  qelectrotech --recover        <damaged.qetz> <output.qet>
 		  qelectrotech --set-titleblock <project.qet> <output.qet> key=value...
 		  qelectrotech --query          <SQL> <project>... [--json]
+		  qelectrotech --export-calculations     <project.qet> <output.pdf> [--ampacity-tables=<file.json>]
+		  qelectrotech --export-pdf-calculations <project.qet> <output.pdf> [--ampacity-tables=<file.json>]
 
 		PDF: one multi-page document (one diagram per page).
+		calculations: the electrical calculation annex (boards, circuits,
+		      checks, rules applied), A4 landscape; pdf-calculations: the
+		      folios, then the annex, in one document. The ampacity tables
+		      are those of the settings unless --ampacity-tables names a file.
 		PNG/SVG/DXF: one file per diagram, named <output_dir>/<NN>_<title>.<ext>.
 		DXF: the same file the export dialog writes with its default options
 		      (the export settings of the preferences).

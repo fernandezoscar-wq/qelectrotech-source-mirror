@@ -26,6 +26,7 @@
 #include "conductorproperties.h"
 #include "dataBase/projectdatabase.h"
 #include "dataBase/qetdbfile.h"
+#include "electrical/electricalmodel.h"
 #include "properties/projectlanguages.h"
 #include "properties/reportproperties.h"
 #include "properties/xrefproperties.h"
@@ -413,6 +414,17 @@ class QETProject : public QObject
 		bool removeBridge(Bridge *bridge);
 		Diagram *diagramByUuid(const QUuid &uuid);
 
+			/// The boards and circuits of the project (REBT calculations)
+		const electrical::ElectricalModel &electricalModel() const
+		{ return m_electrical_model; }
+			/// @p mark_modified false for an undo command: the undo stack
+			/// then tells whether the project changed
+		bool setElectricalModel(const electrical::ElectricalModel &model,
+								bool mark_modified = true);
+			/// What reading the model from the file found
+		electrical::ReadReport electricalReadReport() const
+		{ return m_electrical_read_report; }
+
 	public slots:
 		Diagram *addNewDiagram(int pos = -1);
 		void removeDiagram(Diagram *);
@@ -426,6 +438,8 @@ class QETProject : public QObject
 		void diagramAdded(QETProject *, Diagram *);
 		void diagramRemoved(QETProject *, Diagram *);
 		void projectModified(QETProject *, bool);
+			/// The electrical model was replaced (setElectricalModel())
+		void electricalModelChanged();
 		void projectDiagramsOrderChanged(QETProject *, int, int);
 		void diagramUsedTemplate(TitleBlockTemplatesCollection *, const QString &);
 		void readOnlyChanged(QETProject *, bool);
@@ -503,6 +517,8 @@ class QETProject : public QObject
 		void readChainedReportsXml(QDomDocument &xml_project);
 		void readTerminalLabelSplitXml(QDomDocument &xml_project);
 		void readWiringRulesXml(QDomDocument &xml_project);
+		void readElectricalXml(const QDomDocument &xml_project);
+		void storeElectricalBlock();
 
 		void writeProjectPropertiesXml(QDomElement &);
 		void writeDefaultPropertiesXml(QDomElement &);
@@ -676,6 +692,8 @@ class QETProject : public QObject
 			//Called after each folio built, see setFolioBuildObserver()
 		std::function<void(int, int)> m_folio_build_observer;
 		QVector<Cable *> m_cables;
+		electrical::ElectricalModel m_electrical_model;
+		electrical::ReadReport m_electrical_read_report;
 		QVector<Bridge *> m_bridges;
 
 		ProjectPropertiesHandler m_project_properties_handler;

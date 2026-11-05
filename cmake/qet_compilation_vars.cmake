@@ -1104,6 +1104,8 @@ set(QET_SRC_FILES
   ${QET_DIR}/sources/electrical/ui/roomsdialog.h
   ${QET_DIR}/sources/electrical/ui/devicepickerdialog.cpp
   ${QET_DIR}/sources/electrical/ui/devicepickerdialog.h
+  ${QET_DIR}/sources/electrical/ui/pvdialog.cpp
+  ${QET_DIR}/sources/electrical/ui/pvdialog.h
   ${QET_DIR}/sources/electrical/ui/electricalelementwidget.cpp
   ${QET_DIR}/sources/electrical/ui/electricalelementwidget.h
   ${QET_DIR}/sources/electrical/ui/changeelectricalmodelcommand.cpp

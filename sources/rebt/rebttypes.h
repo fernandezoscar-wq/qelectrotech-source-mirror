@@ -155,7 +155,13 @@ enum class Issue {
 	ResidualInTNC,         ///< ITC-BT-24 4.1.1: no residual current device in TN-C
 	MissingFirstFault,     ///< IT: current of a first fault, Id
 	MissingMassesArrangement,  ///< IT: masses earthed apart or interconnected
-	MissingNeutralArrangement  ///< IT: neutral distributed or not
+	MissingNeutralArrangement, ///< IT: neutral distributed or not
+		// Photovoltaic
+	MissingModuleData,     ///< a datum of the PV module (STC values, coefficients)
+	MissingInverterData,   ///< a datum of the inverter input
+	MissingStringLayout,   ///< modules per string or strings in parallel
+	MissingCellTemperature,///< lowest or highest cell temperature of the site
+	MissingStringProtection///< string protection required and none given
 };
 
 /**
@@ -205,7 +211,11 @@ enum class Assumption {
 	EarthResistanceGiven,      ///< RA as given: electrode plus protective conductors
 	GuideLoop,                 ///< TN, supply unknown: Zs = R / 0.8 (Guia-BT Anexo 3)
 	LoopFromItOrigin,          ///< IT: Zs of the lines from the IT board, no source
-	InstantaneousWithinTable   ///< Ia clears in under 0.1 s: within every time of the tables
+	InstantaneousWithinTable,  ///< Ia clears in under 0.1 s: within every time of the tables
+		// Photovoltaic
+	IscMaxFactor,              ///< ISC MAX taken as 1.25 ISC STC (on the safe side)
+	CurrentsAtStc,             ///< input currents at STC, no temperature correction
+	SingleStringCable          ///< one string: its cable at least 1.25 ISC, as Ns = 2
 };
 
 struct CurrentResult

@@ -88,6 +88,28 @@ Circuit fullCircuit()
 	c.conductor.conduit = 20.0;
 	c.protection.residualDevice = QStringLiteral("ID2 <ñ>");
 	c.points = 3;
+	c.pv.moduleName = QStringLiteral("Módulo <prueba> & 320 W");
+	c.pv.openCircuitVoltage = 42.5;
+	c.pv.vocCoefficient = -0.29;
+	c.pv.maxSeriesFuse = 15.0;
+	c.pv.moduleSource = QStringLiteral("Hoja de datos");
+	c.pv.mpptMinVoltage = 90.0;
+	c.pv.inverterSource = QStringLiteral("Ficha del inversor");
+	c.pv.minCellTemperature = -10.0;
+	c.pv.temperatureReason = QStringLiteral("Mínima histórica");
+	{
+		PvStringGroup g;
+		g.name = QStringLiteral("MPPT1");
+		g.modulesPerString = 8;
+		g.parallelStrings = 2;
+		g.cableMaterial = rebt::Material::Copper;
+		g.cableAdmissible = 20.0;
+		g.cableAdmissibleReason = QStringLiteral("Tabla FV");
+		PvStringGroup h;
+		h.name = QStringLiteral("MPPT2");
+		h.stringFuse = 15.0;
+		c.pv.strings = {g, h};
+	}
 	return c;
 }
 
@@ -643,6 +665,128 @@ class tst_electricalmodel : public QObject
 			QVERIFY(std::find(e.indirect.diagnostics.begin(), e.indirect.diagnostics.end(),
 							  rebt::Diagnostic{rebt::Issue::ResidualInTNC, "residualDevice"})
 					!= e.indirect.diagnostics.end());
+		}
+
+		void pvRoundTrips()
+		{
+			const ElectricalModel read = roundTrip(fullModel());
+			const PvData &p = read.circuit(id(10))->pv;
+			QCOMPARE(p, fullCircuit().pv);
+			QCOMPARE(p.moduleName, QStringLiteral("Módulo <prueba> & 320 W"));
+			QCOMPARE(*p.vocCoefficient, -0.29);
+			QCOMPARE(p.strings.size(), 2);
+			QCOMPARE(*p.strings.at(0).parallelStrings, 2);
+			QCOMPARE(*p.strings.at(0).cableMaterial, rebt::Material::Copper);
+			QCOMPARE(*p.strings.at(1).stringFuse, 15.0);
+			QVERIFY(!p.strings.at(1).modulesPerString);
+				// a circuit without it writes nothing
+			QVERIFY(read.circuit(id(11))->pv.isEmpty());
+			QVERIFY(!read.toXmlText().contains(QStringLiteral("<pv/>")));
+		}
+
+		void generatorLine()
+		{
+				// inverter of 21.6 A, 15 m of 6 mm2 at 230 V, conductivity 48:
+				// 2 x 15 x 21.6 / (48 x 6) = 2.25 V = 0.978261 %
+			Circuit c;
+			c.id = id(600);
+			c.use = CircuitUse::GeneratorLine;
+			c.system = rebt::System::SinglePhase;
+			c.voltage = 230.0;
+			c.load.designCurrent = 21.6;
+			c.load.powerFactor = 1.0;
+			c.conductor.length = 15.0;
+			c.conductor.section = 6.0;
+			c.conductor.conductivity = 48.0;
+			CircuitEvaluation e = evaluate(c, rebt::AmpacityLibrary());
+			QCOMPARE(e.limit->percent, 1.5);
+			QVERIFY(!e.limit->strict);
+			QCOMPARE(e.limit->rule.id, std::string("REBT-FV-007"));
+			QVERIFY(qAbs(*e.drop.percent - 0.978261) < 1e-6);
+			QCOMPARE(e.check.outcome, rebt::CheckOutcome::Passed);
+				// the cable is checked for 1.25 x 21.6 = 27 A
+			QVERIFY(qAbs(*e.sizingCurrent - 27.0) < 1e-12);
+			QCOMPARE(e.ampacityCheck.rule.id, std::string("REBT-FV-007"));
+				// 2.5 mm2: 5.4 V = 2.347826 %, over 1.5 %
+			c.conductor.section = 2.5;
+			e = evaluate(c, rebt::AmpacityLibrary());
+			QCOMPARE(e.check.outcome, rebt::CheckOutcome::NotPassed);
+				// not part of the interior drop: its own only, through the model
+			ElectricalModel model;
+			model.setBoard({id(601), QStringLiteral("CGMP"), QUuid(), QUuid()});
+			c.board = id(601);
+			c.conductor.section = 6.0;
+			model.setCircuit(c);
+			e = evaluate(c, model);
+			QVERIFY(qAbs(*e.cumulativePercent - 0.978261) < 1e-6);
+				// any other use: no 125 %
+			c.use = CircuitUse::OtherUses;
+			QVERIFY(!evaluate(c, rebt::AmpacityLibrary()).sizingCurrent);
+		}
+
+		void pvThroughTheCircuit()
+		{
+				// the example of tst_rebtpv, through the model
+			Circuit c;
+			c.use = CircuitUse::GeneratorLine;
+			PvData &p = c.pv;
+			p.openCircuitVoltage = 42.5;
+			p.mppVoltage = 37.0;
+			p.shortCircuitCurrent = 9.18;
+			p.mppCurrent = 8.64;
+			p.vocCoefficient = -0.29;
+			p.vmppCoefficient = -0.37;
+			p.maxSystemVoltage = 1000.0;
+			p.maxSeriesFuse = 15.0;
+			p.moduleSource = QStringLiteral("Hoja");
+			p.maxDcVoltage = 600.0;
+			p.mpptMinVoltage = 90.0;
+			p.mpptMaxVoltage = 550.0;
+			p.maxInputCurrent = 22.0;
+			p.maxShortCircuitCurrent = 27.5;
+			p.inverterSource = QStringLiteral("Ficha");
+			p.minCellTemperature = -10.0;
+			p.maxCellTemperature = 70.0;
+			p.temperatureReason = QStringLiteral("Emplazamiento");
+			PvStringGroup g;
+			g.name = QStringLiteral("MPPT1");
+			g.modulesPerString = 8;
+			g.parallelStrings = 2;
+			g.cableLength = 30.0;
+			g.cableSection = 4.0;
+			g.cableMaterial = rebt::Material::Copper;
+			g.conductorTemperature = 90.0;
+			g.cableAdmissible = 20.0;
+			g.cableAdmissibleReason = QStringLiteral("Tabla");
+			p.strings = {g};
+			CircuitEvaluation e = evaluate(c, rebt::AmpacityLibrary());
+			QCOMPARE(e.pvStrings.size(), 1);
+			QVERIFY(qAbs(*e.pvStrings.first().openCircuitMax - 374.51) < 1e-9);
+			QCOMPARE(e.pvOutcome, rebt::CheckOutcome::Passed);
+				// a second input with 14 modules: over 600 V, the generator fails
+			PvStringGroup h = g;
+			h.name = QStringLiteral("MPPT2");
+			h.modulesPerString = 14;
+			c.pv.strings << h;
+			e = evaluate(c, rebt::AmpacityLibrary());
+			QCOMPARE(e.pvStrings.size(), 2);
+			QCOMPARE(e.pvStrings.at(1).voltage, rebt::CheckOutcome::NotPassed);
+			QCOMPARE(e.pvOutcome, rebt::CheckOutcome::NotPassed);
+				// an Iz with no source is not used
+			c.pv.strings = {g};
+			c.pv.strings[0].cableAdmissibleReason.clear();
+			e = evaluate(c, rebt::AmpacityLibrary());
+			QCOMPARE(e.pvStrings.first().cable, rebt::CheckOutcome::NotPerformed);
+			QCOMPARE(e.pvOutcome, rebt::CheckOutcome::NotPerformed);
+			const auto &d = e.pvStrings.first().diagnostics;
+			QVERIFY(std::find(d.begin(), d.end(),
+							  rebt::Diagnostic{rebt::Issue::MissingJustification, "cableAdmissible"})
+					!= d.end());
+				// no strings: nothing of it
+			c.pv.strings.clear();
+			e = evaluate(c, rebt::AmpacityLibrary());
+			QVERIFY(e.pvStrings.isEmpty());
+			QCOMPARE(e.pvOutcome, rebt::CheckOutcome::NotPerformed);
 		}
 
 		void ownTransformerLimits()

@@ -162,7 +162,8 @@ ElectricalCircuitsDock::ElectricalCircuitsDock(QWidget *parent) :
 							 tr("ΔU total (%)"), tr("ΔU check"), tr("Iz (A)"),
 							 tr("Ib ≤ Iz"), tr("Protection ↔ cable"),
 							 tr("Icc max (kA)"), tr("Icc min (kA)"),
-							 tr("Short circuit"), tr("Indirect contacts"), tr("ITC-BT-25")});
+							 tr("Short circuit"), tr("Indirect contacts"), tr("PV"),
+							 tr("ITC-BT-25")});
 	m_tree->setRootIsDecorated(true);
 	m_tree->setAlternatingRowColors(true);
 	m_tree->setUniformRowHeights(true);
@@ -246,6 +247,7 @@ void ElectricalCircuitsDock::refresh()
 	int sc_passed = 0, sc_not_passed = 0, sc_not_performed = 0;
 	int dw_passed = 0, dw_not_passed = 0, dw_not_performed = 0;
 	int ic_passed = 0, ic_not_passed = 0, ic_not_performed = 0;
+	int pv_passed = 0, pv_not_passed = 0, pv_not_performed = 0;
 	bool earthing_given = false;
 	for (const Board &b : model.boards())
 		earthing_given = earthing_given || b.earthing.has_value();
@@ -270,6 +272,13 @@ void ElectricalCircuitsDock::refresh()
 				case rebt::CheckOutcome::Passed: ++sc_passed; break;
 				case rebt::CheckOutcome::NotPassed: ++sc_not_passed; break;
 				case rebt::CheckOutcome::NotPerformed: ++sc_not_performed; break;
+			}
+			if (!e.pvStrings.isEmpty()) {
+				switch (e.pvOutcome) {
+					case rebt::CheckOutcome::Passed: ++pv_passed; break;
+					case rebt::CheckOutcome::NotPassed: ++pv_not_passed; break;
+					case rebt::CheckOutcome::NotPerformed: ++pv_not_performed; break;
+				}
 			}
 			switch (e.indirect.outcome) {
 				case rebt::CheckOutcome::Passed: ++ic_passed; break;
@@ -357,6 +366,10 @@ void ElectricalCircuitsDock::refresh()
 			 : QLatin1Char(' ')
 			   + tr("Indirect contacts: %1 passed, %2 not passed, %3 not performed.")
 				 .arg(ic_passed).arg(ic_not_passed).arg(ic_not_performed))
+		  + (pv_passed + pv_not_passed + pv_not_performed == 0 ? QString()
+			 : QLatin1Char(' ')
+			   + tr("PV, DC side: %1 passed, %2 not passed, %3 not performed.")
+				 .arg(pv_passed).arg(pv_not_passed).arg(pv_not_performed))
 		  + (dw_passed + dw_not_passed + dw_not_performed == 0 ? QString()
 			 : QLatin1Char(' ')
 			   + tr("ITC-BT-25: %1 passed, %2 not passed, %3 not performed.")
@@ -450,6 +463,15 @@ void ElectricalCircuitsDock::fillCircuitRow(QTreeWidgetItem *item, const Circuit
 	if (e.indirect.outcome == rebt::CheckOutcome::NotPassed) ic_color = FAILED;
 	item->setForeground(IndirectColumn, ic_color);
 	item->setToolTip(IndirectColumn, ElectricalTexts::indirectDetails(e));
+
+	if (!e.pvStrings.isEmpty()) {
+		item->setText(PvColumn, ElectricalTexts::pvOutcome(e));
+		QColor pv_color = GREY;
+		if (e.pvOutcome == rebt::CheckOutcome::Passed) pv_color = PASSED;
+		if (e.pvOutcome == rebt::CheckOutcome::NotPassed) pv_color = FAILED;
+		item->setForeground(PvColumn, pv_color);
+		item->setToolTip(PvColumn, ElectricalTexts::pvDetails(c, e));
+	}
 
 	if (c.dwellingCircuit) {
 		item->setText(DwellingColumn, ElectricalTexts::dwellingCode(*c.dwellingCircuit)

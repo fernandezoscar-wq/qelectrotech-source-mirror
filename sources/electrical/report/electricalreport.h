@@ -99,6 +99,7 @@ struct ElectricalReport
 	CheckCounts coordination;
 	CheckCounts shortCircuit;
 	CheckCounts indirect;         ///< ITC-BT-24, counted when a board gives its earthing
+	CheckCounts pv;               ///< DC side of the PV generators, circuits that have one
 	bool earthingGiven = false;   ///< some board of the project gives its earthing
 	CheckCounts dwelling;         ///< dwelling circuits only
 	CheckCounts dwellings;        ///< dwellings as a whole

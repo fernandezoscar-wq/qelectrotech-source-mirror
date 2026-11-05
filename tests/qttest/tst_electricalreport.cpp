@@ -176,6 +176,54 @@ class tst_electricalreport : public QObject
 			QLocale::setDefault(QLocale(QLocale::Spanish, QLocale::Spain));
 		}
 
+		void pvInTheReport()
+		{
+			ElectricalModel model = chainModel();
+			ElectricalReport r = ElectricalReportBuilder::build(
+				model, tables(), QStringLiteral("t.json"), QStringLiteral("Vivienda"));
+			QCOMPARE(r.pv.passed + r.pv.notPassed + r.pv.notPerformed, 0);
+				// the test example of tst_rebtpv on C1, 14 modules: over 600 V
+			for (Circuit c : model.circuits()) {
+				if (c.name != QLatin1String("C1 Alumbrado")) continue;
+				PvData &p = c.pv;
+				p.openCircuitVoltage = 42.5; p.mppVoltage = 37.0;
+				p.shortCircuitCurrent = 9.18; p.mppCurrent = 8.64;
+				p.vocCoefficient = -0.29; p.vmppCoefficient = -0.37;
+				p.maxSystemVoltage = 1000.0; p.maxSeriesFuse = 15.0;
+				p.moduleSource = QStringLiteral("Hoja");
+				p.maxDcVoltage = 600.0; p.mpptMinVoltage = 90.0; p.mpptMaxVoltage = 550.0;
+				p.maxInputCurrent = 22.0; p.maxShortCircuitCurrent = 27.5;
+				p.inverterSource = QStringLiteral("Ficha");
+				p.minCellTemperature = -10.0; p.maxCellTemperature = 70.0;
+				p.temperatureReason = QStringLiteral("Sitio");
+				PvStringGroup g;
+				g.name = QStringLiteral("MPPT1");
+				g.modulesPerString = 14; g.parallelStrings = 2;
+				g.cableLength = 30.0; g.cableSection = 4.0;
+				g.cableMaterial = rebt::Material::Copper; g.conductorTemperature = 90.0;
+				g.cableAdmissible = 20.0; g.cableAdmissibleReason = QStringLiteral("Tabla");
+				p.strings = {g};
+				model.setCircuit(c);
+			}
+			r = ElectricalReportBuilder::build(model, tables(), QStringLiteral("t.json"),
+											   QStringLiteral("Vivienda"));
+			QCOMPARE(r.pv.notPassed, 1);
+			bool found = false;
+			for (const CircuitNotes &n : r.notes) {
+				const QString text = n.lines.join('\n');
+				if (!text.contains(QStringLiteral("Photovoltaic generator, DC side: Not passed")))
+					continue;
+				found = true;
+				QVERIFY(n.hasProblem);
+				QVERIFY2(text.contains(QStringLiteral("UOC MAX 655,4 V")), qPrintable(text));
+			}
+			QVERIFY(found);
+			bool cited = false;
+			for (const rebt::NormRef &n : r.rules)
+				cited = cited || n.id == "REBT-FV-001";
+			QVERIFY(cited);
+		}
+
 		void indirectContactsInTheReport()
 		{
 			ElectricalModel model = chainModel();

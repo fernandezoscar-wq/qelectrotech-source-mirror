@@ -21,6 +21,7 @@
 #include "electrical/ui/circuitdialog.h"
 #include "electrical/ui/roomsdialog.h"
 #include "electrical/ui/devicepickerdialog.h"
+#include "electrical/ui/pvdialog.h"
 #include "electrical/devicecatalogue.h"
 #include "electrical/ui/electricalelementwidget.h"
 #include "ui/elementpropertieswidget.h"
@@ -28,6 +29,12 @@
 #include <QTabWidget>
 #include "electrical/ui/electricalcircuitsdock.h"
 #include "qetgraphicsitem/conductor.h"
+#include "factory/elementfactory.h"
+#include "qetresult.h"
+#include "ElementsCollection/elementslocation.h"
+#include "diagramcontext.h"
+#include "qetgraphicsitem/terminal.h"
+#include "qetgraphicsitem/independenttextitem.h"
 #include "qetgraphicsitem/element.h"
 #include "qetproject.h"
 #include "electrical/ampacityfile.h"
@@ -102,6 +109,9 @@ class tst_electricalpanel : public QObject
 		void electricalTab();
 		void deviceCatalogue();
 		void indirectContacts();
+		void photovoltaic();
+		void exampleProject();
+		void exampleVelilla();
 		void screenshot();
 
 	private:
@@ -1372,6 +1382,483 @@ void tst_electricalpanel::indirectContacts()
 	QVERIFY2(row->toolTip(D::IndirectColumn).contains(QStringLiteral("Ia = IΔn of ID1 = 30 mA")),
 			 qPrintable(row->toolTip(D::IndirectColumn)));
 	QVERIFY(row->toolTip(D::IndirectColumn).contains(QStringLiteral("Largest RA: U / Ia = 1666,67 Ω")));
+}
+
+void tst_electricalpanel::photovoltaic()
+{
+	using D = ElectricalCircuitsDock;
+	PvData empty;
+	PvDialog dialog(empty);
+	QVERIFY(dialog.pv().isEmpty());
+	QVERIFY(dialog.resultLabel()->text().contains(QStringLiteral("Add the strings")));
+		//the example of tst_rebtpv, typed in
+	const QList<QPair<const char *, const char *>> values{
+		{"moduleName", " Módulo 320 W "}, {"openCircuitVoltage", "42,5"},
+		{"mppVoltage", "37"}, {"shortCircuitCurrent", "9,18"}, {"mppCurrent", "8,64"},
+		{"vocCoefficient", "-0,29"}, {"vmppCoefficient", "-0,37"},
+		{"maxSystemVoltage", "1000"}, {"maxSeriesFuse", "15"}, {"moduleSource", "Hoja"},
+		{"inverterName", "Inversor 5 kW"}, {"maxDcVoltage", "600"}, {"mpptMinVoltage", "90"},
+		{"mpptMaxVoltage", "550"}, {"maxInputCurrent", "22"},
+		{"maxShortCircuitCurrent", "27,5"}, {"inverterSource", "Ficha"},
+		{"minCellTemperature", "-10"}, {"maxCellTemperature", "70"},
+		{"temperatureReason", "Emplazamiento"}};
+	for (const auto &v : values) {
+		QLineEdit *edit = dialog.field(QLatin1String(v.first));
+		QVERIFY2(edit, v.first);
+		edit->setText(QString::fromUtf8(v.second));
+	}
+	dialog.addGroup();
+	QTableWidget *t = dialog.stringsTable();
+	QCOMPARE(t->rowCount(), 1);
+	QCOMPARE(t->item(0, 0)->text(), QStringLiteral("MPPT1"));
+	const QStringList row{QStringLiteral("MPPT1"), QStringLiteral("8"), QStringLiteral("2"),
+						  QString(), QStringLiteral("30"), QStringLiteral("4"),
+						  QStringLiteral("cu"), QStringLiteral("90"), QStringLiteral("20"),
+						  QStringLiteral("Tabla FV")};
+	for (int c = 0; c < row.size(); ++c)
+		t->item(0, c)->setText(row.at(c));
+	QVERIFY(dialog.isValid());
+	PvData pv = dialog.pv();
+	QCOMPARE(pv.moduleName, QStringLiteral("Módulo 320 W"));
+	QCOMPARE(*pv.vocCoefficient, -0.29);
+	QCOMPARE(pv.strings.size(), 1);
+	QCOMPARE(*pv.strings.first().modulesPerString, 8);
+	QCOMPARE(*pv.strings.first().cableMaterial, rebt::Material::Copper);
+	QVERIFY(!pv.strings.first().stringFuse);
+	QVERIFY2(dialog.resultLabel()->text().contains(QStringLiteral("UOC MAX 374,5 V")),
+			 qPrintable(dialog.resultLabel()->text()));
+		//not valid: a count of 0, a material that is not one
+	t->item(0, 1)->setText(QStringLiteral("0"));
+	QVERIFY(!dialog.isValid());
+	t->item(0, 1)->setText(QStringLiteral("8"));
+	t->item(0, 6)->setText(QStringLiteral("hierro"));
+	QVERIFY(!dialog.isValid());
+	t->item(0, 6)->setText(QStringLiteral("Cu"));
+	dialog.field(QStringLiteral("openCircuitVoltage"))->setText(QStringLiteral("cuarenta"));
+	QVERIFY(!dialog.isValid());
+	dialog.field(QStringLiteral("openCircuitVoltage"))->setText(QStringLiteral("42,5"));
+	QVERIFY(dialog.isValid());
+	pv = dialog.pv();
+
+		//On a generator line of the panel: its column and the summary
+	const QUuid board_id = m_dock->createBoard(QStringLiteral("CGMP"));
+	Circuit c = sampleCircuit(board_id);
+	c.use = CircuitUse::GeneratorLine;
+	c.pv = pv;
+	QVERIFY(m_dock->applyCircuit(c));
+	QTreeWidgetItem *item = m_dock->tree()->topLevelItem(0)->child(0);
+	QCOMPARE(item->text(D::PvColumn), QStringLiteral("Passed"));
+	QVERIFY(item->toolTip(D::PvColumn).contains(QStringLiteral("REBT-FV-001")));
+	QVERIFY(m_dock->summaryLabel()->text().contains(
+		QStringLiteral("PV, DC side: 1 passed, 0 not passed, 0 not performed.")));
+		//the circuit dialog keeps it, and says so
+	{
+		CircuitDialog cd(*m_project->electricalModel().circuit(c.id), {});
+		QVERIFY(cd.pvButton());
+		QVERIFY(cd.pvSummary()->text().contains(QStringLiteral("1 input(s): Passed")));
+		QCOMPARE(cd.circuit().pv, pv);
+		cd.setPv(PvData());
+		QVERIFY(cd.circuit().pv.isEmpty());
+		QVERIFY(cd.pvSummary()->text().startsWith(QStringLiteral("None")));
+	}
+		//a circuit with no PV leaves the column empty
+	Circuit other = sampleCircuit(board_id);
+	QVERIFY(m_dock->applyCircuit(other));
+	for (int i = 0; i < m_dock->tree()->topLevelItem(0)->childCount(); ++i) {
+		QTreeWidgetItem *row_item = m_dock->tree()->topLevelItem(0)->child(i);
+		if (row_item->data(0, Qt::UserRole).toUuid() == other.id)
+			QVERIFY(row_item->text(D::PvColumn).isEmpty());
+	}
+}
+
+/**
+	Only when asked (QET_EXAMPLE_PROJECT = path of the .qet): the dwelling of
+	docs/rebt guide, 120 m2 with air conditioning and dryer planned, drawn
+	and with its data, as an example to open in the application.
+*/
+void tst_electricalpanel::exampleProject()
+{
+	const QString path = qEnvironmentVariable("QET_EXAMPLE_PROJECT");
+	if (path.isEmpty())
+		QSKIP("QET_EXAMPLE_PROJECT not set");
+	QETProject project;
+	project.setTitle(QStringLiteral("Vivienda 120 m² — electrificación elevada (ejemplo)"));
+	Diagram *folio = project.addNewDiagram();
+	QVERIFY(folio);
+	const QString base = QStringLiteral("common://10_electric/11_singlepole/");
+	auto place = [&](const QString &location, const QString &label, const QPointF &pos) {
+		ElementsLocation common(base + location);
+		if (!common.exist()) return static_cast<Element *>(nullptr);
+		ElementsLocation embedded = project.importElement(common);
+		int state = 0;
+		Element *e = ElementFactory::Instance()->createElement(embedded, nullptr, &state);
+		if (!e || state) return static_cast<Element *>(nullptr);
+		e->setPos(pos);
+		folio->addItem(e);
+		DiagramContext info = e->elementInformations();
+		info.addValue(QStringLiteral("label"), label);
+		e->setElementInformations(info);
+		return e;
+	};
+	auto end = [](Element *e, bool top) {
+			//The terminal pointing up for the incoming wire, down for the outgoing
+		for (Terminal *t : e->terminals())
+			if (t->orientation() == (top ? Qet::North : Qet::South))
+				return t;
+		return e->terminals().isEmpty() ? nullptr : e->terminals().first();
+	};
+	auto wire = [&](Element *a, Element *b) {
+		folio->addItem(new Conductor(end(a, false), end(b, true)));
+	};
+	const QString breaker = QStringLiteral(
+		"200_fuses_protective_gears/12_magneto_thermal_circuit_breakers/"
+		"disjoncteur_magneto-thermique_1.elmt");
+	const QString rcd = QStringLiteral(
+		"200_fuses_protective_gears/50_residual_current_circuit_breaker/int_diff-1p.elmt");
+	Element *meter = place(QStringLiteral("500_home_installation/40_meters/"
+										  "compteur_220v_monophase.elmt"),
+						   QStringLiteral("Contador"), QPointF(500, 60));
+	Element *iga = place(breaker, QStringLiteral("IGA 40 A"), QPointF(500, 200));
+	Element *id1 = place(rcd, QStringLiteral("ID1 40 A 30 mA"), QPointF(260, 340));
+	Element *id2 = place(rcd, QStringLiteral("ID2 40 A 30 mA"), QPointF(760, 340));
+	QVERIFY(meter && iga && id1 && id2);
+	wire(meter, iga);
+	wire(iga, id1);
+	wire(iga, id2);
+	struct Row { const char *code; const char *name; double in; double s; double tube;
+				 double p; int points; double l; bool second;
+				 rebt::DwellingCircuit circuit; };
+	const Row rows[] = {
+		{"C1", "C1 Alumbrado", 10, 1.5, 16, 2300, 18, 20, false, rebt::DwellingCircuit::C1},
+		{"C2", "C2 Tomas de uso general", 16, 2.5, 20, 3450, 15, 25, false, rebt::DwellingCircuit::C2},
+		{"C3", "C3 Cocina y horno", 25, 6, 25, 5400, 1, 12, false, rebt::DwellingCircuit::C3},
+		{"C4", "C4 Lavadora, lavavajillas y termo", 20, 4, 20, 3450, 3, 15, false, rebt::DwellingCircuit::C4},
+		{"C5", "C5 Baño y cocina", 16, 2.5, 20, 3450, 6, 15, false, rebt::DwellingCircuit::C5},
+		{"C9", "C9 Aire acondicionado", 25, 6, 25, 5750, 1, 20, true, rebt::DwellingCircuit::C9},
+		{"C10", "C10 Secadora", 16, 2.5, 20, 3450, 1, 15, true, rebt::DwellingCircuit::C10}};
+	QList<Element *> breakers;
+	int left = 0, right = 0;
+	for (const Row &r : rows) {
+		const double x = r.second ? 700 + 120 * right++ : 60 + 120 * left++;
+		Element *b = place(breaker, QStringLiteral("%1 %2 A").arg(QLatin1String(r.code))
+								   .arg(r.in), QPointF(x, 500));
+		QVERIFY(b);
+		wire(r.second ? id2 : id1, b);
+		breakers << b;
+	}
+
+		//The data: the meter's board, its DI, the dwelling's board
+	ElectricalModel model;
+	Board contadores{QUuid::createUuid(), QStringLiteral("Contadores"), meter->uuid(), QUuid()};
+	model.setBoard(contadores);
+	Circuit di;
+	di.id = QUuid::createUuid();
+	di.name = QStringLiteral("DI");
+	di.board = contadores.id;
+	di.use = CircuitUse::DiMetersTotallyGrouped;
+	di.system = rebt::System::SinglePhase;
+	di.voltage = 230.0;
+	di.load.power = 9200.0;
+	di.load.powerFactor = 1.0;
+	di.conductor.material = rebt::Material::Copper;
+	di.conductor.section = 16.0;
+	di.conductor.neutralSection = 16.0;
+	di.conductor.peSection = 16.0;
+	di.conductor.length = 20.0;
+	di.conductor.temperature = 70.0;
+	di.notes = QStringLiteral("Ejemplo: sección, longitud y protección de la DI a revisar en obra.");
+	model.setCircuit(di);
+	Board cgmp{QUuid::createUuid(), QStringLiteral("CGMP Vivienda"), iga->uuid(), di.id};
+	cgmp.dwellingArea = 120.0;
+	cgmp.plannedHeating = false;
+	cgmp.plannedAirConditioning = true;
+	cgmp.plannedAutomation = false;
+	cgmp.plannedVehicleCharging = false;
+	cgmp.plannedDryer = true;
+	cgmp.singleFamily = false;
+	cgmp.generalSwitch = 40.0;
+	cgmp.residualDevices = {{QStringLiteral("ID1"), 30.0, 40.0},
+							{QStringLiteral("ID2"), 30.0, 40.0}};
+	cgmp.earthing = rebt::EarthingSystem::TT;
+	{
+		using I = rebt::RoomItem;
+		auto room = [](const char *name, rebt::RoomType type, std::optional<double> area,
+					   std::optional<double> length, std::optional<int> accesses,
+					   QMap<rebt::RoomItem, int> counts) {
+			RoomData r;
+			r.name = QString::fromUtf8(name);
+			r.type = type;
+			r.area = area;
+			r.length = length;
+			r.accesses = accesses;
+			r.counts = counts;
+			return r;
+		};
+		cgmp.rooms = {
+			room("Acceso", rebt::RoomType::Access, std::nullopt, std::nullopt, std::nullopt,
+				 {{I::Bell, 1}, {I::LightPoints, 1}, {I::Switches, 1}}),
+			room("Vestíbulo", rebt::RoomType::Hall, 4.0, std::nullopt, std::nullopt,
+				 {{I::LightPoints, 1}, {I::Switches, 1}, {I::Sockets, 1}}),
+			room("Salón", rebt::RoomType::LivingRoom, 28.0, std::nullopt, std::nullopt,
+				 {{I::LightPoints, 2}, {I::Switches, 2}, {I::Sockets, 5}, {I::AirConditioning, 2}}),
+			room("Dormitorio principal", rebt::RoomType::Bedroom, 14.0, std::nullopt, std::nullopt,
+				 {{I::LightPoints, 2}, {I::Switches, 2}, {I::Sockets, 3}, {I::AirConditioning, 1}}),
+			room("Dormitorio 2", rebt::RoomType::Bedroom, 11.0, std::nullopt, std::nullopt,
+				 {{I::LightPoints, 2}, {I::Switches, 2}, {I::Sockets, 3}, {I::AirConditioning, 1}}),
+			room("Dormitorio 3", rebt::RoomType::Bedroom, 9.0, std::nullopt, std::nullopt,
+				 {{I::LightPoints, 1}, {I::Switches, 1}, {I::Sockets, 3}, {I::AirConditioning, 1}}),
+			room("Baño", rebt::RoomType::Bathroom, 5.0, std::nullopt, std::nullopt,
+				 {{I::LightPoints, 1}, {I::Switches, 1}, {I::WetSockets, 1}}),
+			room("Pasillo", rebt::RoomType::Corridor, std::nullopt, 7.0, 2,
+				 {{I::LightPoints, 2}, {I::Switches, 2}, {I::Sockets, 2}}),
+			room("Cocina", rebt::RoomType::Kitchen, 12.0, std::nullopt, std::nullopt,
+				 {{I::LightPoints, 2}, {I::Switches, 2}, {I::Sockets, 2}, {I::Cooker, 1},
+				  {I::ApplianceSockets, 3}, {I::WetSockets, 3}, {I::Dryer, 1}})};
+	}
+	model.setBoard(cgmp);
+	for (int i = 0; i < int(std::size(rows)); ++i) {
+		const Row &r = rows[i];
+		Circuit c;
+		c.id = QUuid::createUuid();
+		c.name = QString::fromUtf8(r.name);
+		c.board = cgmp.id;
+		c.use = CircuitUse::DwellingInterior;
+		c.dwellingCircuit = r.circuit;
+		c.points = r.points;
+		c.system = rebt::System::SinglePhase;
+		c.voltage = 230.0;
+		c.load.power = r.p;
+		c.load.powerFactor = 1.0;
+		c.conductor.material = rebt::Material::Copper;
+		c.conductor.insulation = Insulation::PVC;
+		c.conductor.installationMethod = QStringLiteral("B1");
+		c.conductor.section = r.s;
+		c.conductor.neutralSection = r.s;
+		c.conductor.peSection = r.s;
+		c.conductor.conduit = r.tube;
+		c.conductor.length = r.l;
+		c.conductor.temperature = 70.0;
+		c.protection.element = breakers.at(i)->uuid();
+		c.protection.type = ProtectionType::CircuitBreaker;
+		c.protection.standard = rebt::ProtectionStandard::EN60898;
+		c.protection.ratedCurrent = r.in;
+		c.protection.curve = QStringLiteral("C");
+		c.protection.breakingCapacity = 6.0;
+		c.protection.poles = 2;
+		c.protection.residualDevice = r.second ? QStringLiteral("ID2") : QStringLiteral("ID1");
+		c.notes = QStringLiteral("Valores de ejemplo: potencia, puntos y longitud a sustituir por los de la obra.");
+		model.setCircuit(c);
+	}
+	ReportInfo info;
+	info.documentTitle = QStringLiteral("Anexo de cálculo — ejemplo");
+	model.setReportInfo(info);
+	QVERIFY(project.setElectricalModel(model, false));
+	project.setFilePath(path);
+	QVERIFY(project.write().isOk());
+
+		//What the panel says of it, for the record
+	ElectricalCircuitsDock dock;
+	dock.setProject(&project);
+	qInfo().noquote() << dock.summaryLabel()->text();
+	for (int i = 0; i < dock.tree()->topLevelItemCount(); ++i) {
+		QTreeWidgetItem *board = dock.tree()->topLevelItem(i);
+		qInfo().noquote() << board->text(0) << "|" << board->text(ElectricalCircuitsDock::DwellingColumn) << "|"
+						  << board->toolTip(ElectricalCircuitsDock::DwellingColumn);
+		for (int j = 0; j < board->childCount(); ++j)
+			qInfo().noquote() << "  " << board->child(j)->text(0) << "| dU"
+							  << board->child(j)->text(ElectricalCircuitsDock::DropTotalColumn)
+							  << board->child(j)->text(ElectricalCircuitsDock::CheckColumn)
+							  << "| 25:" << board->child(j)->text(ElectricalCircuitsDock::DwellingColumn);
+	}
+}
+
+/**
+	Only when asked (QET_EXAMPLE_VELILLA = path of the .qet): the dwelling
+	board of the user's plan "Unifilar cuadro vivienda, 41 viviendas
+	unifamiliares en Velilla de San Antonio" (01-07-21), as drawn there,
+	with a surge protector added at the IGA. What the plan does not give
+	(powers, lengths, curves, points) is left empty.
+*/
+void tst_electricalpanel::exampleVelilla()
+{
+	const QString path = qEnvironmentVariable("QET_EXAMPLE_VELILLA");
+	if (path.isEmpty())
+		QSKIP("QET_EXAMPLE_VELILLA not set");
+	QETProject project;
+	project.setTitle(QStringLiteral("41 viviendas unifamiliares con zona común en Velilla de San Antonio"));
+	Diagram *folio = project.addNewDiagram();
+	QVERIFY(folio);
+	folio->border_and_titleblock.setColumnsCount(23);   // 11 circuits side by side
+	const QString base = QStringLiteral("common://10_electric/");
+	auto place = [&](const QString &location, const QString &label, const QPointF &pos) {
+		ElementsLocation common(base + location);
+		if (!common.exist()) return static_cast<Element *>(nullptr);
+		ElementsLocation embedded = project.importElement(common);
+		int state = 0;
+		Element *e = ElementFactory::Instance()->createElement(embedded, nullptr, &state);
+		if (!e || state) return static_cast<Element *>(nullptr);
+		e->setPos(pos);
+		folio->addItem(e);
+		DiagramContext info = e->elementInformations();
+		info.addValue(QStringLiteral("label"), label);
+		e->setElementInformations(info);
+		return e;
+	};
+	auto end = [](Element *e, bool top) {
+		for (Terminal *t : e->terminals())
+			if (t->orientation() == (top ? Qet::North : Qet::South))
+				return t;
+		return e->terminals().isEmpty() ? nullptr : e->terminals().first();
+	};
+	auto wire = [&](Element *a, Element *b) {
+		folio->addItem(new Conductor(end(a, false), end(b, true)));
+	};
+	const QString breaker = QStringLiteral(
+		"11_singlepole/200_fuses_protective_gears/12_magneto_thermal_circuit_breakers/"
+		"disjoncteur_magneto-thermique_1.elmt");
+	const QString rcd = QStringLiteral(
+		"11_singlepole/200_fuses_protective_gears/50_residual_current_circuit_breaker/int_diff-1p.elmt");
+	Element *meter = place(QStringLiteral("11_singlepole/500_home_installation/40_meters/"
+										  "compteur_220v_monophase.elmt"),
+						   QStringLiteral("CGPM"), QPointF(660, 40));
+	Element *transfer = place(QStringLiteral("11_singlepole/200_fuses_protective_gears/"
+												 "20_disconnecting_switches/conmutador_transferencia_I-0-II.elmt"),
+								 QStringLiteral("CT I-0-II 2x40A"), QPointF(680, 140));
+	Element *generator = place(QStringLiteral("11_singlepole/392_generators_sources/10_generators/"
+												  "generatrice.elmt"),
+								  QStringLiteral("Grupo electrógeno"), QPointF(820, 110));
+	QVERIFY(transfer && generator);
+	auto *genText = new IndependentTextItem(QStringLiteral("Grupo electrógeno (fuente II)"));
+	genText->setPos(QPointF(850, 115));
+	folio->addItem(genText);
+	Element *iga = place(breaker, QStringLiteral("IGA 2x40A 6kA"), QPointF(680, 250));
+	Element *spd = place(QStringLiteral("10_allpole/200_fuses_protective_gears/"
+										"90_overvoltage_protections/parafoudre.elmt"),
+						 QStringLiteral("Sobretensiones"), QPointF(470, 370));
+	Element *earth = place(QStringLiteral("10_allpole/110_network_supplies/terre.elmt"),
+						   QString(), QPointF(470, 435));
+	Element *id1 = place(rcd, QStringLiteral("ID1 2x40A 30mA"), QPointF(280, 400));
+	Element *id2 = place(rcd, QStringLiteral("ID2 2x25A 30mA S.I."), QPointF(860, 400));
+	Element *id3 = place(rcd, QStringLiteral("ID3 2x40A 30mA"), QPointF(1110, 400));
+	QVERIFY(meter && iga && spd && earth && id1 && id2 && id3);
+	auto input = [&](bool second) {
+		Terminal *found = nullptr;
+		for (Terminal *t : transfer->terminals())
+			if (t->orientation() == Qet::North
+				&& (!found || (second ? t->dockConductor().x() > found->dockConductor().x()
+									  : t->dockConductor().x() < found->dockConductor().x())))
+				found = t;
+		return found;
+	};
+	QVERIFY(input(false) && input(true) && input(false) != input(true));
+	folio->addItem(new Conductor(end(meter, false), input(false)));
+	folio->addItem(new Conductor(generator->terminals().first(), input(true)));
+	wire(transfer, iga);
+	wire(iga, spd);
+	wire(spd, earth);
+	wire(iga, id1);
+	wire(iga, id2);
+	wire(iga, id3);
+	struct Row { const char *code; const char *name; double in; double s; int rcd;
+				 rebt::DwellingCircuit circuit; };
+	const Row rows[] = {
+		{"C1", "Iluminación Planta Baja", 10, 1.5, 1, rebt::DwellingCircuit::C1},
+		{"C2", "Usos Varios Planta Baja", 16, 2.5, 1, rebt::DwellingCircuit::C2},
+		{"C4.1", "Lavadora", 16, 2.5, 1, rebt::DwellingCircuit::C4Single},
+		{"C4.2", "Lavavajillas", 16, 2.5, 1, rebt::DwellingCircuit::C4Single},
+		{"C5", "Usos Varios Zonas Húmedas", 16, 2.5, 1, rebt::DwellingCircuit::C5},
+		{"C3", "Cocina", 25, 6, 1, rebt::DwellingCircuit::C3},
+		{"C4.3", "Caldera", 16, 2.5, 1, rebt::DwellingCircuit::C4Single},
+		{"C13", "Vehículo Eléctrico", 10, 2.5, 2, rebt::DwellingCircuit::C13},
+		{"C6", "Iluminación Planta 1ª", 10, 1.5, 3, rebt::DwellingCircuit::C6},
+		{"C7", "Usos Varios Planta 1ª", 16, 2.5, 3, rebt::DwellingCircuit::C7},
+		{"C9.1", "Aire Acondicionado", 25, 6, 3, rebt::DwellingCircuit::C9}};
+	QList<Element *> breakers;
+	const double xs[] = {40, 160, 280, 400, 520, 640, 760, 880, 1000, 1120, 1240};
+	for (int i = 0; i < int(std::size(rows)); ++i) {
+		const Row &r = rows[i];
+		Element *b = place(breaker, QStringLiteral("%1 2x%2A").arg(QLatin1String(r.code)).arg(r.in),
+						   QPointF(xs[i], 600));
+		QVERIFY(b);
+		wire(r.rcd == 1 ? id1 : r.rcd == 2 ? id2 : id3, b);
+		breakers << b;
+	}
+
+	ElectricalModel model;
+	Board cgpm{QUuid::createUuid(), QStringLiteral("CGPM"), meter->uuid(), QUuid()};
+	model.setBoard(cgpm);
+	Circuit di;
+	di.id = QUuid::createUuid();
+	di.name = QStringLiteral("Línea desde la CGPM (3x10 mm² Cu 0,6/1 kV bajo tubo)");
+	di.board = cgpm.id;
+	di.use = CircuitUse::DiSingleUser;
+	di.system = rebt::System::SinglePhase;
+	di.voltage = 230.0;
+	di.conductor.material = rebt::Material::Copper;
+	di.conductor.section = 10.0;
+	di.conductor.neutralSection = 10.0;
+	di.conductor.peSection = 10.0;
+	di.notes = QStringLiteral("Del plano: 3x10 mm², Cu, 0,6/1 kV, bajo tubo. Faltan longitud, "
+							  "aislamiento exacto del cable y potencia prevista.");
+	model.setCircuit(di);
+	Board cuadro{QUuid::createUuid(), QStringLiteral("Cuadro vivienda"), iga->uuid(), di.id};
+	cuadro.singleFamily = true;
+	cuadro.plannedVehicleCharging = true;
+	cuadro.plannedAirConditioning = true;
+	cuadro.generalSwitch = 40.0;
+	cuadro.residualDevices = {{QStringLiteral("ID1"), 30.0, 40.0},
+							  {QStringLiteral("ID2"), 30.0, 25.0},
+							  {QStringLiteral("ID3"), 30.0, 40.0}};
+	model.setBoard(cuadro);
+	for (int i = 0; i < int(std::size(rows)); ++i) {
+		const Row &r = rows[i];
+		Circuit c;
+		c.id = QUuid::createUuid();
+		c.name = QStringLiteral("%1 %2").arg(QLatin1String(r.code), QString::fromUtf8(r.name));
+		c.board = cuadro.id;
+		c.use = CircuitUse::DwellingInterior;
+		c.dwellingCircuit = r.circuit;
+		c.system = rebt::System::SinglePhase;
+		c.voltage = 230.0;
+		c.conductor.material = rebt::Material::Copper;
+		c.conductor.insulation = Insulation::PVC;
+		c.conductor.section = r.s;
+		c.conductor.neutralSection = r.s;
+		c.conductor.peSection = r.s;
+		c.conductor.temperature = 70.0;
+		c.protection.element = breakers.at(i)->uuid();
+		c.protection.type = ProtectionType::CircuitBreaker;
+		c.protection.ratedCurrent = r.in;
+		c.protection.breakingCapacity = 6.0;
+		c.protection.poles = 2;
+		c.protection.residualDevice = QStringLiteral("ID%1").arg(r.rcd);
+		c.notes = QStringLiteral("Del plano: 2(1x%1)+%1 mm² H07Z1-K (AS) bajo tubo, 2x%2 A 6 kA. "
+								 "H07Z1-K es termoplástico de 70 °C: tomado como PVC. Faltan "
+								 "potencia, longitud, puntos, curva y norma del interruptor, "
+								 "método de instalación y tubo.")
+					  .arg(QLocale(QLocale::Spanish).toString(r.s)).arg(r.in);
+		model.setCircuit(c);
+	}
+	ReportInfo info;
+	info.documentTitle = QStringLiteral("Unifilar cuadro vivienda");
+	info.date = QStringLiteral("01-07-21");
+	model.setReportInfo(info);
+	QVERIFY(project.setElectricalModel(model, false));
+	project.setFilePath(path);
+	QVERIFY(project.write().isOk());
+
+	ElectricalCircuitsDock dock;
+	dock.setProject(&project);
+	qInfo().noquote() << dock.summaryLabel()->text();
+	for (int i = 0; i < dock.tree()->topLevelItemCount(); ++i) {
+		QTreeWidgetItem *board = dock.tree()->topLevelItem(i);
+		qInfo().noquote() << board->text(0) << "|" << board->text(ElectricalCircuitsDock::DwellingColumn)
+						  << "|" << board->toolTip(ElectricalCircuitsDock::DwellingColumn);
+		for (int j = 0; j < board->childCount(); ++j)
+			qInfo().noquote() << "  " << board->child(j)->text(0) << "| 25:"
+							  << board->child(j)->text(ElectricalCircuitsDock::DwellingColumn)
+							  << "|" << board->child(j)->toolTip(ElectricalCircuitsDock::DwellingColumn).replace('\n', " / ");
+	}
 }
 
 void tst_electricalpanel::screenshot()

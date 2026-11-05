@@ -53,6 +53,11 @@ class ElectricalTexts
 		static QString suggestion(const electrical::CircuitEvaluation &evaluation);
 		static QString standard(rebt::ProtectionStandard standard);
 		static QString earthing(rebt::EarthingSystem earthing);
+			/// The DC side of the PV generator of a circuit, as a whole
+		static QString pvOutcome(const electrical::CircuitEvaluation &evaluation);
+			/// Per group of strings: voltages, currents, fuses, cable, rules
+		static QString pvDetails(const electrical::Circuit &circuit,
+								 const electrical::CircuitEvaluation &evaluation);
 			/// "Passed"..., and "0.9 V ≤ 50 V" when computed
 		static QString indirectOutcome(const electrical::CircuitEvaluation &evaluation);
 			/// RA, Ia, U, contact voltage, what is missing, assumptions, rules

@@ -185,6 +185,8 @@ ElectricalReport ElectricalReportBuilder::build(const ElectricalModel &model,
 				report.dwelling.add(e.dwelling.outcome);
 			if (report.earthingGiven)
 				report.indirect.add(e.indirect.outcome);
+			if (!e.pvStrings.isEmpty())
+				report.pv.add(e.pvOutcome);
 			auto kilo = [](const std::optional<double> &a) {
 				return a ? formatNumber(*a / 1000.0, 2) : QStringLiteral("—");
 			};
@@ -234,6 +236,7 @@ ElectricalReport ElectricalReportBuilder::build(const ElectricalModel &model,
 							   || e.coordination.outcome == rebt::CheckOutcome::NotPassed
 							   || e.shortCircuit.outcome == rebt::CheckOutcome::NotPassed
 							   || e.indirect.outcome == rebt::CheckOutcome::NotPassed
+							   || e.pvOutcome == rebt::CheckOutcome::NotPassed
 							   || (c.dwellingCircuit
 								   && e.dwelling.outcome == rebt::CheckOutcome::NotPassed);
 			if (!c.protection.manufacturer.isEmpty() || !c.protection.partNumber.isEmpty())
@@ -261,6 +264,14 @@ ElectricalReport ElectricalReportBuilder::build(const ElectricalModel &model,
 				for (const QString &line : withoutRules(ElectricalTexts::indirectDetails(e)))
 					notes.lines << QStringLiteral("    ") + line;
 				add_rules(e.indirect.rules);
+			}
+			if (!e.pvStrings.isEmpty()) {
+				notes.lines << tr("Photovoltaic generator, DC side: %1")
+								   .arg(outcomeWord(e.pvOutcome));
+				for (const QString &line : withoutRules(ElectricalTexts::pvDetails(c, e)))
+					notes.lines << QStringLiteral("    ") + line;
+				for (const rebt::PvStringResult &r : e.pvStrings)
+					add_rules(r.rules);
 			}
 			if (c.dwellingCircuit) {
 				notes.lines << tr("ITC-BT-25, %1: %2")

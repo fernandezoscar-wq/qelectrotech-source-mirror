@@ -63,7 +63,10 @@ enum class CircuitUse {
 	LgaPartlyCentralized,   ///< LGA, meters partly centralized
 	DiMetersInSeveralPlaces,///< DI, meters grouped in more than one place
 	DiMetersTotallyGrouped, ///< DI, meters totally grouped
-	DiSingleUser            ///< DI of a single user, no LGA
+	DiSingleUser,           ///< DI of a single user, no LGA
+		/// Line of a generator (an inverter) to its point of connection:
+		/// its own drop, at most 1.5 %, cables for 125 % (ITC-BT-40 5)
+	GeneratorLine
 };
 
 /// Part of the interior installation: its drop adds up from the origin
@@ -210,6 +213,59 @@ struct Board
 	bool operator==(const Board &other) const;
 };
 
+/**
+	@brief One group of equal strings in parallel on one input (MPPT) of
+	the inverter, with its string cable
+*/
+struct PvStringGroup
+{
+	QString name;                          ///< "MPPT1"
+	std::optional<int> modulesPerString;
+	std::optional<int> parallelStrings;
+	std::optional<double> stringFuse;      ///< A, In of the string protection
+	std::optional<double> cableLength;     ///< m, one way, farthest module
+	std::optional<double> cableSection;    ///< mm2
+	std::optional<rebt::Material> cableMaterial;
+	std::optional<double> conductorTemperature;   ///< degC
+	std::optional<double> cableAdmissible; ///< Iz of the string cable, A
+	QString cableAdmissibleReason;         ///< table and factors it comes from
+
+	bool operator==(const PvStringGroup &other) const;
+};
+
+/**
+	@brief The photovoltaic generator behind an inverter: its module, the
+	DC input of the inverter, the site and the strings. Held by the
+	circuit of the inverter's AC line.
+*/
+struct PvData
+{
+	QString moduleName;                    ///< manufacturer and model
+	std::optional<double> openCircuitVoltage;    ///< Voc, V, STC
+	std::optional<double> mppVoltage;            ///< Vmpp, V
+	std::optional<double> shortCircuitCurrent;   ///< Isc, A
+	std::optional<double> mppCurrent;            ///< Impp, A
+	std::optional<double> vocCoefficient;        ///< %/degC
+	std::optional<double> vmppCoefficient;       ///< %/degC
+	std::optional<double> maxSystemVoltage;      ///< V
+	std::optional<double> maxSeriesFuse;         ///< A
+	QString moduleSource;                  ///< datasheet
+	QString inverterName;
+	std::optional<double> maxDcVoltage;          ///< V
+	std::optional<double> mpptMinVoltage;        ///< V
+	std::optional<double> mpptMaxVoltage;        ///< V
+	std::optional<double> maxInputCurrent;       ///< A, per MPPT
+	std::optional<double> maxShortCircuitCurrent;///< A, per MPPT
+	QString inverterSource;
+	std::optional<double> minCellTemperature;    ///< degC
+	std::optional<double> maxCellTemperature;    ///< degC
+	QString temperatureReason;
+	QList<PvStringGroup> strings;
+
+	bool isEmpty() const;
+	bool operator==(const PvData &other) const;
+};
+
 struct Circuit
 {
 	QUuid id;
@@ -227,6 +283,7 @@ struct Circuit
 	ConductorData conductor;
 	ProtectionData protection;
 	QString notes;                        ///< hypotheses, pending data
+	PvData pv;                            ///< the PV generator of a generator line
 
 	bool operator==(const Circuit &other) const;
 };

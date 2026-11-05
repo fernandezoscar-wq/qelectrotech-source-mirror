@@ -28438,6 +28438,29 @@ asociar el nombre de &quot;volta&quot; y el valor &quot;1745&quot; reemplazara %
 </context>
 <context>
     <name>CircuitDialog</name>
+    <message numerus="yes">
+        <source>%n input(s): %1</source>
+        <translation>
+            <numerusform>%n entrada: %1</numerusform>
+            <numerusform>%n entradas: %1</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Module, inverter input and strings of the inverter this line connects, for the checks of the DC side</source>
+        <translation>Módulo, entrada del inversor y strings del inversor que conecta esta línea, para las comprobaciones del lado de continua</translation>
+    </message>
+    <message>
+        <source>None. For a generator line, the inverter&apos;s PV generator.</source>
+        <translation>Ninguno. En una línea de generador, el generador FV del inversor.</translation>
+    </message>
+    <message>
+        <source>Photovoltaic generator</source>
+        <translation>Generador fotovoltaico</translation>
+    </message>
+    <message>
+        <source>Photovoltaic generator...</source>
+        <translation>Generador fotovoltaico...</translation>
+    </message>
     <message>
         <source>The PE (the PEN in TN-C): needed for the indirect contacts in TN and IT, never assumed</source>
         <translation>El PE (el PEN en TN-C): necesario para los contactos indirectos en TN e IT, nunca se supone</translation>
@@ -28842,6 +28865,14 @@ asociar el nombre de &quot;volta&quot; y el valor &quot;1745&quot; reemplazara %
 <context>
     <name>ElectricalCircuitsDock</name>
     <message>
+        <source>PV</source>
+        <translation>FV</translation>
+    </message>
+    <message>
+        <source>PV, DC side: %1 passed, %2 not passed, %3 not performed.</source>
+        <translation>FV, lado de continua. Superadas: %1; no superadas: %2; no realizadas: %3.</translation>
+    </message>
+    <message>
         <source>Indirect contacts</source>
         <translation>Contactos indirectos</translation>
     </message>
@@ -29235,6 +29266,170 @@ asociar el nombre de &quot;volta&quot; y el valor &quot;1745&quot; reemplazara %
 </context>
 <context>
     <name>ElectricalTexts</name>
+    <message>
+        <source>%1: %2 × %3 modules: %4</source>
+        <translation>%1: %2 × %3 módulos: %4</translation>
+    </message>
+    <message>
+        <source>DC drop %1 % &lt; 1.5 %: %2</source>
+        <translation>Caída en continua %1 % &lt; 1,5 %: %2</translation>
+    </message>
+    <message>
+        <source>Generator line, inverter to connection point (ITC-BT-40)</source>
+        <translation>Línea del generador, del inversor al punto de conexión (ITC-BT-40)</translation>
+    </message>
+    <message>
+        <source>Generator: the cable for 1.25 × IB = %1 A (ITC-BT-40 5)</source>
+        <translation>Generador: el cable para 1,25 × IB = %1 A (ITC-BT-40 5)</translation>
+    </message>
+    <message>
+        <source>ISC MAX taken as 1.25 ISC STC, on the safe side</source>
+        <translation>ISC MAX tomada como 1,25 ISC STC, del lado de la seguridad</translation>
+    </message>
+    <message>
+        <source>Impp of the module</source>
+        <translation>Impp del módulo</translation>
+    </message>
+    <message>
+        <source>Input %1</source>
+        <translation>Entrada %1</translation>
+    </message>
+    <message>
+        <source>Input %1 A (Isc), %2 A (Impp): %3</source>
+        <translation>Entrada %1 A (Isc), %2 A (Impp): %3</translation>
+    </message>
+    <message>
+        <source>Input currents at STC, not corrected for temperature or irradiance</source>
+        <translation>Corrientes de entrada en STC, sin corregir por temperatura ni irradiancia</translation>
+    </message>
+    <message>
+        <source>Isc of the module</source>
+        <translation>Isc del módulo</translation>
+    </message>
+    <message>
+        <source>Iz of the string cable</source>
+        <translation>Iz del cable de string</translation>
+    </message>
+    <message>
+        <source>Module: %1. Inverter: %2</source>
+        <translation>Módulo: %1. Inversor: %2</translation>
+    </message>
+    <message>
+        <source>One or two strings: the string cable for at least 1.25 ISC</source>
+        <translation>Uno o dos strings: el cable de string para al menos 1,25 ISC</translation>
+    </message>
+    <message>
+        <source>String cable for %1 A: %2</source>
+        <translation>Cable de string para %1 A: %2</translation>
+    </message>
+    <message>
+        <source>String fuses needed and none given</source>
+        <translation>Hacen falta fusibles de string y no se ha indicado ninguno</translation>
+    </message>
+    <message>
+        <source>String fuses needed, %1 A &lt; In &lt; %2 A: %3</source>
+        <translation>Hacen falta fusibles de string, %1 A &lt; In &lt; %2 A: %3</translation>
+    </message>
+    <message>
+        <source>String fuses not needed: %1</source>
+        <translation>No hacen falta fusibles de string: %1</translation>
+    </message>
+    <message>
+        <source>UMPP %1–%2 V in the MPPT range: %3</source>
+        <translation>UMPP %1–%2 V dentro del rango MPPT: %3</translation>
+    </message>
+    <message>
+        <source>UOC MAX %1 V ≤ inverter and module: %2</source>
+        <translation>UOC MAX %1 V ≤ inversor y módulo: %2</translation>
+    </message>
+    <message>
+        <source>Vmpp coefficient of the module</source>
+        <translation>coeficiente de Vmpp del módulo</translation>
+    </message>
+    <message>
+        <source>Vmpp of the module</source>
+        <translation>Vmpp del módulo</translation>
+    </message>
+    <message>
+        <source>Voc coefficient of the module</source>
+        <translation>coeficiente de Voc del módulo</translation>
+    </message>
+    <message>
+        <source>Voc of the module</source>
+        <translation>Voc del módulo</translation>
+    </message>
+    <message>
+        <source>highest MPPT voltage of the inverter</source>
+        <translation>tensión MPPT máxima del inversor</translation>
+    </message>
+    <message>
+        <source>highest cell temperature</source>
+        <translation>temperatura de célula máxima</translation>
+    </message>
+    <message>
+        <source>length of the string cable</source>
+        <translation>longitud del cable de string</translation>
+    </message>
+    <message>
+        <source>lowest MPPT voltage of the inverter</source>
+        <translation>tensión MPPT mínima del inversor</translation>
+    </message>
+    <message>
+        <source>lowest cell temperature</source>
+        <translation>temperatura de célula mínima</translation>
+    </message>
+    <message>
+        <source>material of the string cable</source>
+        <translation>material del cable de string</translation>
+    </message>
+    <message>
+        <source>maximum DC voltage of the inverter</source>
+        <translation>tensión continua máxima del inversor</translation>
+    </message>
+    <message>
+        <source>maximum input current per MPPT</source>
+        <translation>corriente de entrada máxima por MPPT</translation>
+    </message>
+    <message>
+        <source>maximum series fuse of the module</source>
+        <translation>fusible en serie máximo del módulo</translation>
+    </message>
+    <message>
+        <source>maximum short circuit current per MPPT</source>
+        <translation>corriente de cortocircuito máxima por MPPT</translation>
+    </message>
+    <message>
+        <source>maximum system voltage of the module</source>
+        <translation>tensión máxima del sistema del módulo</translation>
+    </message>
+    <message>
+        <source>modules per string</source>
+        <translation>módulos por string</translation>
+    </message>
+    <message>
+        <source>section of the string cable</source>
+        <translation>sección del cable de string</translation>
+    </message>
+    <message>
+        <source>source of the cell temperatures</source>
+        <translation>fuente de las temperaturas de célula</translation>
+    </message>
+    <message>
+        <source>source of the inverter data</source>
+        <translation>fuente de los datos del inversor</translation>
+    </message>
+    <message>
+        <source>source of the module data</source>
+        <translation>fuente de los datos del módulo</translation>
+    </message>
+    <message>
+        <source>string fuse</source>
+        <translation>fusible de string</translation>
+    </message>
+    <message>
+        <source>strings in parallel</source>
+        <translation>strings en paralelo</translation>
+    </message>
     <message>
         <source>2 Zs × Ia = %1 V; 2 Zs × Ia ≤ U: %2</source>
         <translation>2 Zs × Ia = %1 V; 2 Zs × Ia ≤ U: %2</translation>
@@ -30660,6 +30855,10 @@ asociar el nombre de &quot;volta&quot; y el valor &quot;1745&quot; reemplazara %
 <context>
     <name>ElectricalReportBuilder</name>
     <message>
+        <source>Photovoltaic generator, DC side: %1</source>
+        <translation>Generador fotovoltaico, lado de continua: %1</translation>
+    </message>
+    <message>
         <source>This annex shows, circuit by circuit, the checks listed, done with the data entered in the project. It does not state that the installation complies with the REBT as a whole: protection against electric shock beyond the conditions of ITC-BT-24 4.1 for indirect contacts (TT, TN and IT, with the RA and Id given), the earthing itself, selectivity, the protective conductor and the particular requirements of each ITC, beyond the checks of table 1 of ITC-BT-25 listed, are not checked here. The short circuit is checked only for the phase conductors, with the supply data of the origin board and the methods stated. A check marked &quot;not performed&quot; lacks data: it is neither passed nor failed.</source>
         <translation>Este anexo recoge, circuito a circuito, las comprobaciones indicadas, realizadas con los datos introducidos en el proyecto. No afirma que la instalación cumpla el REBT en su conjunto: no se comprueban aquí la protección contra los choques eléctricos, salvo las condiciones de la ITC-BT-24 4.1 para contactos indirectos (TT, TN e IT, con la RA y la Id indicadas), la propia puesta a tierra, la selectividad, el conductor de protección ni las prescripciones particulares de cada ITC, salvo las comprobaciones de la tabla 1 de la ITC-BT-25 indicadas. El cortocircuito se comprueba solo en los conductores de fase, con los datos de alimentación del cuadro de origen y los métodos indicados. Una comprobación «no realizada» carece de datos: no está superada ni incumplida.</translation>
     </message>
@@ -30937,6 +31136,10 @@ asociar el nombre de &quot;volta&quot; y el valor &quot;1745&quot; reemplazara %
 </context>
 <context>
     <name>ReportPdfWriter</name>
+    <message>
+        <source>PV generators, DC side (UNE-HD 60364-7-712, IDAE)</source>
+        <translation>Generadores FV, lado de continua (UNE-HD 60364-7-712, IDAE)</translation>
+    </message>
     <message>
         <source>Indirect contacts (ITC-BT-24 4.1)</source>
         <translation>Contactos indirectos (ITC-BT-24 4.1)</translation>
@@ -31456,6 +31659,209 @@ asociar el nombre de &quot;volta&quot; y el valor &quot;1745&quot; reemplazara %
     <message>
         <source>Type</source>
         <translation>Tipo</translation>
+    </message>
+</context>
+<context>
+    <name>PvDialog</name>
+    <message>
+        <source>%/°C</source>
+        <translation>%/°C</translation>
+    </message>
+    <message>
+        <source>A</source>
+        <translation>A</translation>
+    </message>
+    <message>
+        <source>A field holds text that is not a number.</source>
+        <translation>Un campo contiene texto que no es un número.</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Añadir</translation>
+    </message>
+    <message>
+        <source>Add the strings of each input.</source>
+        <translation>Añada los strings de cada entrada.</translation>
+    </message>
+    <message>
+        <source>Cable length (m)</source>
+        <translation>Longitud del cable (m)</translation>
+    </message>
+    <message>
+        <source>Conductor (°C)</source>
+        <translation>Conductor (°C)</translation>
+    </message>
+    <message>
+        <source>For the highest open circuit voltage: the lowest temperature of the site</source>
+        <translation>Para la tensión de circuito abierto máxima: la temperatura más baja del emplazamiento</translation>
+    </message>
+    <message>
+        <source>For the lowest MPP voltage: the highest cell temperature in operation</source>
+        <translation>Para la tensión MPP mínima: la temperatura de célula más alta en funcionamiento</translation>
+    </message>
+    <message>
+        <source>Highest in operation</source>
+        <translation>Máxima en funcionamiento</translation>
+    </message>
+    <message>
+        <source>IMOD_MAX_OCPR of the datasheet</source>
+        <translation>IMOD_MAX_OCPR de la hoja de datos</translation>
+    </message>
+    <message>
+        <source>Impp</source>
+        <translation>Impp</translation>
+    </message>
+    <message>
+        <source>Input</source>
+        <translation>Entrada</translation>
+    </message>
+    <message>
+        <source>Inverter, DC input (datasheet)</source>
+        <translation>Inversor, entrada de continua (hoja de datos)</translation>
+    </message>
+    <message>
+        <source>Isc</source>
+        <translation>Isc</translation>
+    </message>
+    <message>
+        <source>Iz (A)</source>
+        <translation>Iz (A)</translation>
+    </message>
+    <message>
+        <source>Length: one way, from the farthest module. Iz of the string cable with its source (table and factors). Empty: not known.</source>
+        <translation>Longitud: solo ida, desde el módulo más alejado. Iz del cable de string con su fuente (tabla y factores). Vacío: desconocido.</translation>
+    </message>
+    <message>
+        <source>Lowest</source>
+        <translation>Mínima</translation>
+    </message>
+    <message>
+        <source>MPPT from</source>
+        <translation>MPPT desde</translation>
+    </message>
+    <message>
+        <source>MPPT to</source>
+        <translation>MPPT hasta</translation>
+    </message>
+    <message>
+        <source>MPPT%1</source>
+        <translation>MPPT%1</translation>
+    </message>
+    <message>
+        <source>Manufacturer and model</source>
+        <translation>Fabricante y modelo</translation>
+    </message>
+    <message>
+        <source>Material (Cu/Al)</source>
+        <translation>Material (Cu/Al)</translation>
+    </message>
+    <message>
+        <source>Maximum DC voltage</source>
+        <translation>Tensión continua máxima</translation>
+    </message>
+    <message>
+        <source>Maximum input current per MPPT</source>
+        <translation>Corriente de entrada máxima por MPPT</translation>
+    </message>
+    <message>
+        <source>Maximum series fuse</source>
+        <translation>Fusible en serie máximo</translation>
+    </message>
+    <message>
+        <source>Maximum short circuit current per MPPT</source>
+        <translation>Corriente de cortocircuito máxima por MPPT</translation>
+    </message>
+    <message>
+        <source>Maximum system voltage</source>
+        <translation>Tensión máxima del sistema</translation>
+    </message>
+    <message>
+        <source>Module (datasheet, STC)</source>
+        <translation>Módulo (hoja de datos, STC)</translation>
+    </message>
+    <message>
+        <source>Modules per string</source>
+        <translation>Módulos por string</translation>
+    </message>
+    <message>
+        <source>Negative, e.g. -0,29</source>
+        <translation>Negativo, p. ej. -0,29</translation>
+    </message>
+    <message>
+        <source>Photovoltaic generator</source>
+        <translation>Generador fotovoltaico</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Quitar</translation>
+    </message>
+    <message>
+        <source>Section (mm²)</source>
+        <translation>Sección (mm²)</translation>
+    </message>
+    <message>
+        <source>Site: cell temperatures</source>
+        <translation>Emplazamiento: temperaturas de célula</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Fuente</translation>
+    </message>
+    <message>
+        <source>Source of Iz</source>
+        <translation>Fuente de Iz</translation>
+    </message>
+    <message>
+        <source>String fuse (A)</source>
+        <translation>Fusible de string (A)</translation>
+    </message>
+    <message>
+        <source>Strings in parallel</source>
+        <translation>Strings en paralelo</translation>
+    </message>
+    <message>
+        <source>Strings, one row per inverter input</source>
+        <translation>Strings, una fila por entrada del inversor</translation>
+    </message>
+    <message>
+        <source>V</source>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>Vmpp</source>
+        <translation>Vmpp</translation>
+    </message>
+    <message>
+        <source>Vmpp coefficient</source>
+        <translation>Coeficiente de Vmpp</translation>
+    </message>
+    <message>
+        <source>Voc</source>
+        <translation>Voc</translation>
+    </message>
+    <message>
+        <source>Voc coefficient</source>
+        <translation>Coeficiente de Voc</translation>
+    </message>
+    <message>
+        <source>When the datasheet does not give it, that of Pmax is on the safe side: say so in the source</source>
+        <translation>Si la hoja de datos no lo da, el de Pmax queda del lado de la seguridad: indíquelo en la fuente</translation>
+    </message>
+    <message>
+        <source>climate data, criterion...</source>
+        <translation>datos climáticos, criterio...</translation>
+    </message>
+    <message>
+        <source>datasheet, revision...</source>
+        <translation>hoja de datos, revisión...</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>desconocido</translation>
+    </message>
+    <message>
+        <source>°C</source>
+        <translation>°C</translation>
     </message>
 </context>
 </TS>

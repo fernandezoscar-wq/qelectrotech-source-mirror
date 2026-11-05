@@ -1,0 +1,30 @@
+<definition version="0.100.0" type="element" link_type="simple" width="60" height="70" hotspot_x="30" hotspot_y="35">
+    <uuid uuid="{774a5d96-9c02-4de2-9011-9da662d9dd82}"/>
+    <names>
+        <name lang="es">Conmutador de transferencia I-0-II</name>
+        <name lang="en">Transfer switch I-0-II</name>
+        <name lang="fr">Inverseur de source I-0-II</name>
+    </names>
+    <kindInformations>
+        <kindInformation name="type">commutator</kindInformation>
+    </kindInformations>
+    <informations>Author: EFICAES SL, Oscar Fernandez (dibujado con Claude)
+Simbolo unifilar: conmutador de transferencia (inversor de fuentes) de tres posiciones con seccionamiento. Entrada I: fuente normal; entrada II: fuente alternativa; borne inferior: salida comun.
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+    <description>
+        <polygon x1="-20" y1="-30" x2="-20" y2="-14" x3="-7" y3="-14" closed="false" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+        <polygon x1="20" y1="-30" x2="20" y2="-14" x3="7" y3="-14" closed="false" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+        <line x1="-7" y1="-17" x2="-7" y2="-11" end1="none" end2="none" length1="1.5" length2="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" antialias="true"/>
+        <line x1="7" y1="-17" x2="7" y2="-11" end1="none" end2="none" length1="1.5" length2="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" antialias="true"/>
+        <line x1="0" y1="12" x2="0" y2="-9" end1="none" end2="none" length1="1.5" length2="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" antialias="true"/>
+        <line x1="0" y1="12" x2="0" y2="30" end1="none" end2="none" length1="1.5" length2="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" antialias="true"/>
+        <circle x="-1.5" y="10.5" diameter="3" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+        <text x="-27" y="-20" text="I" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+        <text x="23" y="-20" text="II" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+        <text x="3" y="-1" text="0" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+        <dynamic_text x="24" y="-2" z="4" text_width="-1" Halignment="AlignLeft" Valignment="AlignTop" frame="false" rotation="0" keep_visual_rotation="false" text_from="ElementInfo" uuid="{d29838ca-9b24-44cb-bd77-b83db9f34af8}" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular"><text></text><info_name>label</info_name></dynamic_text>
+        <terminal uuid="{78b16730-7192-4794-b8ed-80f6b818dec5}" name="I" x="-20" y="-31" orientation="n" type="Generic"/>
+        <terminal uuid="{fd7252f2-d10f-4177-b748-c3d6c1f154e9}" name="II" x="20" y="-31" orientation="n" type="Generic"/>
+        <terminal uuid="{44d98ae7-3346-4d4a-8686-69e2109cef0b}" name="" x="0" y="31" orientation="s" type="Generic"/>
+    </description>
+</definition>

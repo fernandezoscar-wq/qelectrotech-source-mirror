@@ -20,6 +20,7 @@
 #include "electrical/ampacityfile.h"
 #include "electrical/electricalevaluation.h"
 #include "devicepickerdialog.h"
+#include "pvdialog.h"
 #include "electricaltexts.h"
 
 #include <QComboBox>
@@ -119,7 +120,9 @@ CircuitDialog::CircuitDialog(const Circuit &circuit,
 			   {ElectricalTexts::use(CircuitUse::DiMetersTotallyGrouped),
 				int(CircuitUse::DiMetersTotallyGrouped)},
 			   {ElectricalTexts::use(CircuitUse::DiSingleUser),
-				int(CircuitUse::DiSingleUser)}},
+				int(CircuitUse::DiSingleUser)},
+			   {ElectricalTexts::use(CircuitUse::GeneratorLine),
+				int(CircuitUse::GeneratorLine)}},
 			  indexOf(circuit.use));
 	{
 		const rebt::DwellingCircuit kinds[] = {
@@ -331,6 +334,24 @@ CircuitDialog::CircuitDialog(const Circuit &circuit,
 	});
 	iz->addRow(m_use_suggestion);
 	right->addWidget(iz_box);
+
+		//The PV generator behind an inverter, for a generator line
+	auto *pv_box = new QGroupBox(tr("Photovoltaic generator"));
+	auto *pv_layout = new QHBoxLayout(pv_box);
+	m_pv_button = new QPushButton(tr("Photovoltaic generator..."));
+	m_pv_button->setObjectName(QStringLiteral("pv"));
+	m_pv_button->setToolTip(tr("Module, inverter input and strings of the inverter this "
+							   "line connects, for the checks of the DC side"));
+	m_pv_summary = new QLabel;
+	m_pv_summary->setWordWrap(true);
+	connect(m_pv_button, &QPushButton::clicked, this, [this] {
+		PvDialog dialog(m_circuit.pv, this);
+		if (dialog.exec() == QDialog::Accepted)
+			setPv(dialog.pv());
+	});
+	pv_layout->addWidget(m_pv_button);
+	pv_layout->addWidget(m_pv_summary, 1);
+	right->addWidget(pv_box);
 
 	auto *notes_box = new QGroupBox(tr("Notes, assumptions, pending data"));
 	auto *notes_layout = new QVBoxLayout(notes_box);
@@ -572,6 +593,10 @@ void CircuitDialog::updateState()
 	}
 
 	const Circuit edited = circuit();
+	m_pv_summary->setText(m_circuit.pv.strings.isEmpty()
+		? tr("None. For a generator line, the inverter's PV generator.")
+		: tr("%n input(s): %1", "", int(m_circuit.pv.strings.size()))
+			  .arg(ElectricalTexts::pvOutcome(evaluate(edited, m_tables))));
 	CircuitEvaluation e;
 	if (m_model) {
 			//The model as it would be with this circuit, for the drop from the origin
@@ -638,5 +663,11 @@ void CircuitDialog::applyDevice(const DeviceEntry &entry)
 	m_reasons.value(QStringLiteral("conventionalCurrent"))->setText(p.conventionalCurrentReason);
 	m_reasons.value(QStringLiteral("tripCurrent"))->setText(p.tripCurrentReason);
 	m_reasons.value(QStringLiteral("letThrough"))->setText(p.letThroughReason);
+	updateState();
+}
+
+void CircuitDialog::setPv(const PvData &pv)
+{
+	m_circuit.pv = pv;
 	updateState();
 }

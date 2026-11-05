@@ -22,6 +22,7 @@
 #include "rebt/rebtampacity.h"
 #include "rebt/rebtcalc.h"
 #include "rebt/rebtdwelling.h"
+#include "rebt/rebtpv.h"
 #include "rebt/rebtprotection.h"
 #include "rebt/rebtrules.h"
 #include "rebt/rebtshortcircuit.h"
@@ -45,6 +46,11 @@ struct CircuitEvaluation
 	rebt::CheckResult ampacityCheck; ///< IB <= IZ
 	rebt::SectionSuggestion suggestion;  ///< smallest section that will do
 	rebt::CoordinationResult coordination;   ///< with its protection
+		/// A generator line: the current the cable is checked for, 1.25 IB
+	std::optional<double> sizingCurrent;
+		// The DC side of its PV generator, one result per group of strings
+	QList<rebt::PvStringResult> pvStrings;
+	rebt::CheckOutcome pvOutcome = rebt::CheckOutcome::NotPerformed;
 
 		// Voltage drop from the origin of the interior installation,
 		// through the feeders of the boards upstream. Only with a model.
@@ -97,6 +103,14 @@ struct CircuitEvaluation
 std::optional<ResidualDeviceData> residualDeviceOf(const Circuit &circuit,
 												   const ElectricalModel &model,
 												   QUuid *holder = nullptr);
+
+/// The engine input of one group of strings of @p pv
+rebt::PvStringInput pvStringInput(const PvData &pv, const PvStringGroup &group);
+
+/// ITC-BT-40 5: drop between the generator and the connection point
+constexpr double GENERATOR_DROP_LIMIT = 1.5;
+/// ITC-BT-40 5: cables for at least 125 % of the generator's maximum current
+constexpr double GENERATOR_CABLE_FACTOR = 1.25;
 
 /// The voltage drop limit of the use of @p circuit, none when unknown
 std::optional<rebt::VoltageDropLimit> limitFor(const Circuit &circuit);

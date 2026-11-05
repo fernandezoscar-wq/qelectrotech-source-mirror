@@ -71,6 +71,8 @@ if (r.status == rebt::Status::Ok) {
 | REBT-CIN-002 | ITC‑BT‑24 4.1.1, tabla 1 | Contactos indirectos en TN: Zs × Ia ≤ U0; sin diferencial en TN-C |
 | REBT-CIN-003 | ITC‑BT‑24 4.1.3 | IT, primer defecto: RA × Id ≤ UL |
 | REBT-CIN-004 | ITC‑BT‑24 4.1.3, tabla 2 | IT, segundo defecto: como TT, o 2 Zs × Ia ≤ U (U0) |
+| REBT-FV-001…006 | UNE‑HD 60364‑7‑712; IDAE PCT 5.5.2 | Lado de continua FV: UOC MAX, MPPT, corrientes, fusibles, cable y caída |
+| REBT-FV-007 | ITC‑BT‑40 5 | Línea del inversor: cable para el 125 % y caída ≤ 1,5 % |
 
 Pendiente de revisión: antes de publicar una versión hay que contrastar cada regla con
 el texto consolidado del BOE (BOE‑A‑2002‑18099).
@@ -126,3 +128,6 @@ interruptor de cada circuito. Ver [contactos_indirectos.md](contactos_indirectos
 cmake --build build --target tst_rebtcalc
 ctest --test-dir build -R '^tst_rebtcalc$' --output-on-failure
 ```
+
+Generador fotovoltaico: la línea del inversor según la ITC-BT-40 y el lado de
+continua (strings, inversor, fusibles, cable). Ver [fotovoltaica.md](fotovoltaica.md).

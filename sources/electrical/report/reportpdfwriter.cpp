@@ -234,6 +234,10 @@ class Layout
 				+ counts(m_report.coordination), false);
 			row(QStringList{ReportPdfWriter::tr("Short circuit (ITC-BT-22 1.1 b, UNE-HD 60364-4-43)")}
 				+ counts(m_report.shortCircuit), false);
+			if (m_report.pv.passed + m_report.pv.notPassed + m_report.pv.notPerformed > 0)
+				row(QStringList{ReportPdfWriter::tr("PV generators, DC side "
+													"(UNE-HD 60364-7-712, IDAE)")}
+					+ counts(m_report.pv), false);
 			if (m_report.earthingGiven)
 				row(QStringList{ReportPdfWriter::tr("Indirect contacts (ITC-BT-24 4.1)")}
 					+ counts(m_report.indirect), false);

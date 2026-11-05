@@ -19,6 +19,7 @@
 
 #include <algorithm>
 
+#include <QMap>
 #include <QStringList>
 
 using namespace electrical;
@@ -57,6 +58,8 @@ QString ElectricalTexts::use(CircuitUse use)
 			return tr("DI, meters totally grouped");
 		case CircuitUse::DiSingleUser:
 			return tr("DI of a single user, no LGA");
+		case CircuitUse::GeneratorLine:
+			return tr("Generator line, inverter to connection point (ITC-BT-40)");
 	}
 	return QString();
 }
@@ -126,6 +129,31 @@ QString ElectricalTexts::field(const std::string &field)
 	if (field == "residualCurrent") return tr("IΔn of the residual current device");
 	if (field == "residualDevice") return tr("residual current device of the circuit");
 	if (field == "protectiveSection") return tr("protective conductor section");
+	if (field == "openCircuitVoltage") return tr("Voc of the module");
+	if (field == "mppVoltage") return tr("Vmpp of the module");
+	if (field == "shortCircuitCurrent") return tr("Isc of the module");
+	if (field == "mppCurrent") return tr("Impp of the module");
+	if (field == "vocCoefficient") return tr("Voc coefficient of the module");
+	if (field == "vmppCoefficient") return tr("Vmpp coefficient of the module");
+	if (field == "maxSystemVoltage") return tr("maximum system voltage of the module");
+	if (field == "maxSeriesFuse") return tr("maximum series fuse of the module");
+	if (field == "module") return tr("source of the module data");
+	if (field == "inverter") return tr("source of the inverter data");
+	if (field == "maxDcVoltage") return tr("maximum DC voltage of the inverter");
+	if (field == "mpptMinVoltage") return tr("lowest MPPT voltage of the inverter");
+	if (field == "mpptMaxVoltage") return tr("highest MPPT voltage of the inverter");
+	if (field == "maxInputCurrent") return tr("maximum input current per MPPT");
+	if (field == "maxShortCircuitCurrent") return tr("maximum short circuit current per MPPT");
+	if (field == "modulesPerString") return tr("modules per string");
+	if (field == "parallelStrings") return tr("strings in parallel");
+	if (field == "minCellTemperature") return tr("lowest cell temperature");
+	if (field == "maxCellTemperature") return tr("highest cell temperature");
+	if (field == "cellTemperature") return tr("source of the cell temperatures");
+	if (field == "stringFuse") return tr("string fuse");
+	if (field == "cableLength") return tr("length of the string cable");
+	if (field == "cableSection") return tr("section of the string cable");
+	if (field == "cableMaterial") return tr("material of the string cable");
+	if (field == "cableAdmissible") return tr("Iz of the string cable");
 	if (field == "firstFaultCurrent") return tr("first fault current Id");
 	if (field == "massesInterconnected")
 		return tr("whether the masses are interconnected or earthed apart");
@@ -251,6 +279,13 @@ QString ElectricalTexts::diagnostic(const rebt::Diagnostic &diagnostic)
 		case rebt::Issue::MissingMassesArrangement:
 		case rebt::Issue::MissingNeutralArrangement:
 			return tr("Missing: %1").arg(name);
+		case rebt::Issue::MissingModuleData:
+		case rebt::Issue::MissingInverterData:
+		case rebt::Issue::MissingStringLayout:
+		case rebt::Issue::MissingCellTemperature:
+			return tr("Missing: %1").arg(name);
+		case rebt::Issue::MissingStringProtection:
+			return tr("String fuses needed and none given");
 		case rebt::Issue::ResidualInTNC:
 			return tr("Residual current device in TN-C: not allowed (ITC-BT-24 4.1.1)");
 		case rebt::Issue::LimitAboveNormal:
@@ -319,6 +354,12 @@ QString ElectricalTexts::assumption(rebt::Assumption assumption)
 		case rebt::Assumption::EarthResistanceGiven:
 			return tr("RA as given: earth electrode plus protective conductors, "
 					  "not worked out");
+		case rebt::Assumption::IscMaxFactor:
+			return tr("ISC MAX taken as 1.25 ISC STC, on the safe side");
+		case rebt::Assumption::CurrentsAtStc:
+			return tr("Input currents at STC, not corrected for temperature or irradiance");
+		case rebt::Assumption::SingleStringCable:
+			return tr("One or two strings: the string cable for at least 1.25 ISC");
 		case rebt::Assumption::GuideLoop:
 			return tr("Supply not known: Zs = R / 0.8 from the CGP (Guía-BT Anexo 3)");
 		case rebt::Assumption::LoopFromItOrigin:
@@ -452,11 +493,16 @@ QString ElectricalTexts::ampacityDetails(const CircuitEvaluation &evaluation)
 		}
 		lines << tr("IZ = %1 A").arg(formatNumber(a.admissible, 2));
 	}
+	if (evaluation.sizingCurrent)
+		lines << tr("Generator: the cable for 1.25 × IB = %1 A (ITC-BT-40 5)")
+					 .arg(formatNumber(evaluation.sizingCurrent, 2));
 	for (rebt::Assumption assumption_ : a.assumptions)
 		lines << QStringLiteral("- ") + assumption(assumption_);
 	QStringList rules;
 	for (const rebt::NormRef &r : a.rules)
 		rules << rule(r);
+	if (evaluation.sizingCurrent)
+		rules << rule(evaluation.ampacityCheck.rule);
 	lines << tr("Rules: %1").arg(rules.join(QStringLiteral("; ")));
 	return lines.join(QLatin1Char('\n'));
 }
@@ -502,6 +548,76 @@ QString ElectricalTexts::earthing(rebt::EarthingSystem earthing)
 		case rebt::EarthingSystem::IT: return tr("IT");
 	}
 	return QString();
+}
+
+QString ElectricalTexts::pvOutcome(const CircuitEvaluation &evaluation)
+{
+	if (evaluation.pvStrings.isEmpty())
+		return QString();
+	switch (evaluation.pvOutcome) {
+		case rebt::CheckOutcome::Passed: return tr("Passed");
+		case rebt::CheckOutcome::NotPassed: return tr("Not passed");
+		case rebt::CheckOutcome::NotPerformed: return tr("Not performed");
+	}
+	return QString();
+}
+
+QString ElectricalTexts::pvDetails(const Circuit &circuit, const CircuitEvaluation &evaluation)
+{
+	auto word = [](rebt::CheckOutcome o) {
+		switch (o) {
+			case rebt::CheckOutcome::Passed: return tr("passed");
+			case rebt::CheckOutcome::NotPassed: return tr("not passed");
+			case rebt::CheckOutcome::NotPerformed: return tr("not performed");
+		}
+		return QString();
+	};
+	auto v = [](const std::optional<double> &x, int decimals) {
+		return x ? formatNumber(x, decimals) : QStringLiteral("—");
+	};
+	QStringList lines;
+	if (!circuit.pv.moduleName.isEmpty() || !circuit.pv.inverterName.isEmpty())
+		lines << tr("Module: %1. Inverter: %2").arg(circuit.pv.moduleName, circuit.pv.inverterName);
+	QMap<QString, rebt::NormRef> rules;
+	for (int i = 0; i < evaluation.pvStrings.size() && i < circuit.pv.strings.size(); ++i) {
+		const rebt::PvStringResult &r = evaluation.pvStrings.at(i);
+		const PvStringGroup &g = circuit.pv.strings.at(i);
+		lines << tr("%1: %2 × %3 modules: %4")
+					 .arg(g.name.isEmpty() ? tr("Input %1").arg(i + 1) : g.name,
+						  g.parallelStrings ? QString::number(*g.parallelStrings) : QStringLiteral("?"),
+						  g.modulesPerString ? QString::number(*g.modulesPerString) : QStringLiteral("?"),
+						  word(r.outcome));
+		for (const rebt::Diagnostic &d : r.diagnostics)
+			lines << QStringLiteral("    ") + diagnostic(d);
+		lines << QStringLiteral("    ")
+				 + tr("UOC MAX %1 V ≤ inverter and module: %2").arg(v(r.openCircuitMax, 1), word(r.voltage));
+		lines << QStringLiteral("    ")
+				 + tr("UMPP %1–%2 V in the MPPT range: %3")
+					   .arg(v(r.mppMin, 1), v(r.mppMax, 1), word(r.mppt));
+		lines << QStringLiteral("    ")
+				 + tr("Input %1 A (Isc), %2 A (Impp): %3")
+					   .arg(v(r.inputShortCircuit, 2), v(r.inputMppCurrent, 2), word(r.current));
+		if (r.protectionRequired)
+			lines << QStringLiteral("    ")
+					 + (*r.protectionRequired
+							? tr("String fuses needed, %1 A < In < %2 A: %3")
+								  .arg(v(r.fuseMin, 2), v(r.fuseMax, 2), word(r.protection))
+							: tr("String fuses not needed: %1").arg(word(r.protection)));
+		lines << QStringLiteral("    ")
+				 + tr("String cable for %1 A: %2").arg(v(r.cableRequired, 2), word(r.cable));
+		lines << QStringLiteral("    ")
+				 + tr("DC drop %1 % < 1.5 %: %2").arg(v(r.dropPercent, 2), word(r.drop));
+		for (rebt::Assumption a : r.assumptions)
+			lines << QStringLiteral("    - ") + assumption(a);
+		for (const rebt::NormRef &n : r.rules)
+			rules.insert(QString::fromStdString(n.id), n);
+	}
+	QStringList cited;
+	for (const rebt::NormRef &n : rules)
+		cited << rule(n);
+	if (!cited.isEmpty())
+		lines << tr("Rules: %1").arg(cited.join(QStringLiteral("; ")));
+	return lines.join(QLatin1Char('\n'));
 }
 
 QString ElectricalTexts::indirectOutcome(const CircuitEvaluation &evaluation)

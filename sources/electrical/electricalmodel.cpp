@@ -45,7 +45,8 @@ const Words<CircuitUse> USES[] = {
 	{CircuitUse::LgaPartlyCentralized, "lga-partly-centralized"},
 	{CircuitUse::DiMetersInSeveralPlaces, "di-meters-in-several-places"},
 	{CircuitUse::DiMetersTotallyGrouped, "di-meters-totally-grouped"},
-	{CircuitUse::DiSingleUser, "di-single-user"}};
+	{CircuitUse::DiSingleUser, "di-single-user"},
+	{CircuitUse::GeneratorLine, "generator-line"}};
 const Words<rebt::ProtectionStandard> STANDARDS[] = {
 	{rebt::ProtectionStandard::EN60898, "EN60898"},
 	{rebt::ProtectionStandard::EN61009, "EN61009"},
@@ -321,6 +322,37 @@ bool Board::operator==(const Board &o) const
 		   && neutralDistributed == o.neutralDistributed;
 }
 
+bool PvStringGroup::operator==(const PvStringGroup &o) const
+{
+	return name == o.name && modulesPerString == o.modulesPerString
+		   && parallelStrings == o.parallelStrings && stringFuse == o.stringFuse
+		   && cableLength == o.cableLength && cableSection == o.cableSection
+		   && cableMaterial == o.cableMaterial && conductorTemperature == o.conductorTemperature
+		   && cableAdmissible == o.cableAdmissible
+		   && cableAdmissibleReason == o.cableAdmissibleReason;
+}
+
+bool PvData::isEmpty() const
+{
+	return *this == PvData();
+}
+
+bool PvData::operator==(const PvData &o) const
+{
+	return moduleName == o.moduleName && openCircuitVoltage == o.openCircuitVoltage
+		   && mppVoltage == o.mppVoltage && shortCircuitCurrent == o.shortCircuitCurrent
+		   && mppCurrent == o.mppCurrent && vocCoefficient == o.vocCoefficient
+		   && vmppCoefficient == o.vmppCoefficient && maxSystemVoltage == o.maxSystemVoltage
+		   && maxSeriesFuse == o.maxSeriesFuse && moduleSource == o.moduleSource
+		   && inverterName == o.inverterName && maxDcVoltage == o.maxDcVoltage
+		   && mpptMinVoltage == o.mpptMinVoltage && mpptMaxVoltage == o.mpptMaxVoltage
+		   && maxInputCurrent == o.maxInputCurrent
+		   && maxShortCircuitCurrent == o.maxShortCircuitCurrent
+		   && inverterSource == o.inverterSource && minCellTemperature == o.minCellTemperature
+		   && maxCellTemperature == o.maxCellTemperature
+		   && temperatureReason == o.temperatureReason && strings == o.strings;
+}
+
 bool Circuit::operator==(const Circuit &o) const
 {
 	return id == o.id && name == o.name && board == o.board
@@ -328,7 +360,7 @@ bool Circuit::operator==(const Circuit &o) const
 		   && system == o.system && voltage == o.voltage && use == o.use
 		   && dwellingCircuit == o.dwellingCircuit && points == o.points
 		   && load == o.load && conductor == o.conductor
-		   && protection == o.protection && notes == o.notes;
+		   && protection == o.protection && notes == o.notes && pv == o.pv;
 }
 
 bool ReportInfo::isEmpty() const
@@ -608,6 +640,48 @@ QDomElement ElectricalModel::toXml(QDomDocument &document) const
 		if (prot.attributes().count())
 			e.appendChild(prot);
 
+		if (!c.pv.isEmpty()) {
+			const PvData &p = c.pv;
+			QDomElement pv = document.createElement(QStringLiteral("pv"));
+			Writer vw(pv);
+			vw.text("moduleName", p.moduleName);
+			vw.number("openCircuitVoltage", p.openCircuitVoltage);
+			vw.number("mppVoltage", p.mppVoltage);
+			vw.number("shortCircuitCurrent", p.shortCircuitCurrent);
+			vw.number("mppCurrent", p.mppCurrent);
+			vw.number("vocCoefficient", p.vocCoefficient);
+			vw.number("vmppCoefficient", p.vmppCoefficient);
+			vw.number("maxSystemVoltage", p.maxSystemVoltage);
+			vw.number("maxSeriesFuse", p.maxSeriesFuse);
+			vw.text("moduleSource", p.moduleSource);
+			vw.text("inverterName", p.inverterName);
+			vw.number("maxDcVoltage", p.maxDcVoltage);
+			vw.number("mpptMinVoltage", p.mpptMinVoltage);
+			vw.number("mpptMaxVoltage", p.mpptMaxVoltage);
+			vw.number("maxInputCurrent", p.maxInputCurrent);
+			vw.number("maxShortCircuitCurrent", p.maxShortCircuitCurrent);
+			vw.text("inverterSource", p.inverterSource);
+			vw.number("minCellTemperature", p.minCellTemperature);
+			vw.number("maxCellTemperature", p.maxCellTemperature);
+			vw.text("temperatureReason", p.temperatureReason);
+			for (const PvStringGroup &g : p.strings) {
+				QDomElement ge = document.createElement(QStringLiteral("pvStrings"));
+				Writer gw(ge);
+				gw.text("name", g.name);
+				gw.integer("modulesPerString", g.modulesPerString);
+				gw.integer("parallelStrings", g.parallelStrings);
+				gw.number("stringFuse", g.stringFuse);
+				gw.number("cableLength", g.cableLength);
+				gw.number("cableSection", g.cableSection);
+				gw.word("cableMaterial", MATERIALS, g.cableMaterial);
+				gw.number("conductorTemperature", g.conductorTemperature);
+				gw.number("cableAdmissible", g.cableAdmissible);
+				gw.text("cableAdmissibleReason", g.cableAdmissibleReason);
+				pv.appendChild(ge);
+			}
+			e.appendChild(pv);
+		}
+
 		if (!c.notes.isEmpty()) {
 			QDomElement notes = document.createElement(QStringLiteral("notes"));
 			notes.appendChild(document.createTextNode(c.notes));
@@ -828,6 +902,50 @@ ReadReport ElectricalModel::fromXml(const QDomElement &element)
 		pd.letThrough = pr.number("letThrough");
 		pd.letThroughAt = pr.number("letThroughAt");
 		pd.letThroughReason = pr.text("letThroughReason");
+
+		const QDomElement pv = e.firstChildElement(QStringLiteral("pv"));
+		if (!pv.isNull()) {
+			Reader vr(pv, path + QStringLiteral("/pv"), report);
+			PvData &p = c.pv;
+			p.moduleName = vr.text("moduleName");
+			p.openCircuitVoltage = vr.number("openCircuitVoltage");
+			p.mppVoltage = vr.number("mppVoltage");
+			p.shortCircuitCurrent = vr.number("shortCircuitCurrent");
+			p.mppCurrent = vr.number("mppCurrent");
+			p.vocCoefficient = vr.number("vocCoefficient");
+			p.vmppCoefficient = vr.number("vmppCoefficient");
+			p.maxSystemVoltage = vr.number("maxSystemVoltage");
+			p.maxSeriesFuse = vr.number("maxSeriesFuse");
+			p.moduleSource = vr.text("moduleSource");
+			p.inverterName = vr.text("inverterName");
+			p.maxDcVoltage = vr.number("maxDcVoltage");
+			p.mpptMinVoltage = vr.number("mpptMinVoltage");
+			p.mpptMaxVoltage = vr.number("mpptMaxVoltage");
+			p.maxInputCurrent = vr.number("maxInputCurrent");
+			p.maxShortCircuitCurrent = vr.number("maxShortCircuitCurrent");
+			p.inverterSource = vr.text("inverterSource");
+			p.minCellTemperature = vr.number("minCellTemperature");
+			p.maxCellTemperature = vr.number("maxCellTemperature");
+			p.temperatureReason = vr.text("temperatureReason");
+			int g_index = 0;
+			for (QDomElement ge = pv.firstChildElement(QStringLiteral("pvStrings"));
+				 !ge.isNull();
+				 ge = ge.nextSiblingElement(QStringLiteral("pvStrings")), ++g_index) {
+				Reader gr(ge, path + QStringLiteral("/pv/pvStrings[%1]").arg(g_index), report);
+				PvStringGroup g;
+				g.name = gr.text("name");
+				g.modulesPerString = gr.integer("modulesPerString");
+				g.parallelStrings = gr.integer("parallelStrings");
+				g.stringFuse = gr.number("stringFuse");
+				g.cableLength = gr.number("cableLength");
+				g.cableSection = gr.number("cableSection");
+				g.cableMaterial = gr.word("cableMaterial", MATERIALS);
+				g.conductorTemperature = gr.number("conductorTemperature");
+				g.cableAdmissible = gr.number("cableAdmissible");
+				g.cableAdmissibleReason = gr.text("cableAdmissibleReason");
+				p.strings << g;
+			}
+		}
 
 		c.notes = e.firstChildElement(QStringLiteral("notes")).text();
 		m_circuits.append(c);

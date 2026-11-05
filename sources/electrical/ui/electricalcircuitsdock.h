@@ -63,6 +63,7 @@ class ElectricalCircuitsDock : public QDockWidget
 			MinFaultColumn,
 			ShortCircuitColumn,
 			IndirectColumn,
+			PvColumn,
 			DwellingColumn,
 			ColumnCount
 		};

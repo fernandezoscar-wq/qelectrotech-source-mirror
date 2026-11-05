@@ -71,6 +71,8 @@ std::optional<rebt::VoltageDropLimit> limitFor(const Circuit &circuit)
 			return rebt::rules::diMetersTotallyGrouped();
 		case CircuitUse::DiSingleUser:
 			return rebt::rules::diSingleUser();
+		case CircuitUse::GeneratorLine:
+			return rebt::VoltageDropLimit{GENERATOR_DROP_LIMIT, false, rebt::rules::pvAcLine()};
 	}
 	return std::nullopt;
 }
@@ -93,9 +95,20 @@ CircuitEvaluation evaluate(const Circuit &circuit, const rebt::AmpacityLibrary &
 
 	const rebt::AmpacityInput ampacity = toAmpacityInput(circuit);
 	evaluation.ampacity = rebt::admissibleCurrent(ampacity, tables);
-	evaluation.ampacityCheck = rebt::checkAmpacity(evaluation.designCurrent(),
-												   evaluation.ampacity);
-	evaluation.suggestion = rebt::suggestSection(input, ampacity, tables,
+		//A generator: cables for 125 % of its maximum current (ITC-BT-40 5)
+	const bool generator = circuit.use == CircuitUse::GeneratorLine;
+	std::optional<double> sizing = evaluation.designCurrent();
+	rebt::CircuitInput sizing_input = input;
+	if (generator && sizing) {
+		evaluation.sizingCurrent = GENERATOR_CABLE_FACTOR * *sizing;
+		sizing = evaluation.sizingCurrent;
+		if (sizing_input.designCurrent)
+			sizing_input.designCurrent = sizing;
+	}
+	evaluation.ampacityCheck = rebt::checkAmpacity(sizing, evaluation.ampacity);
+	if (generator)
+		evaluation.ampacityCheck.rule = rebt::rules::pvAcLine();
+	evaluation.suggestion = rebt::suggestSection(sizing_input, ampacity, tables,
 												 evaluation.limit);
 
 	rebt::CoordinationInput coordination;
@@ -112,7 +125,57 @@ CircuitEvaluation evaluate(const Circuit &circuit, const rebt::AmpacityLibrary &
 	evaluation.coordination = rebt::checkCoordination(coordination);
 
 	evaluation.dwelling = rebt::checkDwellingCircuit(dwellingInput(circuit));
+
+		//The DC side of its PV generator: every group has to pass
+	if (!circuit.pv.strings.isEmpty()) {
+		bool all = true, failed = false;
+		for (const PvStringGroup &g : circuit.pv.strings) {
+			rebt::PvStringResult r = rebt::checkPvString(pvStringInput(circuit.pv, g));
+			if (g.cableAdmissible && g.cableAdmissibleReason.trimmed().isEmpty())
+				r.diagnostics.push_back({rebt::Issue::MissingJustification, "cableAdmissible"});
+			evaluation.pvStrings << r;
+			failed = failed || r.outcome == rebt::CheckOutcome::NotPassed;
+			all = all && r.outcome == rebt::CheckOutcome::Passed;
+		}
+		evaluation.pvOutcome = failed ? rebt::CheckOutcome::NotPassed
+							   : all ? rebt::CheckOutcome::Passed
+									 : rebt::CheckOutcome::NotPerformed;
+	}
 	return evaluation;
+}
+
+rebt::PvStringInput pvStringInput(const PvData &pv, const PvStringGroup &g)
+{
+	rebt::PvStringInput in;
+	in.module.openCircuitVoltage = pv.openCircuitVoltage;
+	in.module.mppVoltage = pv.mppVoltage;
+	in.module.shortCircuitCurrent = pv.shortCircuitCurrent;
+	in.module.mppCurrent = pv.mppCurrent;
+	in.module.vocCoefficient = pv.vocCoefficient;
+	in.module.vmppCoefficient = pv.vmppCoefficient;
+	in.module.maxSystemVoltage = pv.maxSystemVoltage;
+	in.module.maxSeriesFuse = pv.maxSeriesFuse;
+	in.module.source = pv.moduleSource.trimmed().toStdString();
+	in.inverter.maxDcVoltage = pv.maxDcVoltage;
+	in.inverter.mpptMinVoltage = pv.mpptMinVoltage;
+	in.inverter.mpptMaxVoltage = pv.mpptMaxVoltage;
+	in.inverter.maxInputCurrent = pv.maxInputCurrent;
+	in.inverter.maxShortCircuitCurrent = pv.maxShortCircuitCurrent;
+	in.inverter.source = pv.inverterSource.trimmed().toStdString();
+	in.modulesPerString = g.modulesPerString;
+	in.parallelStrings = g.parallelStrings;
+	in.minCellTemperature = pv.minCellTemperature;
+	in.maxCellTemperature = pv.maxCellTemperature;
+	in.temperatureJustification = pv.temperatureReason.trimmed().toStdString();
+	in.stringFuse = g.stringFuse;
+	in.cableLength = g.cableLength;
+	in.cableSection = g.cableSection;
+	in.cableMaterial = g.cableMaterial;
+	in.conductorTemperature = g.conductorTemperature;
+		//An Iz given is used only with where it comes from
+	if (!g.cableAdmissibleReason.trimmed().isEmpty())
+		in.cableAdmissible = g.cableAdmissible;
+	return in;
 }
 
 namespace {

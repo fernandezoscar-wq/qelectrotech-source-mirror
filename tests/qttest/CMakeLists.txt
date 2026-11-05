@@ -318,6 +318,12 @@ add_test(NAME tst_rebtindirect COMMAND tst_rebtindirect)
 target_include_directories(tst_rebtindirect PRIVATE ${QET_DIR}/sources)
 target_link_libraries(tst_rebtindirect PRIVATE qetrebt Qt::Test)
 
+# DC side of a PV generator: strings, inverter input, fuses, cable (UNE-HD 60364-7-712).
+add_executable(tst_rebtpv tst_rebtpv.cpp)
+add_test(NAME tst_rebtpv COMMAND tst_rebtpv)
+target_include_directories(tst_rebtpv PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_rebtpv PRIVATE qetrebt Qt::Test)
+
 # The electrical model of a project and its XML, without the application.
 add_executable(tst_electricalmodel tst_electricalmodel.cpp)
 add_test(NAME tst_electricalmodel COMMAND tst_electricalmodel)

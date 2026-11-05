@@ -32,6 +32,8 @@ add_library(qetrebt STATIC
 	rebtdwelling.cpp
 	rebtindirect.h
 	rebtindirect.cpp
+	rebtpv.h
+	rebtpv.cpp
 )
 target_include_directories(qetrebt PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_features(qetrebt PUBLIC cxx_std_17)

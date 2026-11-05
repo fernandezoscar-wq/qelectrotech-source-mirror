@@ -59,6 +59,10 @@ class CircuitDialog : public QDialog
 		QPushButton *useSuggestionButton() const { return m_use_suggestion; }
 		QLineEdit *reasonField(const QString &name) const { return m_reasons.value(name); }
 		QPushButton *catalogueButton() const { return m_catalogue; }
+		QPushButton *pvButton() const { return m_pv_button; }
+		QLabel *pvSummary() const { return m_pv_summary; }
+			/// The PV generator the dialog keeps for the circuit
+		void setPv(const electrical::PvData &pv);
 			/// Puts the data of @p entry in the fields of the device, all of
 			/// them replaced; the residual current device named stays
 		void applyDevice(const electrical::DeviceEntry &entry);
@@ -92,6 +96,8 @@ class CircuitDialog : public QDialog
 		std::optional<electrical::ElectricalModel> m_model;
 		QPushButton *m_use_suggestion = nullptr;
 		QPushButton *m_catalogue = nullptr;
+		QPushButton *m_pv_button = nullptr;
+		QLabel *m_pv_summary = nullptr;
 		std::optional<double> m_suggested;
 		QLineEdit *m_name = nullptr;
 		QLineEdit *m_method = nullptr;
